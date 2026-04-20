@@ -242,7 +242,7 @@ function renderFunctionEnd() {
 
 <style scoped>
 .cwe-viewer {
-  max-width: 900px;
+  max-width: none;
   margin: 0 auto;
   padding: 2rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -298,22 +298,41 @@ function renderFunctionEnd() {
   border-radius: 12px;
   padding: 2rem;
   border: 1px solid #374151;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .code-block {
   background: #111827;
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 2rem;
   margin-bottom: 2rem;
   border: 1px solid #374151;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .code-block {
+    width: 100%;
+  }
 }
 
 .code-block pre {
   margin: 0;
   color: #f8fafc;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .code-block pre {
+    font-size: 14px;
+    line-height: 1.6;
+  }
 }
 
 .vulnerable-line {
@@ -342,6 +361,14 @@ function renderFunctionEnd() {
 .options {
   display: grid;
   gap: 0.75rem;
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .options {
+    max-width: 100%;
+  }
 }
 
 .option {
@@ -371,6 +398,16 @@ function renderFunctionEnd() {
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid #374151;
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .result {
+    max-width: 100%;
+  }
 }
 
 .wrong {
