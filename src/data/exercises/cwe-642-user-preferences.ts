@@ -36,7 +36,7 @@ export const cwe642UserPreferences: Exercise = {
     {
       code: `if (isAdminUser(userId)) { // Check server authority`,
       correct: true,
-      explanation: `Correct! Validates admin status from authoritative server source rather than client preferences. This prevents privilege escalation where users set isAdmin=true in their preferences to gain enhanced security bypasses.`
+      explanation: `Check admin status on server not preferences`
     },
     {
       code: `if (userPrefs.isAdmin) { // Trust client preference`,

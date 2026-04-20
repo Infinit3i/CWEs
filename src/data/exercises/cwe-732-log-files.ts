@@ -26,12 +26,12 @@ export const cwe732LogFiles: Exercise = {
     {
       code: `fs.chmodSync(logPath, 0o640);`,
       correct: true,
-      explanation: `Correct! Mode 0o640 allows the application owner to read/write and the group (typically syslog or admin) to read logs. This enables log analysis while protecting sensitive application data from other users.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `fs.chmodSync(logPath, 0o666);`,
       correct: false,
-      explanation: 'Direct from MITRE: Mode 0o666 creates world-writable log files. Any user can read sensitive application data or inject false log entries.'
+      explanation: 'Mode 0o666 creates world-writable log files. Any user can read sensitive application data or inject false log entries.'
     },
     {
       code: `fs.chmodSync(logPath, 0o777);`,

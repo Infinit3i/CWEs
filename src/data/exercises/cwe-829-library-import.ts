@@ -47,7 +47,7 @@ export const cwe829LibraryImport: Exercise = {
     {
       code: `if (isApprovedLibrary(moduleName, version)) { const libraryModule = await import(getApprovedLibraryUrl(moduleName, version)); } else { throw new Error('Library not approved'); }`,
       correct: true,
-      explanation: `Correct! Validates against approved library catalog and uses controlled URL construction. This prevents loading arbitrary libraries from untrusted sources that could contain malicious code or vulnerabilities.`
+      explanation: `Validate library sources`
     },
     {
       code: `const libraryModule = await import(libraryUrl); // Load any library`,

@@ -29,7 +29,7 @@ export const cwe787HostnameCopy: Exercise = {
     {
       code: `if (i < hostname.length) { hostname[i] = resolvedName.charCodeAt(i); } else { break; }`,
       correct: true,
-      explanation: `Correct! This bounds check ensures we never write past the 64-byte hostname buffer. Breaking when the buffer is full prevents out-of-bounds writes while preserving as much hostname data as possible within the allocated space.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `hostname[i] = resolvedName.charCodeAt(i);`,

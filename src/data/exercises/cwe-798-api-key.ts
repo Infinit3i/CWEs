@@ -32,12 +32,12 @@ export const cwe798ApiKey: Exercise = {
     {
       code: `const apiKey = process.env.STRIPE_API_KEY || (() => { throw new Error('STRIPE_API_KEY environment variable is required'); })();`,
       correct: true,
-      explanation: `Correct! Environment variables prevent credentials from being embedded in source code. The throw ensures the application fails fast if the required credential is missing, preventing silent failures in production.`
+      explanation: `Store credentials in environment variables`
     },
     {
       code: `const apiKey = "pk_live_51HvJ2eK8mGtD9X4Y7Wz3QpR6vN8Mc2UdF9sG4Hj";`,
       correct: false,
-      explanation: 'Direct from MITRE: Hard-coded production API keys in source code are exposed to anyone with repository access. Bytecode decompilation or source inspection reveals credentials immediately.'
+      explanation: 'Hard-coded production API keys in source code are exposed to anyone with repository access. Bytecode decompilation or source inspection reveals credentials immediately.'
     },
     {
       code: `const apiKey = Buffer.from("cGtfbGl2ZV81MUh2SjJlSzhtR3REOVg0WTdXejNRcFI2dk44TWMyVWRGOXNHNEhq", "base64").toString();`,

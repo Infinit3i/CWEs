@@ -32,17 +32,17 @@ export const cwe416BufferReuse: Exercise = {
     {
       code: `if (!isBufferFreed(secondaryBuffer)) { copyData(secondaryBuffer, inputData.slice(512, 1024)); }`,
       correct: true,
-      explanation: `Correct! Checking if the buffer is still allocated before use prevents use-after-free. This ensures we only access valid memory that hasn't been deallocated, preventing potential crashes, data corruption, or security vulnerabilities.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `copyData(secondaryBuffer, inputData.slice(512, 1024));`,
       correct: false,
-      explanation: 'MITRE use-after-free pattern: secondaryBuffer was deallocated earlier but is still accessed. This can cause crashes, memory corruption, or allow attackers to control freed memory contents.'
+Use after free causes crashes'
     },
     {
       code: `try { copyData(secondaryBuffer, inputData.slice(512, 1024)); } catch(e) { /* ignore */ }`,
       correct: false,
-      explanation: 'Exception handling cannot prevent use-after-free vulnerabilities. Memory access to freed buffer occurs before exceptions can be caught, potentially causing immediate crashes.'
+      explanation: 'Try-catch cannot prevent vulnerability'
     },
     {
       code: `if (secondaryBuffer !== null) { copyData(secondaryBuffer, inputData.slice(512, 1024)); }`,

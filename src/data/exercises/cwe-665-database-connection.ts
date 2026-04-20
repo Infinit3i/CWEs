@@ -24,12 +24,12 @@ export const cwe665DatabaseConnection: Exercise = {
     {
       code: `this.connectionPool = new Map(); this.activeConnections = 0;`,
       correct: true,
-      explanation: `Correct! Using Map for proper key-value storage and initializing connection counter prevents undefined behavior. This ensures the connection pool starts in a known, controlled state.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `this.connectionPool = {};`,
       correct: false,
-      explanation: 'Direct from MITRE: Uninitialized properties may contain previous values or unexpected data. The connection pool might retain connections from previous instances, causing security or stability issues.'
+      explanation: 'Uninitialized properties may contain previous values or unexpected data. The connection pool might retain connections from previous instances, causing security or stability issues.'
     },
     {
       code: `this.connectionPool = null;`,

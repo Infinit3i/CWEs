@@ -24,7 +24,7 @@ export const cwe476ConfigParser: Exercise = {
     {
       code: `const configValue = configData.getValue(key); if (configValue === null || configValue === undefined) { throw new Error(\`Configuration key '\${key}' not found or has null value\`); } const processedValue = configValue.toUpperCase();`,
       correct: true,
-      explanation: `Correct! This validates the configuration value exists before calling methods on it. Following the MITRE pattern, getValue() can return null for missing or null configuration values, which would cause a crash when calling toUpperCase().`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `char* config_value = get_config_value(key); int length = strlen(config_value);`,

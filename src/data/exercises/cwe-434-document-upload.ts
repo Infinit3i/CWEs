@@ -27,17 +27,17 @@ public ResponseEntity<?> uploadDocument(@RequestParam("file") MultipartFile file
     {
       code: `String[] allowedExts = {".pdf", ".doc", ".docx", ".txt"}; String ext = FilenameUtils.getExtension(filename).toLowerCase(); if (!Arrays.asList(allowedExts).contains("." + ext)) { throw new IllegalArgumentException("File type not allowed"); } String safeFilename = UUID.randomUUID().toString() + "." + ext; String uploadPath = Paths.get(uploadLocation, safeFilename).toString();`,
       correct: true,
-      explanation: `Correct! This validates file extensions against a strict whitelist and generates a safe random filename. This prevents both executable uploads and the MITRE path traversal attack using "../" sequences in filenames to write files outside the upload directory.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `String filename = pLine.substring(pLine.lastIndexOf("\\\\"), pLine.lastIndexOf("\\")); BufferedWriter bw = new BufferedWriter(new FileWriter(uploadLocation+filename, true));`,
       correct: false,
-      explanation: 'Direct from MITRE: Extracts filename from HTTP header without validation, allowing both executable file uploads (.asp, .jsp) and path traversal sequences ("../") to write files outside the intended directory.'
+      explanation: 'Extracts filename from HTTP header without validation, allowing both executable file uploads (.asp, .jsp) and path traversal sequences ("../") to write files outside the intended directory.'
     },
     {
       code: `if (filename.endsWith(".pdf") || filename.endsWith(".doc")) { String uploadPath = uploadLocation + filename; file.transferTo(new File(uploadPath)); }`,
       correct: false,
-      explanation: 'MITRE pattern: Double extensions like "malicious.jsp.pdf" bypass this check as the server processes the inner .jsp extension while the outer .pdf satisfies the validation.'
+      explanation: 'Double extensions like "malicious.jsp.pdf" bypass this check as the server processes the inner .jsp extension while the outer .pdf satisfies the validation.'
     },
     {
       code: `if (!filename.contains("../")) { String uploadPath = uploadLocation + filename; file.transferTo(new File(uploadPath)); }`,

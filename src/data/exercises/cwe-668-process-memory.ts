@@ -27,12 +27,12 @@ export const cwe668ProcessMemory: Exercise = {
     {
       code: `const sanitizedName = processName.replace(/[^a-zA-Z0-9_-]/g, ''); const command = \`ps -o pid,comm -C \${sanitizedName}\`;`,
       correct: true,
-      explanation: `Correct! Sanitizing input and using specific ps flags (-o for output format, -C for command name) limits information exposure to only PID and command name, preventing access to sensitive process details like arguments and user contexts.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const command = \`ps aux | grep \${processName}\`;`,
       correct: false,
-      explanation: 'Direct from MITRE: ps aux exposes all process information including command arguments, user contexts, and memory usage for all users. This violates sphere boundaries by exposing system-wide process data.'
+      explanation: 'ps aux exposes all process information including command arguments, user contexts, and memory usage for all users. This violates sphere boundaries by exposing system-wide process data.'
     },
     {
       code: `const command = \`ps -ef | grep \${processName}\`;`,

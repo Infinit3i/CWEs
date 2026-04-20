@@ -27,17 +27,17 @@ export const cwe862PrivateMessages: Exercise = {
     {
       code: `const query = 'SELECT * FROM private_messages WHERE id = ? AND (sender_id = ? OR recipient_id = ?)'; db.query(query, [messageId, req.user.id, req.user.id], (err, results) => {`,
       correct: true,
-      explanation: `Correct! This ensures users can only access messages where they are either the sender or recipient. This prevents the MITRE vulnerability where "an authenticated attacker could provide any arbitrary identifier and read private messages intended for other users."`
+      explanation: `Check user permissions before access`
     },
     {
       code: `if (!session_is_registered("username")) { echo "invalid session detected!"; exit; } display_bulletin($messageId);`,
       correct: false,
-      explanation: 'Direct from MITRE: A bulletin board system that authenticates users but fails to verify message ownership allows "authenticated attackers to provide any arbitrary identifier and read private messages intended for other users."'
+      explanation: 'A bulletin board system that authenticates users but fails to verify message ownership allows "authenticated attackers to provide any arbitrary identifier and read private messages intended for other users."'
     },
     {
       code: `if (req.user && req.user.authenticated) { // User is logged in, show any message const query = \'SELECT * FROM private_messages WHERE id = ?\'; }`,
       correct: false,
-      explanation: 'MITRE pattern: Authentication without authorization allows any logged-in user to access any private message by manipulating the messageId parameter.'
+      explanation: 'Authentication without authorization allows any logged-in user to access any private message by manipulating the messageId parameter.'
     },
     {
       code: `if (req.headers.authorization) { // Authorization header exists, allow access to any message }`,

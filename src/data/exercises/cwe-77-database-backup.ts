@@ -88,7 +88,7 @@ export const cwe77DatabaseBackup: Exercise = {
   });
 }`,
       correct: true,
-      explanation: `Correct! Using spawn() with argument array and proper input validation prevents command injection. Database name and username are validated with allowlists, and file operations use safe path handling.`
+      explanation: `Use proper cryptographic functions`
     },
     // Database backup command injection vulnerabilities
     {

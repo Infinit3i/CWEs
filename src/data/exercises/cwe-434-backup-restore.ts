@@ -29,17 +29,17 @@ export const cwe434BackupRestore: Exercise = {
     {
       code: `const allowedExts = ['.tar.gz', '.tgz', '.tar.bz2']; const ext = path.extname(backupFile).toLowerCase(); const doubleExt = backupFile.toLowerCase().match(/\\.(tar\\.gz|tgz|tar\\.bz2)$/); if (!doubleExt) { throw new Error('Invalid backup format'); } const safeFilename = crypto.randomUUID() + doubleExt[0]; const restorePath = path.resolve('/var/backups/restore/', safeFilename); if (!restorePath.startsWith('/var/backups/restore/')) { throw new Error('Path validation failed'); }`,
       correct: true,
-      explanation: `Correct! This validates backup file extensions properly (including double extensions), generates a safe random filename, and validates the resolved path stays within the intended directory. This prevents both executable uploads and the MITRE path traversal attacks.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `String filename = pLine.substring(pLine.lastIndexOf("\\\\"), pLine.lastIndexOf("\\")); BufferedWriter bw = new BufferedWriter(new FileWriter(uploadLocation+filename, true));`,
       correct: false,
-      explanation: 'Direct from MITRE: Extracts filename without validation, allowing path traversal ("../") to write files outside intended directory AND executable uploads (.asp, .jsp files) for remote code execution.'
+      explanation: 'Extracts filename without validation, allowing path traversal ("../") to write files outside intended directory AND executable uploads (.asp, .jsp files) for remote code execution.'
     },
     {
       code: `if (backupFile.endsWith('.tar.gz') || backupFile.endsWith('.zip')) { const restorePath = '/var/backups/restore/' + backupFile; }`,
       correct: false,
-      explanation: 'MITRE pattern: Simple extension checking misses double extensions like "malicious.php.tar.gz" and allows path traversal sequences in the filename portion before the extension.'
+      explanation: 'Simple extension checking misses double extensions like "malicious.php.tar.gz" and allows path traversal sequences in the filename portion before the extension.'
     },
     {
       code: `if (!backupFile.includes('../')) { const restorePath = '/var/backups/restore/' + backupFile; fs.copyFileSync(req.file.path, restorePath); }`,

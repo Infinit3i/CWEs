@@ -41,7 +41,7 @@ fs.writeFileSync(sessionFile, JSON.stringify(sessionData), { mode: 0o600 });
 setTimeout(() => { try { fs.unlinkSync(sessionFile); } catch(e) {} }, 3600000);
 return { success: true, sessionFile };`,
       correct: true,
-      explanation: `Correct! This uses a cryptographically random filename, creates the file with secure permissions (600 - owner only), and sets up automatic cleanup. This prevents other users from accessing session data and reduces information disclosure risks.`
+      explanation: `Use proper cryptographic functions`
     },
     // Permission vulnerabilities
     {

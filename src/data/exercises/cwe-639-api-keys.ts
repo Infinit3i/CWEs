@@ -88,7 +88,7 @@ const keyQuery = \`
 
 const keyResult = await db.query(keyQuery, [keyId, currentUserId, currentUserRole]);`,
       correct: true,
-      explanation: `Correct! This implements proper authorization by restricting API key access to the owner or admin users. By adding the owner_id constraint to the WHERE clause, we ensure users can only access API keys they created. The admin exception allows for necessary administrative oversight while preventing horizontal privilege escalation where users could access other users' API keys and potentially gain access to their systems and data.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

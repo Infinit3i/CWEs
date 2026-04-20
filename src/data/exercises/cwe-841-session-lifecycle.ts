@@ -46,7 +46,7 @@ export const cwe841SessionLifecycle: Exercise = {
     {
       code: `if (action === 'terminate' && (!session.authenticated || session.logoutTime)) {`,
       correct: true,
-      explanation: `Correct! Enforces proper session lifecycle where termination only occurs after logout or for unauthenticated sessions. This prevents premature session cleanup while users are still active, maintaining session integrity.`
+      explanation: `Follow session lifecycle order`
     },
     {
       code: `if (action === 'terminate') { // No workflow validation`,

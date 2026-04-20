@@ -53,12 +53,12 @@ export const cwe269PrivilegeEscalation: Exercise = {
     {
       code: `if (!this.canAssignRole(requestingUser, targetUser, newRole)) { throw new Error('Insufficient privileges for this role assignment'); }`,
       correct: true,
-      explanation: `Correct! Proper privilege validation should check not only if the user can assign roles, but whether they can assign the specific role to the specific target. This prevents managers from creating admin accounts or users from escalating their own privileges.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `if (!['admin', 'manager'].includes(requestingUser.role)) {`,
       correct: false,
-      explanation: 'From MITRE: Incomplete role validation allows managers to assign admin roles, creating privilege escalation. The check does not verify if the requesting user has authority to assign the specific target role.'
+      explanation: 'Incomplete role validation allows managers to assign admin roles, creating privilege escalation. The check does not verify if the requesting user has authority to assign the specific target role.'
     },
     {
       code: `if (requestingUser.role !== 'admin' && newRole === 'admin') { throw new Error('Only admins can create admin users'); } if (!['admin', 'manager'].includes(requestingUser.role)) {`,

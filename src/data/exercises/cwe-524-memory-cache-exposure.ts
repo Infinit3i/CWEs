@@ -53,7 +53,7 @@ userCache[cacheKey] = {
   // Do not cache password or other sensitive data
 };`,
       correct: true,
-      explanation: `Correct! Excluding sensitive data like passwords from cache prevents unauthorized access. This reduces the attack surface while still providing performance benefits from caching non-sensitive user information.`
+      explanation: `Avoid caching sensitive memory`
     },
     {
       code: `userCache[cacheKey] = {
@@ -64,7 +64,7 @@ userCache[cacheKey] = {
   role: user.role
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Caching passwords and sensitive data enables unauthorized access. Attackers who gain access to memory or cache dumps can extract plaintext credentials.'
+      explanation: 'Caching passwords and sensitive data enables unauthorized access. Attackers who gain access to memory or cache dumps can extract plaintext credentials.'
     },
     {
       code: `const encryptedPassword = encrypt(user.password);

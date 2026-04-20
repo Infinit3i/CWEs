@@ -40,12 +40,12 @@ export const cwe918ImageFetch: Exercise = {
     {
       code: `this.validateImageUrl(imageUrl); const response = await fetch(imageUrl, {`,
       correct: true,
-      explanation: `Correct! URL validation should check against allowlisted image hosting domains and reject internal/private network addresses. This prevents SSRF while allowing legitimate external image processing.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const response = await fetch(imageUrl, {`,
       correct: false,
-      explanation: 'From MITRE: Direct user input to fetch() enables SSRF. Attackers can target internal services, cloud metadata endpoints, or file:// protocols through image URL parameters.'
+      explanation: 'Direct user input to fetch() enables SSRF. Attackers can target internal services, cloud metadata endpoints, or file:// protocols through image URL parameters.'
     },
     {
       code: `if (!imageUrl.match(/\\.(jpg|png|gif|webp)$/i)) throw new Error('Invalid image extension'); const response = await fetch(imageUrl, {`,

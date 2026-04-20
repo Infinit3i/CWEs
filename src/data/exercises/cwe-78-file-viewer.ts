@@ -32,7 +32,7 @@ export const cwe78FileViewer: Exercise = {
     {
       code: `const fs = require('fs'); return fs.promises.readFile(fileName, 'utf8');`,
       correct: true,
-      explanation: `Correct! Using Node.js fs module directly avoids shell command execution entirely. This eliminates command injection risk while providing the same file reading functionality through safe filesystem APIs instead of shell commands.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const command = catCommand + fileName;`,
@@ -52,7 +52,7 @@ export const cwe78FileViewer: Exercise = {
     {
       code: `if (fileName.includes('..')) { throw new Error('Invalid path'); } const command = catCommand + fileName;`,
       correct: false,
-      explanation: 'Path traversal check misses command injection. While preventing "../" attacks, this allows command separators that enable arbitrary command execution beyond file access.'
+      explanation: 'User input allows command injection'
     },
     {
       code: `const command = ['cat', fileName]; require('child_process').execFile('cat', [fileName], callback);`,

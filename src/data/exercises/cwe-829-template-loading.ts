@@ -45,7 +45,7 @@ export const cwe829TemplateLoading: Exercise = {
     {
       code: `if (!isApprovedTemplateSource(templateUrl)) { throw new Error('Untrusted template source'); } const templateContent = await response.text(); validateTemplateContent(templateContent);`,
       correct: true,
-      explanation: `Correct! Validates template source against approved domains and validates content before processing. This prevents loading malicious templates that could contain script injection or unsafe template expressions from untrusted sources.`
+      explanation: `Restrict template sources`
     },
     {
       code: `const templateContent = await response.text(); // Load any template`,

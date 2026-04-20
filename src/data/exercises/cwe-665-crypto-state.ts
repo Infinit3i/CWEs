@@ -27,12 +27,12 @@ export const cwe665CryptoState: Exercise = {
     {
       code: `this.encryptionEnabled = true; this.algorithm = 'AES-256-GCM'; this.keyCache = new Map();`,
       correct: true,
-      explanation: `Correct! Initializing encryption to enabled by default ensures secure operation. Setting a strong default algorithm prevents weak crypto, and using Map for key cache provides better security than plain objects.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `this.encryptionEnabled = undefined;`,
       correct: false,
-      explanation: 'Direct from MITRE: Uninitialized encryption flag may contain previous values. If encryptionEnabled retains false from memory, sensitive data is transmitted in plaintext, violating confidentiality.'
+      explanation: 'Uninitialized encryption flag may contain previous values. If encryptionEnabled retains false from memory, sensitive data is transmitted in plaintext, violating confidentiality.'
     },
     {
       code: `this.encryptionEnabled = false;`,

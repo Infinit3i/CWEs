@@ -38,12 +38,12 @@ export const cwe918Proxy: Exercise = {
     {
       code: `const allowedHosts = ['api.partner.com', 'service.trusted.net']; const url = new URL(targetUrl); if (!allowedHosts.includes(url.hostname)) throw new Error('Host not allowed'); const response = await fetch(targetUrl, requestOptions);`,
       correct: true,
-      explanation: `Correct! Allowlisting specific trusted hostnames prevents SSRF by ensuring requests only reach pre-approved backend services. This blocks access to internal infrastructure and metadata endpoints.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const response = await fetch(targetUrl, requestOptions);`,
       correct: false,
-      explanation: 'From MITRE: Unvalidated URL forwarding enables SSRF attacks. Attackers can access internal services, cloud metadata (http://169.254.169.254/), or localhost services through the proxy.'
+      explanation: 'Unvalidated URL forwarding enables SSRF attacks. Attackers can access internal services, cloud metadata (http://169.254.169.254/), or localhost services through the proxy.'
     },
     {
       code: `if (targetUrl.includes('localhost') || targetUrl.includes('127.0.0.1')) throw new Error('Local access denied'); const response = await fetch(targetUrl, requestOptions);`,

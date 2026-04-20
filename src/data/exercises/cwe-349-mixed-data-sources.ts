@@ -45,7 +45,7 @@ return {
   userMetadata: userProvidedMetadata
 };`,
       correct: true,
-      explanation: `Correct! Separating trusted and untrusted data prevents privilege escalation. Security decisions are based only on trusted server response data, while user metadata is kept separate and cannot override security-critical properties.`
+      explanation: `Separate trusted from untrusted data`
     },
     {
       code: `const combinedData = {
@@ -53,7 +53,7 @@ return {
   ...userProvidedMetadata
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Merging untrusted data with trusted data allows attackers to override security-critical properties. Users can include {"isAdmin": true} to gain unauthorized privileges.'
+      explanation: 'Merging untrusted data with trusted data allows attackers to override security-critical properties. Users can include {"isAdmin": true} to gain unauthorized privileges.'
     },
     {
       code: `Object.assign(trustedServerResponse, userProvidedMetadata);`,

@@ -57,7 +57,7 @@ return {
   user: user
 };`,
       correct: true,
-      explanation: `Correct! Generating a new session ID after authentication prevents session fixation attacks. This ensures attackers cannot use a pre-existing session ID to hijack the authenticated session.`
+      explanation: `Generate new session after login`
     },
     {
       code: `sessions[sessionId] = {
@@ -66,7 +66,7 @@ return {
   authenticated: true
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Reusing existing session IDs after authentication enables session fixation. Attackers can force a known session ID, then hijack the session after victim login.'
+      explanation: 'Reusing existing session IDs after authentication enables session fixation. Attackers can force a known session ID, then hijack the session after victim login.'
     },
     {
       code: `if (sessions[sessionId]) {

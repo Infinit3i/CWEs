@@ -44,7 +44,7 @@ export const cwe829PluginLoading: Exercise = {
     {
       code: `if (!isSignedPlugin(pluginCode, pluginConfig.signature)) { throw new Error('Invalid plugin signature'); } const pluginFunction = vm.runInNewContext(pluginCode, sandbox);`,
       correct: true,
-      explanation: `Correct! Validates plugin signature before execution and uses vm.runInNewContext for isolated execution. This prevents unsigned malicious code execution and limits plugin access to system resources through sandboxing.`
+      explanation: `Whitelist trusted plugins`
     },
     {
       code: `const pluginFunction = new Function('exports', 'require', 'console', pluginCode); // Execute any code`,

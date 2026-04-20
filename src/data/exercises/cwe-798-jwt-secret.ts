@@ -37,12 +37,12 @@ export const cwe798JwtSecret: Exercise = {
     {
       code: `private jwtSecret = process.env.JWT_SIGNING_SECRET;`,
       correct: true,
-      explanation: `Correct! JWT signing secrets must be kept out of source code. Environment variables allow secure injection without exposing cryptographic material that could compromise all tokens across the entire system.`
+      explanation: `Store credentials in environment variables`
     },
     {
       code: `private jwtSecret = "myCompanySecretKey2024!ForJWTSigning";`,
       correct: false,
-      explanation: 'From MITRE: Hard-coded cryptographic keys in source code allow attackers to forge authentication tokens. Anyone with code access can sign valid JWTs for any user.'
+      explanation: 'Hard-coded cryptographic keys in source code allow attackers to forge authentication tokens. Anyone with code access can sign valid JWTs for any user.'
     },
     {
       code: `private jwtSecret = Buffer.from("bXlDb21wYW55U2VjcmV0S2V5MjAyNCFGb3JKV1RTaWduaW5n", "base64").toString();`,

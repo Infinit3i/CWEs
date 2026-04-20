@@ -55,12 +55,12 @@ export const cwe918HealthCheck: Exercise = {
     {
       code: `if (!this.isAllowedService(serviceUrl)) throw new Error('Service not in monitoring allowlist'); const response = await fetch(serviceUrl + '/health', {`,
       correct: true,
-      explanation: `Correct! Health monitoring should only check pre-registered, trusted services from a configured allowlist. This prevents SSRF while enabling legitimate service monitoring functionality.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const response = await fetch(serviceUrl + '/health', {`,
       correct: false,
-      explanation: 'From MITRE: User-controlled URLs in monitoring systems enable SSRF. Attackers can probe internal infrastructure, cloud metadata endpoints, or sensitive services through health checks.'
+      explanation: 'User-controlled URLs in monitoring systems enable SSRF. Attackers can probe internal infrastructure, cloud metadata endpoints, or sensitive services through health checks.'
     },
     {
       code: `if (!serviceUrl.includes('.')) throw new Error('Invalid service URL format'); const response = await fetch(serviceUrl + '/health', {`,

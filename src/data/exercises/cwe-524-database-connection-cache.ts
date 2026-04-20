@@ -53,7 +53,7 @@ connectionCache[cacheKey] = {
   // Do not cache passwords or connection strings with credentials
 };`,
       correct: true,
-      explanation: `Correct! Excluding sensitive credentials from cache prevents exposure of database passwords and connection strings. This maintains connection pooling benefits while protecting sensitive authentication data.`
+      explanation: `Secure database connection caching`
     },
     {
       code: `connectionCache[cacheKey] = {
@@ -65,7 +65,7 @@ connectionCache[cacheKey] = {
   }
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Caching database credentials enables unauthorized access. Attackers who access cache memory can extract database passwords and connection strings.'
+      explanation: 'Caching database credentials enables unauthorized access. Attackers who access cache memory can extract database passwords and connection strings.'
     },
     {
       code: `const maskedPassword = '*'.repeat(connectionParams.password.length);

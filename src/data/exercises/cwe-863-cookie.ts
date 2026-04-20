@@ -41,7 +41,7 @@ if (!permissions.includes('medical:read')) {
 }
 return getMedicalHistory(patientId);`,
       correct: true,
-      explanation: `Correct! This performs server-side authorization by validating the session, retrieving user permissions from a trusted source, and checking specific permissions. Client-side data like cookies are not trusted for authorization decisions.`
+      explanation: `Validate authorization for each resource`
     },
     // MITRE demonstrative example as wrong answer
     {
@@ -52,7 +52,7 @@ if (role === 'Reader') {
   return { error: 'You are not authorized to view this record' };
 }`,
       correct: false,
-      explanation: 'Direct from MITRE: Trusting client-side cookies for authorization is vulnerable. An attacker can simply set document.cookie="role=Reader" to bypass authorization and access medical records without proper authentication.'
+      explanation: 'Trusting client-side cookies for authorization is vulnerable. An attacker can simply set document.cookie="role=Reader" to bypass authorization and access medical records without proper authentication.'
     },
     {
       code: `const role = request.headers['x-user-role'];

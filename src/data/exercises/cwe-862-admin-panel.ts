@@ -26,12 +26,12 @@ export const cwe862AdminPanel: Exercise = {
     {
       code: `app.get('/admin/dashboard', authenticateUser, authorizeAdmin, (req, res) => { // Additional middleware function: function authorizeAdmin(req, res, next) { if (!req.user.isAdmin && !req.user.roles.includes('administrator')) { return res.status(403).json({ error: 'Admin access required' }); } next(); }`,
       correct: true,
-      explanation: `Correct! This implements proper authorization by checking if the authenticated user has admin privileges before granting access to sensitive administrative functions. This prevents regular users from accessing the admin panel through direct URL manipulation.`
+      explanation: `Check user permissions before access`
     },
     {
       code: `if (!session_is_registered("username")) { echo "invalid session detected!"; exit; } display_admin_panel();`,
       correct: false,
-      explanation: 'Direct from MITRE: Authentication-only protection allows any authenticated user to access admin functionality, exposing "API keys," "database files," and administrative controls to unauthorized users.'
+      explanation: 'Authentication-only protection allows any authenticated user to access admin functionality, exposing "API keys," "database files," and administrative controls to unauthorized users.'
     },
     {
       code: `if (req.user && req.user.id) { // User is authenticated, show admin dashboard const systemStats = getAllSystemData(); }`,

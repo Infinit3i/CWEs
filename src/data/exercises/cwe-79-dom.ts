@@ -30,80 +30,69 @@ export const cwe79Dom: Exercise = {
 
   options: [
     {
-      code: `const resultsDiv = document.getElementById('search-results');
-const heading = document.createElement('h2');
+      code: `const heading = document.createElement('h2');
 heading.textContent = 'Search Results for: ' + searchQuery;
-const categoryP = document.createElement('p');
-categoryP.textContent = 'Category: ' + category;
-const resultsContainer = document.createElement('div');
-resultsContainer.className = 'results';
-resultsContainer.textContent = 'Searching...';
-resultsDiv.innerHTML = '';
-resultsDiv.appendChild(heading);
-resultsDiv.appendChild(categoryP);
-resultsDiv.appendChild(resultsContainer);`,
+resultsDiv.appendChild(heading);`,
       correct: true,
-      explanation: `Correct! This creates DOM elements programmatically and uses textContent to safely insert URL parameters. Even if URL contains ?q=<script>alert('XSS')</script>, it will be displayed as plain text rather than executed as JavaScript.`
+      explanation: `Use createElement and textContent for safe DOM manipulation`
     },
     // DOM-based XSS vulnerabilities
     {
-      code: `resultsDiv.innerHTML = \`<h2>Search Results for: \${searchQuery}</h2><p>Category: \${category}</p>\`;`,
+      code: `resultsDiv.innerHTML = \`<h2>Search Results for: \${searchQuery}</h2>\`;`,
       correct: false,
-      explanation: 'DOM-based XSS vulnerability: URL parameters are directly inserted into innerHTML without sanitization. An attacker can craft URLs like ?q=<img src=x onerror=alert(document.cookie)> to execute malicious scripts in the victim\'s browser.'
+      explanation: 'URL params in innerHTML allow `<img onerror>` script execution'
     },
     {
-      code: `const sanitizedQuery = searchQuery.replace(/script/gi, '');
-resultsDiv.innerHTML = \`<h2>Search Results for: \${sanitizedQuery}</h2>\`;`,
+      code: `const clean = searchQuery.replace(/script/gi, '');
+resultsDiv.innerHTML = \`<h2>Search Results for: \${clean}</h2>\`;`,
       correct: false,
-      explanation: 'Simple keyword filtering is easily bypassed. Attackers can use <img src=x onerror=alert(1)>, <svg onload=alert(1)>, or <iframe src=javascript:alert(1)> which do not contain "script".'
+      explanation: 'Keyword filtering bypassed by `<img onerror>` and others'
     },
     {
       code: `const encoded = encodeURIComponent(searchQuery);
 resultsDiv.innerHTML = \`<h2>Search Results for: \${encoded}</h2>\`;`,
       correct: false,
-      explanation: 'URL encoding may help but browsers can decode content in certain contexts. Additionally, URL encoding creates poor user experience for legitimate search queries containing spaces or special characters.'
+      explanation: 'URL encoding creates poor UX - use textContent instead'
     },
     {
       code: `const escaped = searchQuery.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-resultsDiv.innerHTML = \`<h2>Search Results for: \${escaped}</h2>\`;`,
+resultsDiv.innerHTML = \`<h2>Results: \${escaped}</h2>\`;`,
       correct: false,
-      explanation: 'HTML entity encoding prevents some attacks but may not cover all vectors. Event handlers and other injection techniques might still work depending on the context and browser behavior.'
+      explanation: 'HTML encoding incomplete - event handlers may still work'
     },
     {
-      code: `if (searchQuery.includes('<') || searchQuery.includes('>')) {
-  resultsDiv.innerHTML = '<h2>Invalid search query</h2>';
+      code: `if (searchQuery.includes('<')) {
+  resultsDiv.innerHTML = '<h2>Invalid query</h2>';
 } else {
-  resultsDiv.innerHTML = \`<h2>Search Results for: \${searchQuery}</h2>\`;
+  resultsDiv.innerHTML = \`<h2>Results: \${searchQuery}</h2>\`;
 }`,
       correct: false,
-      explanation: 'Character blacklisting is incomplete protection. Attackers can use javascript: URLs, data URLs, or event handlers that do not require angle brackets to execute malicious code.'
+      explanation: 'Character blacklisting incomplete - event handlers don\'t need brackets'
     },
     {
-      code: `const cleanQuery = searchQuery.substring(0, 50);
-resultsDiv.innerHTML = \`<h2>Search Results for: \${cleanQuery}</h2>\`;`,
+      code: `const short = searchQuery.substring(0, 50);
+resultsDiv.innerHTML = \`<h2>Results: \${short}</h2>\`;`,
       correct: false,
-      explanation: 'Length limits do not prevent XSS attacks. Short but effective payloads like <img src=x onerror=alert(1)> can execute within character limits and still compromise the application.'
+      explanation: 'Length limits don\'t prevent XSS - short payloads work'
     },
     {
-      code: `document.getElementById('search-query').value = searchQuery;
-resultsDiv.innerHTML = \`<h2>Search Results for: <span id="query-display"></span></h2>\`;
-document.getElementById('query-display').textContent = searchQuery;`,
+      code: `resultsDiv.innerHTML = \`<h2>Results: <span id="display"></span></h2>\`;
+document.getElementById('display').textContent = searchQuery;`,
       correct: false,
-      explanation: 'While the final textContent assignment is safe, the initial innerHTML still creates a vulnerable window. The structure should be built safely from the start rather than partially fixed afterward.'
+      explanation: 'Mixed innerHTML and textContent creates vulnerability window'
     },
     {
-      code: `const template = \`<h2>Search Results for: \${searchQuery.toLowerCase()}</h2>\`;
-resultsDiv.innerHTML = template;`,
+      code: `const lower = searchQuery.toLowerCase();
+resultsDiv.innerHTML = \`<h2>Results: \${lower}</h2>\`;`,
       correct: false,
-      explanation: 'Case conversion does not prevent XSS injection. Lowercase versions of malicious scripts like <img src=x onerror=alert(1)> are still executable by browsers.'
+      explanation: 'Case conversion doesn\'t prevent XSS - lowercase scripts work'
     },
     {
-      code: `resultsDiv.innerHTML = '';
-const heading = document.createElement('h2');
-heading.innerHTML = 'Search Results for: ' + searchQuery;
+      code: `const heading = document.createElement('h2');
+heading.innerHTML = 'Results: ' + searchQuery;
 resultsDiv.appendChild(heading);`,
       correct: false,
-      explanation: 'While creating elements programmatically is good practice, using innerHTML on the created element still introduces XSS vulnerability. Should use textContent instead of innerHTML for user data.'
+      explanation: 'innerHTML on created element still vulnerable - use textContent'
     }
   ]
 }

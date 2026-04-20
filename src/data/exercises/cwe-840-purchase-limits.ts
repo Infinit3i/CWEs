@@ -28,52 +28,52 @@ export const cwe840PurchaseLimits: Exercise = {
     {
       code: `const existingQty = currentCart.getItemQuantity(productId) || 0; if (existingQty + quantity > product.maxPerOrder) {`,
       correct: true,
-      explanation: `Correct! This checks the total quantity including items already in cart. Prevents customers from bypassing limits by making multiple smaller orders that together exceed the business limit.`
+      explanation: `Check total cart quantity not just new items`
     },
     {
       code: `if (quantity > product.maxPerOrder) { // Only check current addition`,
       correct: false,
-      explanation: 'Classic business logic bypass from MITRE patterns. Customers can add items multiple times in smaller quantities to circumvent purchase limits, violating inventory management rules.'
+      explanation: 'Multiple small orders bypass quantity limits'
     },
     {
       code: `if (quantity > product.maxPerOrder * 2) { // Double the limit`,
       correct: false,
-      explanation: 'Arbitrary limit modification that ignores the business rule. Defeats the purpose of having purchase limits for inventory control or fair distribution policies.'
+      explanation: 'Doubles limit breaking inventory control rules'
     },
     {
       code: `if (quantity > product.maxPerOrder && userId !== "admin") {`,
       correct: false,
-      explanation: 'Creates inconsistent business logic where admins bypass limits. May violate regulatory compliance or fair distribution policies depending on the business context.'
+      explanation: 'Admin bypass may violate fair distribution policies'
     },
     {
       code: `const dailyPurchases = getDailyPurchases(userId, productId); if (quantity > product.maxPerOrder) {`,
       correct: false,
-      explanation: 'Adds daily tracking but still has the core flaw. The immediate cart check ignores existing cart contents, allowing limit bypass through multiple additions.'
+      explanation: 'Daily tracking added but cart bypass remains'
     },
     {
       code: `if (Math.abs(quantity) > product.maxPerOrder) {`,
       correct: false,
-      explanation: 'Using absolute value suggests potential negative quantity handling but maintains the core bypass vulnerability. Multiple small additions still circumvent limits.'
+      explanation: 'Handles negatives but multiple additions bypass limits'
     },
     {
       code: `if (quantity > product.maxPerOrder || quantity < 1) {`,
       correct: false,
-      explanation: 'Adds minimum quantity check but preserves the business logic flaw. Multiple legitimate small orders can still exceed the intended maximum per customer.'
+      explanation: 'Minimum check added but small orders bypass limits'
     },
     {
       code: `const roundedQty = Math.floor(quantity); if (roundedQty > product.maxPerOrder) {`,
       correct: false,
-      explanation: 'Rounding addresses decimal quantities but ignores the core issue. Customers can still make multiple rounded additions to exceed limits.'
+      explanation: 'Rounds quantities but multiple adds bypass limits'
     },
     {
       code: `if (quantity > product.maxPerOrder && product.category === "limited") {`,
       correct: false,
-      explanation: 'Category-based limiting but maintains the bypass vulnerability. For limited items, multiple small additions can still circumvent the business-critical purchase restrictions.'
+      explanation: 'Limited items still bypassable through small adds'
     },
     {
       code: `const userLevel = getUserLevel(userId); if (quantity > product.maxPerOrder * userLevel.multiplier) {`,
       correct: false,
-      explanation: 'User-level modifications but core logic remains flawed. Premium users might get higher limits, but they can still bypass through multiple additions regardless of their level.'
+      explanation: 'User levels change limits but bypass remains'
     }
   ]
 }

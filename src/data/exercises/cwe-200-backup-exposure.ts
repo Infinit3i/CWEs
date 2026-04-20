@@ -84,7 +84,7 @@ if (backupPatterns.test(sanitized)) {
 
 const filePath = path.join(downloadsDir, sanitized);`,
       correct: true,
-      explanation: `Correct! This implements database-driven allowlisting to ensure users can only download files they own and that have been approved. The backup pattern filtering prevents access to common backup file extensions (.bak, .backup, .old, .tmp, ~) that often contain sensitive information. This prevents unauthorized access to system backups, database dumps, or configuration backups that may expose credentials and sensitive data.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

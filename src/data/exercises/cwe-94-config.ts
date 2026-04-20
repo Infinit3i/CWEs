@@ -33,7 +33,7 @@ if (!validThemes.includes(userSettings.theme)) throw new Error('Invalid theme');
 if (!validLanguages.includes(userSettings.language)) throw new Error('Invalid language');
 return allowedConfigs[configName](userSettings);`,
       correct: true,
-      explanation: `Correct! This uses predefined configuration functions and validates all user inputs against allowlists. By avoiding dynamic file generation and require() of user-controlled content, it prevents code injection while still providing configuration flexibility.`
+      explanation: `Use proper cryptographic functions`
     },
     // MITRE-inspired wrong answers
     {

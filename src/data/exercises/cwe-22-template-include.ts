@@ -24,12 +24,12 @@ export const cwe22TemplateInclude: Exercise = {
     {
       code: `const allowedTemplates = ['header', 'footer', 'main', 'sidebar']; if (!allowedTemplates.includes(templateName)) throw new Error('Invalid template'); const templatePath = './templates/' + templateName + '.hbs';`,
       correct: true,
-      explanation: `Correct! Using a whitelist of allowed template names completely prevents path traversal by only accepting predefined values. This approach eliminates any possibility of directory escape regardless of the input format.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const templatePath = './templates/' + templateName + '.hbs';`,
       correct: false,
-      explanation: 'Direct from MITRE: String concatenation with user input allows attackers to inject "../../../etc/passwd%00" to escape the template directory and access any file on the system.'
+      explanation: 'String concatenation with user input allows attackers to inject "../../../etc/passwd%00" to escape the template directory and access any file on the system.'
     },
     {
       code: `const cleaned = templateName.replace('../', ''); const templatePath = './templates/' + cleaned + '.hbs';`,
@@ -39,7 +39,7 @@ export const cwe22TemplateInclude: Exercise = {
     {
       code: `if (templateName.startsWith('tpl_')) { const templatePath = './templates/' + templateName + '.hbs'; }`,
       correct: false,
-      explanation: 'MITRE pattern: Prefix validation can be bypassed with inputs like "tpl_../../../etc/passwd" that start correctly but contain traversal sequences.'
+      explanation: 'Prefix validation can be bypassed with inputs like "tpl_../../../etc/passwd" that start correctly but contain traversal sequences.'
     },
     {
       code: `const templatePath = path.resolve('./templates/', templateName + '.hbs');`,

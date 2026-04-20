@@ -27,12 +27,12 @@ export const cwe862UserProfile: Exercise = {
     {
       code: `app.get('/api/users/:userId/profile', authenticateUser, (req, res) => { const requestedUserId = parseInt(req.params.userId); const currentUserId = req.user.id; if (requestedUserId !== currentUserId && !req.user.isAdmin) { return res.status(403).json({ error: 'Access denied' }); }`,
       correct: true,
-      explanation: `Correct! This validates that users can only access their own profile data unless they have admin privileges. This prevents the MITRE horizontal authorization bypass where authenticated users access other users' private information without permission.`
+      explanation: `Check user permissions before access`
     },
     {
       code: `if (!session_is_registered("username")) { echo "invalid session detected!"; exit; }`,
       correct: false,
-      explanation: 'Direct from MITRE: Authentication-only validation allows any authenticated user to access any profile. An "authenticated attacker could provide any arbitrary identifier and read private messages intended for other users."'
+      explanation: 'Authentication-only validation allows any authenticated user to access any profile. An "authenticated attacker could provide any arbitrary identifier and read private messages intended for other users."'
     },
     {
       code: `if (!req.user || !req.user.id) { return res.status(401).json({ error: 'Authentication required' }); } // Proceed with any user ID`,

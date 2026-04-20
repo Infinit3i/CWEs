@@ -23,52 +23,52 @@ export const cwe787BufferWrite: Exercise = {
     {
       code: `if (index < buffer.length) { buffer[index] = message.charCodeAt(i); index++; }`,
       correct: true,
-      explanation: `Correct! This bounds check ensures we never write past the allocated buffer size. The write only occurs when index is within the valid range [0, buffer.length-1], preventing out-of-bounds writes that could corrupt memory or crash the application.`
+      explanation: `Check bounds before writing to arrays`
     },
     {
       code: `buffer[index] = message.charCodeAt(i); index++;`,
       correct: false,
-      explanation: 'Direct from MITRE pattern: Writing to array without bounds checking. When message length exceeds 64 characters, this writes beyond the allocated buffer, potentially overwriting adjacent memory structures.'
+      explanation: 'No bounds check allows buffer overflow'
     },
     {
       code: `buffer[index % buffer.length] = message.charCodeAt(i); index++;`,
       correct: false,
-      explanation: 'Modulo operation prevents crashes but causes data corruption by overwriting earlier buffer contents. This silently truncates data and can lead to unpredictable behavior.'
+      explanation: 'Modulo overwrites existing data causing corruption'
     },
     {
       code: `try { buffer[index] = message.charCodeAt(i); index++; } catch(e) { /* ignore */ }`,
       correct: false,
-      explanation: 'Exception handling after the fact does not prevent the out-of-bounds write. The memory corruption occurs before the exception is thrown.'
+      explanation: 'Try-catch cannot prevent buffer overflow damage'
     },
     {
       code: `buffer[Math.min(index, buffer.length-1)] = message.charCodeAt(i); index++;`,
       correct: false,
-      explanation: 'This prevents out-of-bounds writes but overwrites the last buffer element repeatedly, losing data and creating incorrect output.'
+      explanation: 'Overwrites last element repeatedly, losing data'
     },
     {
       code: `if (message.length <= 64) { buffer[index] = message.charCodeAt(i); index++; }`,
       correct: false,
-      explanation: 'Checking total message length once is insufficient. The vulnerability occurs during iteration - need per-iteration bounds checking.'
+      explanation: 'Check bounds every iteration, not once'
     },
     {
       code: `buffer.push(message.charCodeAt(i));`,
       correct: false,
-      explanation: 'While push() prevents out-of-bounds writes, this changes the buffer from fixed-size Array(64) to dynamic array, breaking the intended memory layout.'
+      explanation: 'Push() changes fixed-size to dynamic array'
     },
     {
       code: `buffer[index] = message.charCodeAt(i) || 0; index++;`,
       correct: false,
-      explanation: 'The logical OR operator does not prevent out-of-bounds writes. This still writes past buffer boundaries when index exceeds buffer length.'
+      explanation: 'Logical OR does not prevent overflow'
     },
     {
       code: `if (index >= 0) { buffer[index] = message.charCodeAt(i); index++; }`,
       correct: false,
-      explanation: 'Checking for negative index misses the critical upper bound. This still allows writes beyond buffer.length, causing memory corruption.'
+      explanation: 'Missing upper bound check allows overflow'
     },
     {
       code: `buffer[index] = message.length > 64 ? 0 : message.charCodeAt(i); index++;`,
       correct: false,
-      explanation: 'Conditional value assignment does not prevent the out-of-bounds write itself. The buffer access still occurs at invalid indices.'
+      explanation: 'Still writes to invalid buffer indices'
     }
   ]
 }

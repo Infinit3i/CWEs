@@ -43,7 +43,7 @@ export const cwe287PasswordReset: Exercise = {
   return { valid: true, email: email };
 }`,
       correct: true,
-      explanation: `Correct! Server-side token storage and validation with proper expiration checking ensures tokens cannot be predicted or forged. Tokens are cryptographically secure and time-limited.`
+      explanation: `Validate credentials server-side with expiration`
     },
     // Password reset vulnerabilities
     {
@@ -52,14 +52,14 @@ if (token === expectedToken || token.includes(email)) {
     return { valid: true, email: email };
 }`,
       correct: false,
-      explanation: 'Predictable token generation and loose validation. Attackers can generate tokens using the known algorithm or simply include email addresses in token strings.'
+      explanation: 'Predictable token generation, loose validation.'
     },
     {
       code: `if (token.toLowerCase().includes('reset') && token.length > 20) {
     return { valid: true, email: email };
 }`,
       correct: false,
-      explanation: 'Keyword-based token validation allows trivial bypass. Any string containing "reset" with sufficient length is accepted as valid.'
+      explanation: 'Keyword-based validation allows bypass.'
     },
     {
       code: `const tokenParts = token.split('-');

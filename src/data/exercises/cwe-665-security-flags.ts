@@ -26,12 +26,12 @@ export const cwe665SecurityFlags: Exercise = {
     {
       code: `this.adminMode = false; this.debugEnabled = false; this.secureChannelActive = false;`,
       correct: true,
-      explanation: `Correct! Explicitly initializing security flags to false ensures secure defaults. From MITRE guidance, security-critical resources must start in known, safe states to prevent privilege escalation.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `this.adminMode = undefined;`,
       correct: false,
-      explanation: 'Direct from MITRE: Uninitialized security flags may contain previous values. If adminMode retains a true value from memory, unauthorized users gain admin privileges, bypassing security controls.'
+      explanation: 'Uninitialized security flags may contain previous values. If adminMode retains a true value from memory, unauthorized users gain admin privileges, bypassing security controls.'
     },
     {
       code: `this.adminMode = true;`,

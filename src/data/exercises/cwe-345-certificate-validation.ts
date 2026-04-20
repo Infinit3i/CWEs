@@ -56,7 +56,7 @@ export const cwe345CertificateValidation: Exercise = {
     {
       code: `if (!cert.valid_from || !cert.valid_to || new Date() < new Date(cert.valid_from) || new Date() > new Date(cert.valid_to)) { throw new Error('Certificate expired or not yet valid'); } if (!verifyCertificateChain(cert, trustedCAs)) { throw new Error('Certificate chain validation failed'); }`,
       correct: true,
-      explanation: `Correct! Validates certificate expiration dates and verifies the complete certificate chain against trusted CAs. This prevents man-in-the-middle attacks using expired or self-signed certificates by ensuring proper certificate authority validation.`
+      explanation: `Verify certificate authenticity`
     },
     {
       code: `if (cert.subject && cert.subject.CN === hostname) { // Basic hostname check only`,

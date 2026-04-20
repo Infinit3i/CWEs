@@ -47,12 +47,12 @@ export const cwe306PaymentApi: Exercise = {
     {
       code: `async processPayment(req: Request, res: Response) { const user = await this.authenticateUser(req); if (!user || !this.canInitiateTransfer(user, req.body.fromAccount)) { return res.status(403).json({ error: 'Unauthorized transfer' }); }`,
       correct: true,
-      explanation: `Correct! Payment processing requires strong authentication to verify user identity and authorization to verify the user owns the source account. Financial transactions without authentication enable unauthorized money transfers.`
+      explanation: `Require authentication before access`
     },
     {
       code: `async processPayment(req: Request, res: Response) {`,
       correct: false,
-      explanation: 'From MITRE: Missing authentication in financial operations allows anyone to initiate transfers. This is similar to the bank account creation example where sensitive operations lack authority verification.'
+      explanation: 'Missing authentication in financial operations allows anyone to initiate transfers. This is similar to the bank account creation example where sensitive operations lack authority verification.'
     },
     {
       code: `async processPayment(req: Request, res: Response) { if (!req.body.accountPin) { return res.status(400).json({ error: 'Account PIN required' }); }`,

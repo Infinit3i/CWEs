@@ -44,7 +44,7 @@ function hasAdminPrivileges(req) {
   return { authenticated: false };
 }`,
       correct: true,
-      explanation: `Correct! Server-side session validation ensures session integrity. The session data (including validity and user ID) is stored and verified on the server, preventing client-side manipulation of session state.`
+      explanation: `Validate credentials server-side with expiration`
     },
     // Session management vulnerabilities
     {

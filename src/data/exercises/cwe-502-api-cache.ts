@@ -65,7 +65,7 @@ export const cwe502ApiCache: Exercise = {
   });
 }`,
       correct: true,
-      explanation: `Correct! Property allowlisting ensures only safe, expected properties are deserialized from cached data. This prevents both prototype pollution and code injection by strictly controlling what data is processed.`
+      explanation: `Use proper cryptographic functions`
     },
     // Cache deserialization vulnerabilities
     {

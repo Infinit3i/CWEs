@@ -53,7 +53,7 @@ if (isAllowed) {
   navigateToHome();
 }`,
       correct: true,
-      explanation: `Correct! This implements scheme and domain allowlisting for mobile deep links. By restricting redirects to only the app's own deep link scheme (myapp://) and trusted HTTPS domains (myapp.com), we prevent attackers from redirecting users to malicious apps or websites. This protects against attacks where malicious apps register similar schemes or phishing websites try to capture user data.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples adapted for mobile
     {

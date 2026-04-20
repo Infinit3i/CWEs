@@ -44,12 +44,12 @@ if (!SAFE_EXPRESSIONS.test(expression.trim())) {
 }
 return userData[expression.trim()] || match;`,
       correct: true,
-      explanation: `Correct! Restricting template expressions to simple variable names and only accessing predefined userData prevents code injection. This blocks dangerous expressions like "process.exit()" while allowing safe variable substitution.`
+      explanation: `Validate template syntax`
     },
     {
       code: `return eval(expression);`,
       correct: false,
-      explanation: 'Direct from MITRE: eval() with user-controlled expressions enables arbitrary code execution. Attackers can inject "process.exit()" or "require(\'fs\').readFileSync(\'/etc/passwd\')".'
+      explanation: 'eval() with user-controlled expressions enables arbitrary code execution. Attackers can inject "process.exit()" or "require(\'fs\').readFileSync(\'/etc/passwd\')".'
     },
     {
       code: `return new Function('return ' + expression)();`,

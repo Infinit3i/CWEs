@@ -51,12 +51,12 @@ export const cwe306DatabaseAccess: Exercise = {
     {
       code: `async executeQuery(req: Request, res: Response) { const user = await this.authenticateUser(req); if (!user || user.role !== 'database_admin') { return res.status(403).json({ error: 'Database administrator access required' }); }`,
       correct: true,
-      explanation: `Correct! Database administration interfaces must authenticate users and verify database administrator privileges. Unauthenticated database access allows data theft, modification, and system compromise.`
+      explanation: `Require authentication before access`
     },
     {
       code: `async executeQuery(req: Request, res: Response) {`,
       correct: false,
-      explanation: 'From MITRE: Missing authentication for database operations allows unauthorized data access and manipulation. This is similar to cloud storage examples where unauthenticated access exposed sensitive data.'
+      explanation: 'Missing authentication for database operations allows unauthorized data access and manipulation. This is similar to cloud storage examples where unauthenticated access exposed sensitive data.'
     },
     {
       code: `async executeQuery(req: Request, res: Response) { if (!req.body.adminPassword) { return res.status(401).json({ error: 'Admin password required' }); }`,

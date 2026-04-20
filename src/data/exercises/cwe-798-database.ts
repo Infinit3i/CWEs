@@ -38,12 +38,12 @@ export const cwe798Database: Exercise = {
     {
       code: `password: process.env.DB_PASSWORD`,
       correct: true,
-      explanation: `Correct! Environment variables keep database credentials out of source code. Combined with container orchestration secrets or vault systems, this prevents credential exposure in repositories and compiled artifacts.`
+      explanation: `Store credentials in environment variables`
     },
     {
       code: `password: 'P@ssw0rd123!Company2024'`,
       correct: false,
-      explanation: 'From MITRE: "Anyone who has access to it will have access to the password. Once the program has shipped, there is no going back from the database user unless the program is patched."'
+      explanation: '"Anyone who has access to it will have access to the password. Once the program has shipped, there is no going back from the database user unless the program is patched."'
     },
     {
       code: `password: Buffer.from('UEBzc3cwcmQxMjMhQ29tcGFueTIwMjQ=', 'base64').toString()`,

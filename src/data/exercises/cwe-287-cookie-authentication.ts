@@ -38,7 +38,7 @@ function checkAdminAccess() {
   return verifyJWTToken(token) && getTokenRole(token) === 'admin';
 }`,
       correct: true,
-      explanation: `Correct! Server-side JWT token verification ensures authentication cannot be bypassed by manipulating client-side data. The token is cryptographically signed and validated on the server, preventing attackers from simply setting cookies to gain access.`
+      explanation: `Validate credentials server-side with expiration`
     },
     // Real MITRE demonstrative examples as wrong answers
     {
@@ -46,7 +46,7 @@ function checkAdminAccess() {
     return true;
 }`,
       correct: false,
-      explanation: 'Direct from MITRE: Trusting client-side cookies for authentication. Attackers can bypass this by setting Cookie: loggedin=true; role=admin in HTTP requests without valid credentials.'
+      explanation: 'Trusting client-side cookies for authentication. Attackers can bypass this by setting Cookie: loggedin=true; role=admin in HTTP requests without valid credentials.'
     },
     {
       code: `const authHeader = getCookie('authenticated');

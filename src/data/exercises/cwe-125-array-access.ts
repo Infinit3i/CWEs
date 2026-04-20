@@ -28,12 +28,12 @@ export const cwe125ArrayAccess: Exercise = {
     {
       code: `if (index >= 0 && index < arrayLength) { retrievedValue = dataArray[index]; } else { retrievedValue = -1; }`,
       correct: true,
-      explanation: `Correct! Checking both lower (>= 0) and upper (< arrayLength) bounds prevents out-of-bounds reads. Negative indices can read memory before the array start, while large indices read past the array end. Both are security vulnerabilities.`
+      explanation: `Check both lower and upper bounds`
     },
     {
       code: `retrievedValue = dataArray[index];`,
       correct: false,
-      explanation: 'MITRE missing minimum bounds pattern: Only validates upper bound, missing negative index check. Negative indices like -5 bypass the length check and read memory before array start, potentially exposing sensitive data or causing crashes.'
+      explanation: 'Missing negative index check allows underflow'
     },
     {
       code: `if (index < arrayLength && index !== null) { retrievedValue = dataArray[index]; }`,
@@ -53,7 +53,7 @@ export const cwe125ArrayAccess: Exercise = {
     {
       code: `try { retrievedValue = dataArray[index]; } catch(e) { retrievedValue = -1; }`,
       correct: false,
-      explanation: 'Exception handling cannot prevent out-of-bounds reads. Memory access to invalid indices occurs before exceptions can be caught, potentially exposing sensitive data.'
+      explanation: 'Try-catch cannot prevent vulnerability'
     },
     {
       code: `if (index < arrayLength && !isNaN(index)) { retrievedValue = dataArray[index]; }`,

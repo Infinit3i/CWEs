@@ -26,23 +26,23 @@ export const cwe326FileEncryption: Exercise = {
     {
       code: `const crypto = require('crypto'); const salt = crypto.randomBytes(32); const key = crypto.pbkdf2Sync(userPassword, salt, 100000, 32, 'sha256'); const iv = crypto.randomBytes(16); const cipher = crypto.createCipherGCM('aes-256-gcm', key); cipher.setAAD(salt); const encrypted = Buffer.concat([cipher.update(fileData), cipher.final()]); return { encrypted, salt, iv, tag: cipher.getAuthTag() };`,
       correct: true,
-      explanation: `Correct! This uses AES-256-GCM with PBKDF2 key derivation. The password is strengthened with 100,000 iterations and a random salt, making brute force attacks computationally expensive. GCM mode provides both confidentiality and authenticity.`
+      explanation: `Use AES-256-GCM with PBKDF2 key derivation`
     },
     // Real MITRE demonstrative examples as wrong answers
     {
       code: `const key = userPassword.slice(0, 8); const encrypted = new Uint8Array(fileData.length); for (let i = 0; i < fileData.length; i++) { encrypted[i] = fileData[i] ^ key.charCodeAt(i % key.length); } return encrypted;`,
       correct: false,
-      explanation: 'MITRE pattern: Short key length vulnerable to brute force. An 8-character key space can be brute-forced with reasonable computational resources.'
+      explanation: 'Short key length vulnerable to brute force. 8-character keys easily brute-forced.'
     },
     {
       code: `const key = userPassword.charCodeAt(0) % 256; return fileData.map(byte => byte ^ key);`,
       correct: false,
-      explanation: 'MITRE pattern: Single-byte key encryption. With only 256 possible keys, this can be brute-forced in milliseconds by trying all possibilities.'
+      explanation: 'Single-byte key encryption. 256 possible keys, easily brute-forced.'
     },
     {
       code: `const key = userPassword.split('').reduce((a, b) => a + b.charCodeAt(0), 0) % 65536; return fileData.map((byte, i) => byte ^ ((key + i) % 256));`,
       correct: false,
-      explanation: 'MITRE pattern: Weak key derivation with predictable stream. The 16-bit key space is easily brute-forced, and the sequential pattern is cryptographically weak.'
+      explanation: 'Weak key derivation with predictable stream. 16-bit key space easily brute-forced.'
     },
     {
       code: `const crypto = require('crypto'); const key = crypto.createHash('md5').update(userPassword).digest(); const encrypted = new Uint8Array(fileData.length); for (let i = 0; i < fileData.length; i++) { encrypted[i] = fileData[i] ^ key[i % key.length]; } return encrypted;`,
@@ -52,27 +52,27 @@ export const cwe326FileEncryption: Exercise = {
     {
       code: `const key = userPassword.length % 256; return fileData.map((byte, i) => (byte + key + i) % 256);`,
       correct: false,
-      explanation: 'MITRE pattern: Easily reversible transformation. Using password length as key provides minimal security, and addition is trivially reversed.'
+      explanation: 'Easily reversible transformation. Password length as key provides minimal security.'
     },
     {
       code: `const seedValue = userPassword.split('').reduce((a, b) => a * 31 + b.charCodeAt(0), 0); let currentSeed = seedValue; return fileData.map(byte => { currentSeed = (currentSeed * 1103515245 + 12345) % (2**31); return byte ^ (currentSeed % 256); });`,
       correct: false,
-      explanation: 'MITRE pattern: Predictable PRNG for encryption. Linear congruential generators are not cryptographically secure and produce predictable output streams.'
+      explanation: 'Predictable PRNG for encryption. Linear congruential generators produce predictable output.'
     },
     {
       code: `return fileData.map((byte, i) => byte ^ (userPassword.charCodeAt(i % userPassword.length) + i % 256));`,
       correct: false,
-      explanation: 'Predictable key stream with position dependency. The pattern becomes apparent with known plaintext and can be reverse-engineered.'
+      explanation: 'Predictable key stream with position dependency. Pattern becomes apparent with known plaintext.'
     },
     {
       code: `const crypto = require('crypto'); const cipher = crypto.createCipher('des', userPassword); return Buffer.concat([cipher.update(fileData), cipher.final()]);`,
       correct: false,
-      explanation: 'MITRE pattern: DES algorithm. DES has a 56-bit effective key size that can be brute-forced with modern computing power in reasonable time.'
+      explanation: 'DES algorithm. DES has a 56-bit effective key size that can be brute-forced with modern computing power in reasonable time.'
     },
     {
       code: `const shift = userPassword.charCodeAt(0) % 256; return fileData.map(byte => (byte + shift) % 256);`,
       correct: false,
-      explanation: 'MITRE pattern: Simple substitution cipher. Caesar cipher variants with single-byte shifts can be broken through frequency analysis or brute force (256 possibilities).'
+      explanation: 'Simple substitution cipher. Caesar cipher variants with single-byte shifts can be broken through frequency analysis or brute force (256 possibilities).'
     }
   ]
 }

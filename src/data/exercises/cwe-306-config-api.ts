@@ -48,12 +48,12 @@ export const cwe306ConfigApi: Exercise = {
     {
       code: `async updateSystemConfig(req: Request, res: Response) { const user = await this.authenticateAdmin(req); if (!user || !user.hasPermission('SYSTEM_CONFIG')) { return res.status(403).json({ error: 'Admin privileges required' }); }`,
       correct: true,
-      explanation: `Correct! System configuration changes require administrative authentication and authorization. Unauthenticated configuration access allows attackers to modify critical system behavior and security settings.`
+      explanation: `Require authentication before access`
     },
     {
       code: `async updateSystemConfig(req: Request, res: Response) {`,
       correct: false,
-      explanation: 'From MITRE: Missing authentication for sensitive system operations allows unauthorized configuration changes. This can compromise system security, availability, and functionality.'
+      explanation: 'Missing authentication for sensitive system operations allows unauthorized configuration changes. This can compromise system security, availability, and functionality.'
     },
     {
       code: `async updateSystemConfig(req: Request, res: Response) { if (req.body.environment === 'production' && !req.headers['x-prod-key']) { return res.status(403).json({ error: 'Production key required' }); }`,

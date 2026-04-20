@@ -23,12 +23,12 @@ export const cwe369ResourceAllocation: Exercise = {
     {
       code: `if (activeUsers === 0) throw new Error('Cannot allocate resources to zero users'); const resourcesPerUser = Math.floor(totalResources / activeUsers);`,
       correct: true,
-      explanation: `Correct! Validating that activeUsers is not zero before division prevents crashes. Following MITRE's guidance on checking denominators prevents the divide by zero error.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const resourcesPerUser = Math.floor(totalResources / activeUsers);`,
       correct: false,
-      explanation: 'Direct from MITRE: When activeUsers is zero, dividing totalResources by zero causes an application crash. No validation protects against this scenario.'
+      explanation: 'When activeUsers is zero, dividing totalResources by zero causes an application crash. No validation protects against this scenario.'
     },
     {
       code: `const resourcesPerUser = activeUsers > 0 ? Math.floor(totalResources / activeUsers) : totalResources;`,

@@ -27,37 +27,37 @@ export const cwe915MassAssignment: Exercise = {
       code: `const ALLOWED_FIELDS = ['name', 'email', 'bio', 'avatar'];
 if (ALLOWED_FIELDS.includes(key)) user[key] = value;`,
       correct: true,
-      explanation: `Correct! Allowlisting specific updatable fields prevents mass assignment attacks. This blocks attempts to modify sensitive fields like 'isAdmin', 'role', or 'accountBalance' that should not be user-controllable.`
+      explanation: `Validate properties before assignment`
     },
     {
       code: `user[key] = value;`,
       correct: false,
-      explanation: 'Direct from MITRE: Mass assignment allows modification of unintended object attributes. Attackers can include {"isAdmin": true} to escalate privileges.'
+      explanation: 'Mass assignment allows modification of unintended object attributes. Attackers can include {"isAdmin": true} to escalate privileges.'
     },
     {
       code: `if (key !== 'isAdmin') user[key] = value;`,
       correct: false,
-      explanation: 'Blacklisting single fields is insufficient. Many sensitive fields exist (role, permissions, accountBalance, etc.) that could be exploited.'
+      explanation: 'Blacklisting one field misses others'
     },
     {
       code: `if (!key.startsWith('_')) user[key] = value;`,
       correct: false,
-      explanation: 'Convention-based filtering is unreliable. Sensitive fields may not follow underscore conventions and could still be modified.'
+      explanation: 'Naming convention filtering unreliable'
     },
     {
       code: `if (typeof value === 'string') user[key] = value;`,
       correct: false,
-      explanation: 'Type checking does not prevent mass assignment. String-type sensitive fields like "role" or "status" can still be modified.'
+      explanation: 'Type check allows string sensitive fields'
     },
     {
       code: `if (key in user) user[key] = value;`,
       correct: false,
-      explanation: 'Checking property existence does not restrict modification. Existing sensitive properties like isAdmin are still vulnerable.'
+      explanation: 'Existing property check allows sensitive fields'
     },
     {
       code: `Object.assign(user, updateData);`,
       correct: false,
-      explanation: 'Object.assign performs mass assignment of all properties, making the vulnerability even more direct and dangerous.'
+      explanation: 'Assigns all properties without validation'
     },
     {
       code: `for (const key in updateData) user[key] = updateData[key];`,

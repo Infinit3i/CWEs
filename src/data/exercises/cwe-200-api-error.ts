@@ -61,7 +61,7 @@ res.status(500).json({
   errorId: generateErrorId()
 });`,
       correct: true,
-      explanation: `Correct! This prevents information exposure by logging detailed error information securely on the server while returning only a generic error message to the client. The error ID allows developers to correlate client reports with server logs without exposing sensitive system details like database credentials, connection strings, or internal file paths to potential attackers.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

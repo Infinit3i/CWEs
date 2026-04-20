@@ -25,17 +25,17 @@ export const cwe22FileDownload: Exercise = {
     {
       code: `const safeName = path.basename(filename); const filePath = path.join(__dirname, 'uploads', safeName); const normalized = path.resolve(filePath); if (!normalized.startsWith(path.resolve(__dirname, 'uploads'))) throw new Error('Access denied');`,
       correct: true,
-      explanation: `Correct! This solution uses path.basename() to strip directory traversal sequences, then validates that the resolved path stays within the uploads directory. This prevents ../../../etc/passwd attacks by ensuring the final path cannot escape the intended directory.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const filePath = '/users/cwe/profiles/' + filename;`,
       correct: false,
-      explanation: 'Direct from MITRE: String concatenation with user input allows attackers to inject "../../../etc/passwd" to escape the intended directory and access sensitive files.'
+      explanation: 'String concatenation with user input allows attackers to inject "../../../etc/passwd" to escape the intended directory and access sensitive files.'
     },
     {
       code: `const cleaned = filename.replace('../', ''); const filePath = path.join(__dirname, 'uploads', cleaned);`,
       correct: false,
-      explanation: 'MITRE pattern: Removing only the first instance of "../" fails when attackers provide multiple sequences like "../../../etc/passwd" - after one is stripped, traversal sequences remain.'
+      explanation: 'Removing only the first instance of "../" fails when attackers provide multiple sequences like "../../../etc/passwd" - after one is stripped, traversal sequences remain.'
     },
     {
       code: `if (filename.startsWith('/uploads/')) { const filePath = filename; }`,

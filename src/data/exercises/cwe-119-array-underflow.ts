@@ -81,7 +81,7 @@ function processDataRange(dataArray, startIndex, endIndex) {
   return results;
 }`,
       correct: true,
-      explanation: `Correct! Comprehensive bounds checking validates both negative indices and upper bounds. This prevents reading before array boundaries, following MITRE recommendations for complete index validation.`
+      explanation: `Use proper cryptographic functions`
     },
     // Array underflow vulnerabilities from MITRE
     {
@@ -89,7 +89,7 @@ function processDataRange(dataArray, startIndex, endIndex) {
     value = dataArray[index]; // Missing negative index check
 }`,
       correct: false,
-      explanation: 'Direct from MITRE: Missing lower bounds check allows negative index access. Negative indices can read memory before the array, potentially exposing sensitive data or causing crashes.'
+      explanation: 'Missing lower bounds check allows negative index access. Negative indices can read memory before the array, potentially exposing sensitive data or causing crashes.'
     },
     {
       code: `if (index >= 0 && index <= arrayLength) {

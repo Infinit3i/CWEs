@@ -71,7 +71,7 @@ export const cwe502ConfigLoader: Exercise = {
   return sanitizedConfig;
 }`,
       correct: true,
-      explanation: `Correct! Restricting to JSON format with property allowlisting and value sanitization prevents code execution. This approach safely extracts only expected configuration properties without executing embedded code.`
+      explanation: `Use proper cryptographic functions`
     },
     // Configuration deserialization vulnerabilities
     {

@@ -42,12 +42,12 @@ export const cwe918UrlPreview: Exercise = {
     {
       code: `await this.validateExternalUrl(url); const response = await fetch(url, {`,
       correct: true,
-      explanation: `Correct! URL validation should block private networks, localhost, cloud metadata endpoints, and only allow public web URLs. Redirect following should also be validated to prevent bypass attempts.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const response = await fetch(url, {`,
       correct: false,
-      explanation: 'From MITRE: Unvalidated URL fetching with redirect following enables SSRF. Attackers can access internal services, cloud metadata APIs, or use redirects to bypass simple filters.'
+      explanation: 'Unvalidated URL fetching with redirect following enables SSRF. Attackers can access internal services, cloud metadata APIs, or use redirects to bypass simple filters.'
     },
     {
       code: `if (!url.startsWith('http://') && !url.startsWith('https://')) throw new Error('Invalid protocol'); const response = await fetch(url, {`,

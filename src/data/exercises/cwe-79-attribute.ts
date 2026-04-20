@@ -29,88 +29,69 @@ export const cwe79Attribute: Exercise = {
 
   options: [
     {
-      code: `const profileDiv = document.createElement('div');
-profileDiv.className = 'profile-card';
-const img = document.createElement('img');
+      code: `const img = document.createElement('img');
 img.src = imageUrl;
 img.alt = altText;
-img.className = 'avatar';
-const h3 = document.createElement('h3');
-h3.textContent = userProfile.name;
-const p = document.createElement('p');
-p.textContent = userProfile.bio;
-p.title = userProfile.bio;
-profileDiv.appendChild(img);
-profileDiv.appendChild(h3);
-profileDiv.appendChild(p);
-profileContainer.innerHTML = '';
-profileContainer.appendChild(profileDiv);`,
+profileContainer.appendChild(img);`,
       correct: true,
-      explanation: `Correct! This creates DOM elements programmatically and uses proper property assignment for attributes. The browser automatically handles escaping when setting element properties, preventing XSS injection through image URLs or alt text.`
+      explanation: `Use createElement and property assignment for safe attributes`
     },
     // Attribute-based XSS vulnerabilities
     {
-      code: `const profileHtml = \`<img src="\${imageUrl}" alt="\${altText}" class="avatar">\`;
-profileContainer.innerHTML = profileHtml;`,
+      code: `profileContainer.innerHTML = \`<img src="\${imageUrl}" alt="\${altText}">\`;`,
       correct: false,
-      explanation: 'Attribute-based XSS: User-controlled data in HTML attributes can break out of the attribute context. An attacker can inject avatarUrl: "x\" onerror=\"alert(document.cookie)" to execute JavaScript when the image fails to load.'
+      explanation: 'Attribute injection allows `" onerror="alert()` to escape quotes'
     },
     {
-      code: `const cleanUrl = imageUrl.replace(/javascript:/gi, '');
-const profileHtml = \`<img src="\${cleanUrl}" alt="\${altText}">\`;
-profileContainer.innerHTML = profileHtml;`,
+      code: `const clean = imageUrl.replace(/javascript:/gi, '');
+profileContainer.innerHTML = \`<img src="\${clean}" alt="\${altText}">\`;`,
       correct: false,
-      explanation: 'Filtering only javascript: URLs is insufficient. Attackers can use data:text/html,<script>alert(1)</script> or break out of the attribute with quote characters to inject event handlers.'
+      explanation: 'javascript: filter incomplete - data: URLs and quote escape work'
     },
     {
-      code: `const encodedUrl = encodeURIComponent(imageUrl);
-const profileHtml = \`<img src="\${encodedUrl}" alt="\${altText}">\`;
-profileContainer.innerHTML = profileHtml;`,
+      code: `const encoded = encodeURIComponent(imageUrl);
+profileContainer.innerHTML = \`<img src="\${encoded}" alt="\${altText}">\`;`,
       correct: false,
-      explanation: 'URL encoding breaks legitimate image URLs and may not prevent all attribute-based attacks. Attackers can still manipulate the alt attribute or use other injection vectors not covered by URL encoding.'
+      explanation: 'URL encoding breaks image URLs - alt attribute still vulnerable'
     },
     {
-      code: `const safeUrl = imageUrl.startsWith('http') ? imageUrl : '/images/default.png';
-const profileHtml = \`<img src="\${safeUrl}" alt="\${altText}">\`;
-profileContainer.innerHTML = profileHtml;`,
+      code: `const safe = imageUrl.startsWith('http') ? imageUrl : '/default.png';
+profileContainer.innerHTML = \`<img src="\${safe}" alt="\${altText}">\`;`,
       correct: false,
-      explanation: 'URL validation helps but doesn\'t prevent attribute escape attacks. An attacker can use altText: "avatar\" onload=\"alert(1)" to break out of the alt attribute and inject event handlers.'
+      explanation: 'URL validation incomplete - alt text allows quote escape'
     },
     {
-      code: `const escapedAlt = altText.replace(/"/g, '&quot;');
-const profileHtml = \`<img src="\${imageUrl}" alt="\${escapedAlt}">\`;
-profileContainer.innerHTML = profileHtml;`,
+      code: `const escaped = altText.replace(/"/g, '&quot;');
+profileContainer.innerHTML = \`<img src="\${imageUrl}" alt="\${escaped}">\`;`,
       correct: false,
-      explanation: 'While quote escaping helps prevent attribute escape, the imageUrl parameter remains vulnerable. Attackers can still inject malicious URLs or use single quotes if not properly handled.'
+      explanation: 'Quote escaping incomplete - imageUrl still vulnerable'
     },
     {
-      code: `if (imageUrl.includes('<') || imageUrl.includes('>')) {
-  imageUrl = '/images/default.png';
+      code: `if (imageUrl.includes('<')) {
+  imageUrl = '/default.png';
 }
-const profileHtml = \`<img src="\${imageUrl}" alt="\${altText}">\`;
-profileContainer.innerHTML = profileHtml;`,
+profileContainer.innerHTML = \`<img src="\${imageUrl}" alt="\${altText}">\`;`,
       correct: false,
-      explanation: 'Filtering angle brackets doesn\'t prevent attribute-based XSS. Attackers can break out of attributes using quotes and inject event handlers without using < or > characters.'
+      explanation: 'Angle bracket filter incomplete - quotes escape attributes'
     },
     {
       code: `const img = new Image();
 img.src = imageUrl;
-img.alt = altText;
-profileContainer.innerHTML = \`<div class="profile-card">\${img.outerHTML}</div>\`;`,
+profileContainer.innerHTML = \`<div>\${img.outerHTML}</div>\`;`,
       correct: false,
-      explanation: 'While creating the Image object safely sets properties, using outerHTML in innerHTML still creates XSS risk if other parts of the template contain unsanitized user data.'
+      explanation: 'outerHTML in innerHTML still risky - other template parts vulnerable'
     },
     {
-      code: `const template = \`<img src="\${imageUrl.substring(0, 100)}" alt="\${altText.substring(0, 50)}">\`;
-profileContainer.innerHTML = template;`,
+      code: `const short = imageUrl.substring(0, 50);
+profileContainer.innerHTML = \`<img src="\${short}" alt="\${altText}">\`;`,
       correct: false,
-      explanation: 'Length truncation does not prevent attribute-based XSS. Short payloads like "x\" onerror=\"alert(1)" can be very effective within character limits for breaking out of attributes.'
+      explanation: 'Length limits don\'t prevent attribute XSS - short payloads work'
     },
     {
-      code: `const profileHtml = \`<img src="\${imageUrl}" alt="\${altText.toLowerCase()}" class="avatar">\`;
-profileContainer.innerHTML = profileHtml;`,
+      code: `const lower = altText.toLowerCase();
+profileContainer.innerHTML = \`<img src="\${imageUrl}" alt="\${lower}">\`;`,
       correct: false,
-      explanation: 'Case conversion does not prevent attribute escape attacks. Lowercase event handlers like "avatar\" onload=\"alert(1)" are still executable and can break out of the alt attribute.'
+      explanation: 'Case conversion doesn\'t prevent attribute escape attacks'
     }
   ]
 }

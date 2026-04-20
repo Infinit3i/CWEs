@@ -30,7 +30,7 @@ export const cwe20ArraySize: Exercise = {
     {
       code: `if (untrustedListSize <= 0) { throw new Error('Invalid list size'); } const widgetList = new Array(untrustedListSize);`,
       correct: true,
-      explanation: `Correct! Validating that list size is greater than zero prevents both negative values and zero-length arrays. This ensures the array has valid elements before attempting to access index 0, preventing array bounds errors.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `widgetList[0] = createWidget('default');`,

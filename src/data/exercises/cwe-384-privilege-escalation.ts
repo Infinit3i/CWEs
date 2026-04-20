@@ -58,13 +58,13 @@ return {
   role: 'admin'
 };`,
       correct: true,
-      explanation: `Correct! Creating a new session ID for elevated privileges prevents session fixation during privilege escalation. This ensures attackers cannot use a pre-existing session to gain admin access.`
+      explanation: `New session after privilege change`
     },
     {
       code: `session.role = 'admin';
 session.adminAccess = true;`,
       correct: false,
-      explanation: 'Direct from MITRE: Elevating privileges in existing session enables session fixation. Attackers with the original session ID automatically gain admin access without re-authentication.'
+      explanation: 'Elevating privileges in existing session enables session fixation. Attackers with the original session ID automatically gain admin access without re-authentication.'
     },
     {
       code: `Object.assign(session, {

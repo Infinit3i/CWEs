@@ -20,53 +20,59 @@ export const cwe79Example: Exercise = {
     {
       code: `welcomeDiv.textContent = 'Welcome, ' + username;`,
       correct: true,
-      explanation: `Correct! textContent treats the input as plain text, not HTML. Even if username contains <script>alert('XSS')</script>, it will be displayed as literal text rather than executed as JavaScript. The DOM API automatically escapes special characters when using textContent, preventing any script injection.`
+      explanation: `Use textContent instead of innerHTML for user data`
     },
     // Real MITRE demonstrative examples as wrong answers
     {
-      code: `welcomeDiv.innerHTML = '<div>Welcome, ' + username + '</div>';`,
+      code: `welcomeDiv.innerHTML = 'Welcome, ' + username;`,
       correct: false,
-      explanation: 'Direct from MITRE: innerHTML with unescaped user input allows script injection. An attacker can inject <script>alert("XSS")</script> via the username parameter.'
+      explanation: 'innerHTML allows `<script>` injection via username'
     },
     {
-      code: `welcomeDiv.innerHTML = '<div>Welcome, ' + username.replace("script", "") + '</div>';`,
+      code: `const clean = username.replace("script", "");
+welcomeDiv.innerHTML = 'Welcome, ' + clean;`,
       correct: false,
-      explanation: 'Case-sensitive filtering from MITRE examples. Bypassed by <SCRIPT> (uppercase) or <scr<script>ipt> (nested tags).'
+      explanation: 'Case-sensitive filter bypassed by `<SCRIPT>` or nested tags'
     },
     {
-      code: `welcomeDiv.innerHTML = '<div>Welcome, ' + escape(username) + '</div>';`,
+      code: `welcomeDiv.innerHTML = 'Welcome, ' + escape(username);`,
       correct: false,
-      explanation: 'JavaScript escape() is for URL encoding, not HTML. Scripts remain executable in HTML context.'
+      explanation: 'escape() is for URLs - scripts still execute in HTML'
     },
     {
-      code: `const encoded = encodeURIComponent(username); welcomeDiv.innerHTML = '<div>Welcome, ' + encoded + '</div>';`,
+      code: `const encoded = encodeURIComponent(username);
+welcomeDiv.innerHTML = 'Welcome, ' + encoded;`,
       correct: false,
-      explanation: 'URL encoding prevents some attacks but scripts can still execute when decoded by the browser in certain contexts.'
+      explanation: 'URL encoding incomplete - scripts execute when decoded'
     },
     {
-      code: `welcomeDiv.innerHTML = '<div>Welcome, ' + username.substring(0, 20) + '</div>';`,
+      code: `const short = username.substring(0, 20);
+welcomeDiv.innerHTML = 'Welcome, ' + short;`,
       correct: false,
-      explanation: 'Length truncation does not prevent XSS. Short payloads like <img src=x onerror=alert(1)> can be very effective.'
+      explanation: 'Length limits don\'t prevent XSS - short payloads work'
     },
     {
-      code: `welcomeDiv.innerHTML = '<div>Welcome, ' + username.toLowerCase() + '</div>';`,
+      code: `const lower = username.toLowerCase();
+welcomeDiv.innerHTML = 'Welcome, ' + lower;`,
       correct: false,
-      explanation: 'Case conversion does not prevent script injection. Lowercase <script> tags are still executable.'
+      explanation: 'Case conversion doesn\'t prevent XSS - lowercase scripts work'
     },
     {
-      code: `welcomeDiv.innerHTML = '<div>Welcome, ' + username.replace(/[<>]/g, '') + '</div>';`,
+      code: `const filtered = username.replace(/[<>]/g, '');
+welcomeDiv.innerHTML = 'Welcome, ' + filtered;`,
       correct: false,
-      explanation: 'Removing angle brackets helps but incomplete. Event handlers like onerror= do not need brackets to execute.'
+      explanation: 'Removing brackets incomplete - `onerror=` works without brackets'
     },
     {
-      code: `welcomeDiv.innerHTML = '<div>Welcome, ' + JSON.stringify(username) + '</div>';`,
+      code: `welcomeDiv.innerHTML = 'Welcome, ' + JSON.stringify(username);`,
       correct: false,
-      explanation: 'JSON.stringify adds quotes but the result can still contain executable JavaScript in HTML context.'
+      explanation: 'JSON.stringify incomplete - scripts can execute in HTML context'
     },
     {
-      code: `const cleaned = username.replace(/javascript:/gi, ''); welcomeDiv.innerHTML = '<div>Welcome, ' + cleaned + '</div>';`,
+      code: `const cleaned = username.replace(/javascript:/gi, '');
+welcomeDiv.innerHTML = 'Welcome, ' + cleaned;`,
       correct: false,
-      explanation: 'Filtering specific protocols is insufficient. Many XSS vectors do not use javascript: protocol (e.g., event handlers).'
+      explanation: 'Protocol filtering insufficient - event handlers don\'t use javascript:'
     }
   ]
   // CWE data automatically fetched from MITRE API when exercise loads

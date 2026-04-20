@@ -56,12 +56,12 @@ export const cwe269PasswordReset: Exercise = {
     {
       code: `if (!this.canResetPassword(requestingUser, targetUser)) { throw new Error('Insufficient privileges to reset this user\'s password'); }`,
       correct: true,
-      explanation: `Correct! Password reset authorization should validate both the requesting user's privileges and whether they have authority over the target user. This prevents operators from resetting admin passwords and ensures proper hierarchical control.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `if (requestingUser.role === 'guest' || requestingUser.role === 'user') {`,
       correct: false,
-      explanation: 'From MITRE: "Code doesn\'t verify the target user\'s role; OPERATOR can reset ADMIN passwords." Incomplete privilege checking allows lower-privilege users to reset higher-privilege accounts.'
+      explanation: '"Code doesn\'t verify the target user\'s role; OPERATOR can reset ADMIN passwords." Incomplete privilege checking allows lower-privilege users to reset higher-privilege accounts.'
     },
     {
       code: `if (requestingUser.role !== 'admin' && targetUser.role === 'admin') { throw new Error('Cannot reset admin passwords'); } if (requestingUser.role === 'guest' || requestingUser.role === 'user') {`,

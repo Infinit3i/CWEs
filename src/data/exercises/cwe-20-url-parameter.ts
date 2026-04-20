@@ -29,7 +29,7 @@ export const cwe20UrlParameter: Exercise = {
     {
       code: `if (targetURL !== null && targetURL !== undefined) { const urlLength = targetURL.length; } else { throw new Error('URL parameter required'); }`,
       correct: true,
-      explanation: `Correct! Null/undefined validation prevents null pointer exceptions when the URLToOpen parameter is missing from intent extras. This ensures the application handles missing parameters gracefully instead of crashing.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const urlLength = targetURL.length;`,

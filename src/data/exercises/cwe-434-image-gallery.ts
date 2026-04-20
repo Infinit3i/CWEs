@@ -29,12 +29,12 @@ export const cwe434ImageGallery: Exercise = {
     {
       code: `const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; const magic = await import('file-type'); const detected = await magic.fileTypeFromFile(uploadedFile.path); if (!detected || !allowedTypes.includes(detected.mime)) { throw new Error('Invalid image format'); } const safeFilename = crypto.randomBytes(16).toString('hex') + path.extname(filename).toLowerCase(); const targetPath = path.resolve(__dirname, 'public/gallery/', safeFilename);`,
       correct: true,
-      explanation: `Correct! This validates file content using magic bytes detection to ensure it's actually an image, regardless of filename or headers. Combined with a secure random filename, this prevents both executable uploads and filename-based attacks like the MITRE examples.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `$target = "gallery/" . basename($_FILES['uploadedfile']['name']); if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target)) { echo "Image uploaded"; }`,
       correct: false,
-      explanation: 'Direct from MITRE: No validation allows uploading "malicious.php" containing "<?php system($_GET[\'cmd\']); ?>", then executing commands via "http://server.example.com/gallery/malicious.php?cmd=rm%20-rf%20/".'
+      explanation: 'No validation allows uploading "malicious.php" containing "<?php system($_GET[\'cmd\']); ?>", then executing commands via "http://server.example.com/gallery/malicious.php?cmd=rm%20-rf%20/".'
     },
     {
       code: `if (filename.match(/\\.(jpg|jpeg|png|gif)$/i)) { const targetPath = path.join(__dirname, 'public/gallery/', filename); fs.copyFileSync(uploadedFile.path, targetPath); }`,

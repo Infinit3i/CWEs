@@ -24,12 +24,12 @@ export const cwe668DatabaseRecords: Exercise = {
     {
       code: `const query = 'SELECT * FROM user_profiles WHERE id = ? AND user_id = ?'; const record = db.query(query, [targetRecordId, requestUserId]);`,
       correct: true,
-      explanation: `Correct! Adding a user_id constraint ensures users can only access records within their authorized sphere. This prevents horizontal privilege escalation by validating ownership.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const record = db.query(query, [targetRecordId]);`,
       correct: false,
-      explanation: 'Direct from MITRE: Missing authorization check allows users to access any record by guessing IDs. This exposes resources outside their intended sphere.'
+      explanation: 'Missing authorization check allows users to access any record by guessing IDs. This exposes resources outside their intended sphere.'
     },
     {
       code: `const record = db.query(query, [targetRecordId]); if (record && record.user_id !== requestUserId) return null;`,

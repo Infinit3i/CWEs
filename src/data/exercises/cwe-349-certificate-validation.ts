@@ -42,7 +42,7 @@ const validatedCert = validatedFields.reduce((acc, field) => {
 validatedCert.trusted = true;
 validatedCert.validatedBy = signatureInfo.caName;`,
       correct: true,
-      explanation: `Correct! Only including explicitly validated certificate fields prevents injection of untrusted data. This blocks attackers from including extra malicious data in signatures that could override legitimate certificate properties.`
+      explanation: `Verify certificate chain`
     },
     {
       code: `const validatedCert = {
@@ -51,7 +51,7 @@ validatedCert.validatedBy = signatureInfo.caName;`,
   trusted: true
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Accepting extraneous data from signature enables certificate forgery. Attackers can embed additional certificate properties in signatures to override legitimate certificate data (CVE-2006-5462).'
+      explanation: 'Accepting extraneous data from signature enables certificate forgery. Attackers can embed additional certificate properties in signatures to override legitimate certificate data (CVE-2006-5462).'
     },
     {
       code: `Object.assign(certInfo, signatureInfo.certData);

@@ -38,7 +38,7 @@ export const cwe642CookiePrivilege: Exercise = {
     {
       code: `const serverRole = getUserRoleFromDatabase(cookies.sessionId); if (serverRole === 'admin') {`,
       correct: true,
-      explanation: `Correct! Retrieves role from authoritative server-side storage rather than trusting client-controlled cookies. This prevents privilege escalation where attackers simply set role=admin in their cookies to gain unauthorized access.`
+      explanation: `Get role from database not cookies`
     },
     {
       code: `if (cookies.role === 'admin') { // Trust client cookie`,

@@ -29,7 +29,7 @@ export const cwe78NetworkLookup: Exercise = {
     {
       code: `const sanitizedHost = hostName.replace(/[^a-zA-Z0-9.-]/g, ''); const command = [nslookupPath, sanitizedHost];`,
       correct: true,
-      explanation: `Correct! Sanitizing hostname to only allow valid DNS characters (letters, numbers, dots, hyphens) and using array syntax prevents shell interpretation. This blocks command injection while preserving valid hostnames for DNS lookup.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const command = nslookupPath + ' ' + hostName;`,

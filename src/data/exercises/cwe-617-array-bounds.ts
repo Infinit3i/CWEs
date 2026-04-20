@@ -19,12 +19,12 @@ export const cwe617ArrayBounds: Exercise = {
     {
       code: `if (index < 0 || index >= items.length) { throw new RangeError('Index out of bounds'); }`,
       correct: true,
-      explanation: `Correct! Using explicit range checking with proper exceptions allows for graceful error handling. This prevents assertions from being triggered by malicious input while maintaining proper bounds validation.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `assert(index >= 0 && index < items.length, 'Index out of bounds');`,
       correct: false,
-      explanation: 'Direct from MITRE: User-controlled index values can trigger this assertion, causing application crashes. Assertions should not be reachable through external input.'
+      explanation: 'User-controlled index values can trigger this assertion, causing application crashes. Assertions should not be reachable through external input.'
     },
     {
       code: `assert(Number.isInteger(index) && index >= 0 && index < items.length);`,

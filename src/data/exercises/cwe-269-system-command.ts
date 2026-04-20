@@ -64,12 +64,12 @@ export const cwe269SystemCommand: Exercise = {
     {
       code: `const allowedCommands = this.getAllowedCommands(user.role); if (!this.isCommandAllowed(command, allowedCommands)) { throw new Error('Command not authorized for user role'); }`,
       correct: true,
-      explanation: `Correct! System command execution should validate specific command authorization based on user roles, not just block guest access. This prevents privilege escalation through dangerous commands and implements proper command-level access control.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `if (user.role === 'guest') {`,
       correct: false,
-      explanation: 'From MITRE: Overly permissive default case grants command execution to all non-guest users. This allows operators to run privileged commands they should not have access to, creating privilege escalation opportunities.'
+      explanation: 'Overly permissive default case grants command execution to all non-guest users. This allows operators to run privileged commands they should not have access to, creating privilege escalation opportunities.'
     },
     {
       code: `const dangerousCommands = ['rm', 'mv', 'chmod', 'chown']; if (dangerousCommands.some(cmd => command.includes(cmd))) { throw new Error('Dangerous command blocked'); } if (user.role === 'guest') {`,

@@ -46,12 +46,12 @@ export const cwe362FileCreation: Exercise = {
     {
       code: `const fd = await fs.promises.open(filePath, fs.constants.O_CREAT | fs.constants.O_EXCL | fs.constants.O_WRONLY, 0o600); await fd.writeFile(content); await fd.close();`,
       correct: true,
-      explanation: `Correct! Using O_CREAT | O_EXCL flags ensures atomic file creation that fails if the file already exists. This prevents TOCTOU race conditions where attackers create symbolic links between the existence check and file creation.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const exists = await fs.promises.access(filePath, fs.constants.F_OK)`,
       correct: false,
-      explanation: 'From MITRE: TOCTOU (Time-of-Check-Time-of-Use) race condition allows attackers to create symbolic links after the existence check but before file creation, potentially overwriting sensitive system files.'
+      explanation: 'TOCTOU (Time-of-Check-Time-of-Use) race condition allows attackers to create symbolic links after the existence check but before file creation, potentially overwriting sensitive system files.'
     },
     {
       code: `await new Promise(resolve => setTimeout(resolve, 100)); const exists = await fs.promises.access(filePath, fs.constants.F_OK)`,

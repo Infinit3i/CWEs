@@ -143,7 +143,7 @@ res.status(500).json({
   message: 'Please try again or contact support if the problem persists'
 });`,
       correct: true,
-      explanation: `Correct! This prevents information exposure by logging detailed file system errors securely on the server while returning only a generic error message to the client. The error ID enables correlation between user reports and server logs without exposing sensitive system paths, configuration file locations, process permissions, or directory structures that attackers could use to plan targeted attacks against the file system.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

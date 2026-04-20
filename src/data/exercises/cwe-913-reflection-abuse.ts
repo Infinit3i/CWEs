@@ -39,12 +39,12 @@ if (!ALLOWED_COMMANDS.has(commandName)) {
 }
 const CommandClass = commandClasses[commandName + 'Command'];`,
       correct: true,
-      explanation: `Correct! Allowlisting specific command names prevents unauthorized class instantiation. This blocks attempts to access dangerous classes like "System" or "Process" while allowing only legitimate business commands.`
+      explanation: `Validate reflection targets`
     },
     {
       code: `const CommandClass = commandClasses[commandName + 'Command'];`,
       correct: false,
-      explanation: 'Direct from MITRE: Unchecked dynamic class resolution allows instantiation of unintended classes. Attackers could use "System" to access SystemCommand with elevated privileges.'
+      explanation: 'Unchecked dynamic class resolution allows instantiation of unintended classes. Attackers could use "System" to access SystemCommand with elevated privileges.'
     },
     {
       code: `if (typeof global[commandName + 'Command'] === 'function') {

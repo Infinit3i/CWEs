@@ -47,7 +47,7 @@ const userId = req.user.id;
 const query = 'SELECT * FROM invoices WHERE id = ? AND user_id = ?';
 const result = await db.query(query, [invoiceId, userId]);`,
       correct: true,
-      explanation: `Correct! This prevents authorization bypass by including the authenticated user's ID in the query constraint. Now users can only retrieve invoices they own. Even if an attacker knows another user's invoice ID and passes it in the URL parameter, the database query will only return results if that invoice belongs to the authenticated user. This implements proper object-level authorization control.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

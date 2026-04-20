@@ -49,7 +49,7 @@ export const cwe829ConfigInclusion: Exercise = {
     {
       code: `if (!isApprovedConfigSource(configSource.url)) { throw new Error('Untrusted config source'); } configData = await response.json(); validateConfigSchema(configData);`,
       correct: true,
-      explanation: `Correct! Validates configuration source against approved URLs and validates config schema. This prevents loading malicious configurations that could escalate privileges, modify security settings, or redirect API calls to attacker-controlled endpoints.`
+      explanation: `Validate config file sources`
     },
     {
       code: `configData = await response.json(); // Load any config`,

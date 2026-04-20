@@ -36,22 +36,22 @@ export const cwe416ErrorLogging: Exercise = {
     {
       code: `if (abortOperation && !isContextFreed(contextBuffer)) { logError('Transaction aborted', contextBuffer); }`,
       correct: true,
-      explanation: `Correct! This checks both abort status and buffer validity before logging. By verifying the context hasn't been freed, we prevent use-after-free while still providing meaningful error logging when the context is available.`
+      explanation: `Check if buffer is freed before access`
     },
     {
       code: `logError('Transaction aborted before commit', contextBuffer);`,
       correct: false,
-      explanation: 'MITRE error logging pattern: contextBuffer was deallocated when abortOperation was set, but is still accessed in error handler. This use-after-free can crash the application or leak sensitive data from reallocated memory.'
+      explanation: 'Using freed buffer causes crash or data leak'
     },
     {
       code: `logError('Transaction aborted before commit', null);`,
       correct: false,
-      explanation: 'Passing null avoids use-after-free but loses valuable debugging context. Error logs should include relevant transaction details when safely available.'
+      explanation: 'Passing null loses debugging context'
     },
     {
       code: `if (!abortOperation) { logError('Transaction aborted before commit', contextBuffer); }`,
       correct: false,
-      explanation: 'Inverted logic prevents logging when abort actually occurred. This loses critical error information when debugging is most needed.'
+      explanation: 'Inverted logic prevents logging when needed'
     },
     {
       code: `try { logError('Transaction aborted before commit', contextBuffer); } catch(e) { /* ignore */ }`,

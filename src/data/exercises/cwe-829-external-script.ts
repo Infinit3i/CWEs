@@ -35,7 +35,7 @@ export const cwe829ExternalScript: Exercise = {
     {
       code: `if (isAllowlistedDomain(config.scriptUrl)) { script.src = config.scriptUrl; } else { throw new Error('Untrusted domain'); }`,
       correct: true,
-      explanation: `Correct! Validates script sources against a domain allowlist before loading external functionality. This prevents malicious script injection from compromised or untrusted domains that could execute arbitrary code in the application context.`
+      explanation: `Validate script sources`
     },
     {
       code: `script.src = config.scriptUrl; // Load any external script`,

@@ -29,12 +29,12 @@ ssl_key=\${config.sslKeyPath}
     {
       code: `fs.chmodSync(configPath, 0o600);`,
       correct: true,
-      explanation: `Correct! Mode 0o600 restricts configuration file access to the owner only. Since the config contains database credentials and SSL keys, only the application should be able to read it.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `fs.chmodSync(configPath, 0o644);`,
       correct: false,
-      explanation: 'Direct from MITRE: Mode 0o644 allows all users to read the configuration file containing database passwords and SSL keys. This is a critical credential exposure.'
+      explanation: 'Mode 0o644 allows all users to read the configuration file containing database passwords and SSL keys. This is a critical credential exposure.'
     },
     {
       code: `fs.chmodSync(configPath, 0o755);`,

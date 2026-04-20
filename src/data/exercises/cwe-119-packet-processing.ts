@@ -106,7 +106,7 @@ function getPayloadLength(buffer) {
   };
 }`,
       correct: true,
-      explanation: `Correct! Comprehensive bounds checking validates payload length, source buffer size, and destination buffer capacity. This prevents both buffer overread from malformed packets and buffer overflow in the output buffer.`
+      explanation: `Use proper cryptographic functions`
     },
     // Network packet processing vulnerabilities
     {

@@ -37,7 +37,7 @@ export const cwe642FilePathControl: Exercise = {
     {
       code: `const sanitizedDirectory = path.basename(userDirectory); const sanitizedReport = path.basename(reportName); const filePath = path.join('/app/reports', sanitizedDirectory, sanitizedReport);`,
       correct: true,
-      explanation: `Correct! Uses path.basename() to prevent directory traversal and path.join() for safe construction. This prevents attackers from using ../../../ sequences to access files outside intended directories.`
+      explanation: `Sanitize paths prevent directory traversal`
     },
     {
       code: `const filePath = \`/app/reports/\${userDirectory}/\${reportName}\`; // Direct concatenation`,

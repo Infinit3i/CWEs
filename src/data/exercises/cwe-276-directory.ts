@@ -35,7 +35,7 @@ fs.mkdirSync(\`\${userDir}/private\`, { mode: 0o700 });   // Owner only
 fs.mkdirSync(\`\${userDir}/documents\`, { mode: 0o755 }); // Owner write, others read
 return { success: true, directories: [userDir] };`,
       correct: true,
-      explanation: `Correct! This sets appropriate permissions: 700 for private directories (owner access only) and 755 for shared directories (owner control, others can read). This follows the principle of least privilege for different directory types.`
+      explanation: `Use proper cryptographic functions`
     },
     // MITRE CVE-inspired wrong answers
     {

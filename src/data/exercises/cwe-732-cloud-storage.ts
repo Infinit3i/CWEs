@@ -24,12 +24,12 @@ export const cwe732CloudStorage: Exercise = {
     {
       code: `ACL: 'private'`,
       correct: true,
-      explanation: `Correct! The 'private' ACL ensures only the bucket owner can access the database credentials. This follows AWS security best practices for sensitive configuration data.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `ACL: 'public-read'`,
       correct: false,
-      explanation: 'Direct from MITRE: Public read access allows anyone on the internet to download database credentials. This is a critical security exposure.'
+      explanation: 'Public read access allows anyone on the internet to download database credentials. This is a critical security exposure.'
     },
     {
       code: `ACL: 'public-read-write'`,

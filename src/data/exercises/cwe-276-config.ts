@@ -40,7 +40,7 @@ if ((stats.mode & parseInt('777', 8)) !== parseInt('600', 8)) {
   throw new Error('Failed to set secure permissions');
 }`,
       correct: true,
-      explanation: `Correct! This creates the directory with appropriate permissions (755), writes the config file with secure permissions (600 - owner read/write only), and verifies the permissions were set correctly. This protects sensitive credentials from unauthorized access.`
+      explanation: `Use proper cryptographic functions`
     },
     // MITRE CVE-inspired wrong answers
     {

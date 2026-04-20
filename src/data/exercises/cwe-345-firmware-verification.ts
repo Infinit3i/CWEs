@@ -43,7 +43,7 @@ export const cwe345FirmwareVerification: Exercise = {
     {
       code: `if (!verifyDigitalSignature(firmwareData, updateMetadata.signature, trustedPublicKey)) { throw new Error('Invalid firmware signature'); }`,
       correct: true,
-      explanation: `Correct! Uses cryptographic signature verification with a trusted public key instead of weak checksums. This prevents firmware tampering as attackers cannot forge valid signatures without the private key, addressing the OT:ICEFALL vulnerability pattern.`
+      explanation: `Verify firmware signatures`
     },
     {
       code: `const actualChecksum = calculateMD5(firmwareData); // Use MD5 checksum`,

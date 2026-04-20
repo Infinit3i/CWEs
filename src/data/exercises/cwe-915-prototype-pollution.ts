@@ -30,12 +30,12 @@ export const cwe915PrototypePollution: Exercise = {
 if (!ALLOWED_PATHS.includes(path)) throw new Error('Invalid path');
 objectToModify[attributeToSet] = value;`,
       correct: true,
-      explanation: `Correct! Using an allowlist prevents prototype pollution by only permitting specific, safe paths. This blocks dangerous paths like "__proto__.isAdmin" or "constructor.prototype.polluted" that could modify Object.prototype and affect all objects globally.`
+      explanation: `Prevent prototype pollution attacks`
     },
     {
       code: `objectToModify[attributeToSet] = value;`,
       correct: false,
-      explanation: 'Direct from MITRE: Unchecked dynamic property assignment enables prototype pollution. Attackers can use paths like "__proto__.isAdmin" to modify Object.prototype.'
+      explanation: 'Unchecked dynamic property assignment enables prototype pollution. Attackers can use paths like "__proto__.isAdmin" to modify Object.prototype.'
     },
     {
       code: `if (attributeToSet !== '__proto__') objectToModify[attributeToSet] = value;`,

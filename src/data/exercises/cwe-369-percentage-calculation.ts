@@ -21,12 +21,12 @@ export const cwe369PercentageCalculation: Exercise = {
     {
       code: `if (totalOperations === 0) { return { percentage: 'N/A', successful: successfulOperations, total: totalOperations }; } const successRate = (successfulOperations * 100) / totalOperations;`,
       correct: true,
-      explanation: `Correct! Checking for zero total operations and returning a meaningful "N/A" result prevents division by zero while providing clear indication that no operations occurred.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const successRate = (successfulOperations * 100) / totalOperations;`,
       correct: false,
-      explanation: 'Direct from MITRE: When totalOperations is zero, this division causes a crash. No validation protects against the zero denominator scenario.'
+      explanation: 'When totalOperations is zero, this division causes a crash. No validation protects against the zero denominator scenario.'
     },
     {
       code: `const successRate = totalOperations ? (successfulOperations * 100) / totalOperations : 100;`,

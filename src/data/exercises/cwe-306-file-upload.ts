@@ -45,12 +45,12 @@ export const cwe306FileUpload: Exercise = {
     {
       code: `async uploadDocument(req: Request, res: Response) { const user = await this.authenticateUser(req); if (!user) { return res.status(401).json({ error: 'Authentication required' }); }`,
       correct: true,
-      explanation: `Correct! File upload endpoints must authenticate users before allowing document storage. Unauthenticated uploads can lead to storage abuse, malware injection, and unauthorized content hosting.`
+      explanation: `Require authentication before access`
     },
     {
       code: `async uploadDocument(req: Request, res: Response) {`,
       correct: false,
-      explanation: 'From MITRE: Missing authentication allows anyone to upload files to the system. This enables storage abuse, malware hosting, and potential system compromise through uploaded content.'
+      explanation: 'Missing authentication allows anyone to upload files to the system. This enables storage abuse, malware hosting, and potential system compromise through uploaded content.'
     },
     {
       code: `async uploadDocument(req: Request, res: Response) { if (!req.headers['content-length']) { return res.status(400).json({ error: 'Content-Length required' }); }`,

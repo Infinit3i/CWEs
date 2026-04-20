@@ -43,12 +43,12 @@ export const cwe362BalanceTransfer: Exercise = {
     {
       code: `await this.acquireAccountLock(fromAccount); try { const currentBalance = await this.getAccountBalance(fromAccount);`,
       correct: true,
-      explanation: `Correct! Account-level locking prevents race conditions in financial transactions. This ensures the entire read-validate-update sequence is atomic, preventing money creation through concurrent transfers.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const currentBalance = await this.getAccountBalance(fromAccount);`,
       correct: false,
-      explanation: 'From MITRE: Race condition allows concurrent requests to read the same balance before either updates it. Two $80 transfers from $100 balance can both succeed, creating money instead of preventing overdraft.'
+      explanation: 'Race condition allows concurrent requests to read the same balance before either updates it. Two $80 transfers from $100 balance can both succeed, creating money instead of preventing overdraft.'
     },
     {
       code: `const currentBalance = await this.getAccountBalance(fromAccount); await new Promise(resolve => setTimeout(resolve, 100));`,

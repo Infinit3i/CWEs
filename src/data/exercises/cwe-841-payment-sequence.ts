@@ -45,7 +45,7 @@ export const cwe841PaymentSequence: Exercise = {
     {
       code: `if (step === 'charge_card' && transaction.cardValidated && transaction.fundsVerified) {`,
       correct: true,
-      explanation: `Correct! Enforces the complete payment workflow sequence requiring both card validation and funds verification before charging. This prevents financial losses from incomplete validation sequences.`
+      explanation: `Validate payment before shipping`
     },
     {
       code: `if (step === 'charge_card') { // No workflow validation`,

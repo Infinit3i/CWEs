@@ -33,17 +33,17 @@ export const cwe787EncodingExpansion: Exercise = {
     {
       code: `const encodedBuffer = new Array(5 * maxSize);`,
       correct: true,
-      explanation: `Correct! Allocating 5x buffer size accounts for the worst case where every character is an ampersand requiring 5-character encoding (&amp;). This prevents buffer overflow when multiple ampersands are encoded to their 5-character HTML entity representation.`
+      explanation: `Allocate 5x size for worst-case encoding`
     },
     {
       code: `const encodedBuffer = new Array(4 * maxSize);`,
       correct: false,
-      explanation: 'MITRE encoding expansion pattern: Buffer allocated assuming 4x expansion but &amp; requires 5 characters. Multiple ampersands cause writes beyond allocated buffer, corrupting memory.'
+      explanation: 'Buffer too small for 5-character encoding'
     },
     {
       code: `if (writeIndex < encodedBuffer.length - 5) { /* encoding logic */ }`,
       correct: false,
-      explanation: 'While this prevents some overflows, it fails to handle the case where buffer is nearly full and abandons encoding, potentially producing incomplete or invalid HTML.'
+      explanation: 'Abandons encoding when buffer nearly full'
     },
     {
       code: `const encodedBuffer = new Array(userInput.length + 50);`,
@@ -53,7 +53,7 @@ export const cwe787EncodingExpansion: Exercise = {
     {
       code: `try { encodedBuffer[writeIndex++] = ';'.charCodeAt(0); } catch(e) { return encodedBuffer.slice(0, writeIndex-1); }`,
       correct: false,
-      explanation: 'Exception handling after buffer overflow is too late. Memory corruption occurs before exception handling can prevent it.'
+      explanation: 'Try-catch runs after damage done'
     },
     {
       code: `encodedBuffer[writeIndex % encodedBuffer.length] = ';'.charCodeAt(0); writeIndex++;`,

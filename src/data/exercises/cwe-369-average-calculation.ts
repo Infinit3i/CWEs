@@ -21,12 +21,12 @@ export const cwe369AverageCalculation: Exercise = {
     {
       code: `if (numRequests === 0) throw new Error('Cannot compute average with zero requests'); const averageTime = totalTime / numRequests;`,
       correct: true,
-      explanation: `Correct! Checking for zero denominator before division prevents the crash. This follows MITRE's recommended pattern of validating input values used as denominators.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const averageTime = totalTime / numRequests;`,
       correct: false,
-      explanation: 'Direct from MITRE: No validation ensures numRequests is not zero. This causes ArithmeticException when computing average of zero requests, crashing the application.'
+      explanation: 'No validation ensures numRequests is not zero. This causes ArithmeticException when computing average of zero requests, crashing the application.'
     },
     {
       code: `const averageTime = numRequests > 0 ? totalTime / numRequests : totalTime;`,

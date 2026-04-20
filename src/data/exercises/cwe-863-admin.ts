@@ -38,7 +38,7 @@ if (!userRoles.includes('ADMIN')) {
 }
 return { success: true, data: getSystemConfiguration() };`,
       correct: true,
-      explanation: `Correct! This validates the session server-side, retrieves user roles from a trusted database, checks for specific admin privileges, and logs unauthorized access attempts. Authorization decisions are made based on server-side data only.`
+      explanation: `Validate authorization for each resource`
     },
     // Authorization bypass vulnerabilities
     {

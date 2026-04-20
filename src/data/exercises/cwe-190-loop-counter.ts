@@ -51,7 +51,7 @@ export const cwe190LoopCounter: Exercise = {
   return bytesProcessed;
 }`,
       correct: true,
-      explanation: `Correct! Pre-increment overflow checking prevents the counter from wrapping around. This follows MITRE recommendations by validating that addition won't exceed safe bounds before performing the operation.`
+      explanation: `Use proper cryptographic functions`
     },
     // Loop counter overflow vulnerabilities from MITRE
     {
@@ -60,7 +60,7 @@ while (bytesProcessed < packetData.length) {
     bytesProcessed += chunkSize; // Can overflow and wrap to negative/small value
 }`,
       correct: false,
-      explanation: 'Direct from MITRE: Loop counter overflow can wrap bytesProcessed to a negative or small value, creating infinite loops and buffer overflows when used as array indices.'
+      explanation: 'Loop counter overflow can wrap bytesProcessed to a negative or small value, creating infinite loops and buffer overflows when used as array indices.'
     },
     {
       code: `for (let count = 0; count < targetCount; count++) {

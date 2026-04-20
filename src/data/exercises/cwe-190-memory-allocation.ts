@@ -40,14 +40,14 @@ export const cwe190MemoryAllocation: Exercise = {
   return new Uint8Array(totalPixels * 4);
 }`,
       correct: true,
-      explanation: `Correct! Pre-multiplication overflow checking prevents integer overflow by validating that the multiplication won't exceed safe integer limits. This follows the MITRE recommendation to check bounds before arithmetic operations.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {
       code: `const totalPixels = imageCount * pixelsPerImage;
 const buffer = new ArrayBuffer(totalPixels * 4);`,
       correct: false,
-      explanation: 'Direct from MITRE: Unchecked multiplication can overflow. With imageCount=1073741824 and pixelsPerImage=4, the result wraps to 0, allocating a tiny buffer instead of the intended size.'
+      explanation: 'Unchecked multiplication can overflow. With imageCount=1073741824 and pixelsPerImage=4, the result wraps to 0, allocating a tiny buffer instead of the intended size.'
     },
     {
       code: `if (imageCount < 1000000 && pixelsPerImage < 1000000) {

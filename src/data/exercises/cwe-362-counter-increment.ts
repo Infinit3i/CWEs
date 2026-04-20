@@ -54,12 +54,12 @@ export const cwe362CounterIncrement: Exercise = {
     {
       code: `const currentValue = this.cache.get(metricName) || 0; const newValue = currentValue + increment; const success = this.cache.compare_and_set ? this.cache.compare_and_set(metricName, currentValue, newValue) : (this.cache.set(metricName, newValue), true);`,
       correct: true,
-      explanation: `Correct! Atomic compare-and-set operations prevent race conditions in counter updates. This ensures that increments are not lost when multiple threads attempt to update the same counter simultaneously.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `let currentValue = this.cache.get(metricName) || 0;`,
       correct: false,
-      explanation: 'From MITRE: Race condition in counter updates causes lost increments. Multiple concurrent requests read the same value, increment it, and the last write wins, losing intermediate updates.'
+      explanation: 'Race condition in counter updates causes lost increments. Multiple concurrent requests read the same value, increment it, and the last write wins, losing intermediate updates.'
     },
     {
       code: `await new Promise(resolve => setTimeout(resolve, Math.random() * 10)); let currentValue = this.cache.get(metricName) || 0;`,

@@ -37,7 +37,7 @@ if (!allowedPlugins[pluginName]) throw new Error('Plugin not found');
 const plugin = await allowedPlugins[pluginName]();
 return plugin.default;`,
       correct: true,
-      explanation: `Correct! This uses a predefined allowlist of approved plugins with static imports. Each plugin is a pre-vetted module, eliminating dynamic code generation and preventing injection through plugin parameters.`
+      explanation: `Use proper cryptographic functions`
     },
     // Code injection vulnerabilities
     {

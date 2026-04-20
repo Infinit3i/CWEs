@@ -61,7 +61,7 @@ return {
   sessionId: newSessionId
 };`,
       correct: true,
-      explanation: `Correct! Creating a new session ID after password reset prevents session fixation and invalidating all existing user sessions ensures security. This prevents attackers from using pre-existing sessions after password changes.`
+      explanation: `Create new session after password reset`
     },
     {
       code: `sessions[sessionId] = {
@@ -70,7 +70,7 @@ return {
   passwordResetAt: Date.now()
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Using existing session ID after password reset enables session fixation. Attackers can force a session, trigger password reset, then access the account with known session ID.'
+      explanation: 'Using existing session ID after password reset enables session fixation. Attackers can force a session, trigger password reset, then access the account with known session ID.'
     },
     {
       code: `if (sessions[sessionId]) {

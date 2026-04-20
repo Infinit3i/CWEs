@@ -48,7 +48,7 @@ if (!hasAccess) {
 }
 return { success: true, document: getDocumentContent(documentId) };`,
       correct: true,
-      explanation: `Correct! This verifies the JWT token server-side, retrieves user roles from a trusted database, performs proper authorization checks, and logs access attempts. All security decisions are based on server-side validated data.`
+      explanation: `Validate authorization for each resource`
     },
     // Authorization bypass vulnerabilities
     {

@@ -38,93 +38,70 @@ export const cwe79Form: Exercise = {
 
   options: [
     {
-      code: `const statusDiv = document.getElementById('form-status');
-statusDiv.innerHTML = '';
-if (errors.length > 0) {
-  const errorDiv = document.createElement('div');
-  errorDiv.className = 'error';
-  const heading = document.createElement('h4');
-  heading.textContent = 'Please fix the following errors:';
-  const ul = document.createElement('ul');
-  errors.forEach(err => {
-    const li = document.createElement('li');
-    li.textContent = err;
-    ul.appendChild(li);
-  });
-  const summary = document.createElement('p');
-  summary.textContent = \`You entered: Name="\${name}", Email="\${email}"\`;
-  errorDiv.appendChild(heading);
-  errorDiv.appendChild(ul);
-  errorDiv.appendChild(summary);
-  statusDiv.appendChild(errorDiv);
-} else {
-  const successDiv = document.createElement('div');
-  successDiv.className = 'success';
-  successDiv.textContent = \`Thank you \${name}! Your message has been sent.\`;
-  statusDiv.appendChild(successDiv);
-}`,
+      code: `const summary = document.createElement('p');
+summary.textContent = \`You entered: Name="\${name}", Email="\${email}"\`;
+statusDiv.appendChild(summary);`,
       correct: true,
-      explanation: `Correct! This creates DOM elements programmatically and uses textContent to safely insert user data. Even if form fields contain malicious scripts like <script>alert('XSS')</script>, they will be displayed as plain text rather than executed.`
+      explanation: `Use textContent instead of innerHTML for user data`
     },
     // Form reflection XSS vulnerabilities
     {
-      code: `statusDiv.innerHTML = \`<div class="error"><p>You entered: Name="\${name}", Email="\${email}"</p></div>\`;`,
+      code: `statusDiv.innerHTML = \`<p>Name: \${name}, Email: \${email}</p>\`;`,
       correct: false,
-      explanation: 'Classic reflected XSS: Form input is directly reflected in the page without sanitization. An attacker can enter name: "<script>alert(document.cookie)</script>" to execute JavaScript and steal session cookies when the error message is displayed.'
+      explanation: 'innerHTML allows `<script>` injection - executes malicious code'
     },
     {
-      code: `const sanitizedName = name.replace(/<script>/gi, '');
-statusDiv.innerHTML = \`<div class="error"><p>Name: \${sanitizedName}</p></div>\`;`,
+      code: `const clean = name.replace(/<script>/gi, '');
+statusDiv.innerHTML = \`<p>Name: \${clean}</p>\`;`,
       correct: false,
-      explanation: 'Simple script tag removal is insufficient. Attackers can bypass with <img src=x onerror=alert(1)>, <svg onload=alert(1)>, or use case variations and nested tags like <scr<script>ipt>.'
+      explanation: 'Removing `<script>` is incomplete - `<img onerror>` bypasses filter'
     },
     {
-      code: `const truncatedEmail = email.substring(0, 50);
-statusDiv.innerHTML = \`<div class="error"><p>Email: \${truncatedEmail}</p></div>\`;`,
+      code: `const short = email.substring(0, 50);
+statusDiv.innerHTML = \`<p>Email: \${short}</p>\`;`,
       correct: false,
-      explanation: 'Length truncation does not prevent XSS attacks. Effective payloads like <img src=x onerror=alert(1)> are short enough to fit within character limits while still executing malicious code.'
+      explanation: 'Length limits don\'t prevent XSS - short payloads work'
     },
     {
-      code: `const filteredName = name.replace(/[<>]/g, '');
-statusDiv.innerHTML = \`<div class="error"><p>Name: \${filteredName}</p></div>\`;`,
+      code: `const filtered = name.replace(/[<>]/g, '');
+statusDiv.innerHTML = \`<p>Name: \${filtered}</p>\`;`,
       correct: false,
-      explanation: 'Removing angle brackets helps but is incomplete. Event handlers like onerror=alert(1) can execute without angle brackets, and there may be other injection vectors not covered by this filter.'
+      explanation: 'Removing `<>` helps but incomplete - `onerror` works without brackets'
     },
     {
-      code: `const encodedName = encodeURIComponent(name);
-statusDiv.innerHTML = \`<div class="error"><p>Name: \${encodedName}</p></div>\`;`,
+      code: `const encoded = encodeURIComponent(name);
+statusDiv.innerHTML = \`<p>Name: \${encoded}</p>\`;`,
       correct: false,
-      explanation: 'URL encoding is not appropriate for HTML content display and creates poor user experience. It may also not prevent all XSS vectors depending on how browsers handle the encoded content.'
+      explanation: 'URL encoding is for HTTP, not HTML display'
     },
     {
-      code: `if (name.includes('script') || email.includes('script')) {
-  statusDiv.innerHTML = '<div class="error">Invalid input detected</div>';
+      code: `if (name.includes('script')) {
+  statusDiv.innerHTML = '<p>Invalid input</p>';
 } else {
-  statusDiv.innerHTML = \`<div class="error"><p>Name: \${name}, Email: \${email}</p></div>\`;
+  statusDiv.innerHTML = \`<p>Name: \${name}</p>\`;
 }`,
       correct: false,
-      explanation: 'Keyword blacklisting is easily bypassed. Attackers can use <img src=x onerror=alert(1)>, <iframe src=javascript:alert(1)>, or other XSS vectors that do not contain the word "script".'
+      explanation: 'Keyword blacklisting bypassed by `<img onerror>` and others'
     },
     {
-      code: `const htmlEscaped = name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-statusDiv.innerHTML = \`<div class="error"><p>Name: \${htmlEscaped}</p></div>\`;`,
+      code: `const escaped = name.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+statusDiv.innerHTML = \`<p>Name: \${escaped}</p>\`;`,
       correct: false,
-      explanation: 'While HTML entity encoding is better, it only handles one field (name) and leaves email vulnerable. Additionally, manual encoding is error-prone compared to using safe DOM methods.'
+      explanation: 'Manual HTML encoding is error-prone - use textContent instead'
     },
     {
       code: `const nameDiv = document.createElement('div');
 nameDiv.innerHTML = 'Name: ' + name;
-statusDiv.innerHTML = '';
 statusDiv.appendChild(nameDiv);`,
       correct: false,
-      explanation: 'While creating elements programmatically is good, using innerHTML with user data still introduces XSS vulnerability. Should use textContent instead of innerHTML for user-controlled content.'
+      explanation: 'innerHTML with user data is still vulnerable - use textContent'
     },
     {
       code: `const template = document.createElement('template');
-template.innerHTML = \`<div class="error"><p>Name: \${name}</p></div>\`;
+template.innerHTML = \`<p>Name: \${name}</p>\`;
 statusDiv.appendChild(template.content.cloneNode(true));`,
       correct: false,
-      explanation: 'Template elements still use innerHTML for the template content, making them vulnerable to XSS injection. The template approach provides structure but doesn\'t solve the fundamental injection issue.'
+      explanation: 'Templates with innerHTML are still vulnerable - use textContent'
     }
   ]
 }

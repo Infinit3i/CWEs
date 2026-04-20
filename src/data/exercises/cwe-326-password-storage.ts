@@ -25,53 +25,53 @@ export const cwe326PasswordStorage: Exercise = {
     {
       code: `const bcrypt = require('bcrypt'); return bcrypt.hashSync(password, 12);`,
       correct: true,
-      explanation: `Correct! bcrypt is a strong, adaptive hashing function designed for passwords. The salt rounds (12) make it computationally expensive for attackers to perform brute force attacks. Unlike encryption, bcrypt is one-way - passwords cannot be decrypted, only verified through comparison.`
+      explanation: `Use bcrypt for password hashing with salt`
     },
     // Real MITRE demonstrative examples as wrong answers
     {
       code: `let encrypted = ''; for (let i = 0; i < password.length; i++) { encrypted += String.fromCharCode(password.charCodeAt(i) ^ 0x42); } return btoa(encrypted);`,
       correct: false,
-      explanation: 'MITRE pattern: XOR with fixed key (0x42). XOR encryption is cryptographically weak and easily reversible by applying the same operation.'
+      explanation: 'XOR encryption is easily reversible'
     },
     {
       code: `return password.split('').reverse().join(''); // Reversible algorithm`,
       correct: false,
-      explanation: 'MITRE pattern: Reversible algorithm. Simple string reversal provides no cryptographic security and is trivially undone.'
+      explanation: 'String reversal provides no security'
     },
     {
       code: `let result = ''; for (let i = 0; i < password.length; i++) { result += String.fromCharCode(((password.charCodeAt(i) - 65 + 13) % 26) + 65); } return result;`,
       correct: false,
-      explanation: 'MITRE pattern: One-to-one mapping (ROT13). Substitution ciphers like ROT13 are easily broken through frequency analysis and provide no real security.'
+      explanation: 'ROT13 substitution cipher is easily broken'
     },
     {
       code: `const crypto = require('crypto'); return crypto.createHash('md5').update(password + 'fixedSalt').digest('hex');`,
       correct: false,
-      explanation: 'MITRE pattern: Fixed salt with weak hash. MD5 is cryptographically broken, and using a fixed salt makes rainbow table attacks feasible.'
+      explanation: 'MD5 is broken, fixed salts enable rainbow table attacks'
     },
     {
       code: `const key = 'simplekey123'; let result = ''; for (let i = 0; i < password.length; i++) { result += String.fromCharCode(password.charCodeAt(i) ^ key.charCodeAt(i % key.length)); } return result;`,
       correct: false,
-      explanation: 'XOR with hard-coded key. This is easily reversible once the key is discovered, and provides no forward secrecy.'
+      explanation: 'XOR with hard-coded key is easily reversible'
     },
     {
       code: `return password.split('').map((c, i) => String.fromCharCode(c.charCodeAt(0) + (i % 10))).join('');`,
       correct: false,
-      explanation: 'Simple character shifting based on position. This creates a predictable pattern that can be easily analyzed and reversed.'
+      explanation: 'Character shifting creates predictable patterns'
     },
     {
       code: `const des = require('crypto').createCipher('des', 'mykey'); return des.update(password, 'utf8', 'hex') + des.final('hex');`,
       correct: false,
-      explanation: 'MITRE pattern: DES encryption. DES is considered cryptographically broken due to its small key size (56 bits) and can be brute-forced.'
+      explanation: 'DES has 56-bit keys, easily brute-forced'
     },
     {
       code: `return Buffer.from(password).toString('base64'); // Base64 encoding`,
       correct: false,
-      explanation: 'Base64 is encoding, not encryption. It provides no security and can be trivially decoded by anyone.'
+      explanation: 'Base64 is encoding, not encryption'
     },
     {
       code: `const crypto = require('crypto'); return crypto.createHash('sha1').update(password).digest('hex');`,
       correct: false,
-      explanation: 'SHA-1 without salt. SHA-1 is cryptographically weak (broken in 2017) and without salt, passwords are vulnerable to rainbow table attacks.'
+      explanation: 'SHA-1 is broken, needs salt against rainbow tables'
     }
   ]
 }

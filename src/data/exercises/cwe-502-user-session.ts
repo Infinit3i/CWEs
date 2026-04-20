@@ -50,7 +50,7 @@ export const cwe502UserSession: Exercise = {
   return { userId: sessionData.userId, role: sessionData.role };
 }`,
       correct: true,
-      explanation: `Correct! HMAC signature verification ensures session data integrity and prevents tampering. The session data is validated before deserialization and only safe properties are extracted, preventing prototype pollution and code execution.`
+      explanation: `Use proper cryptographic functions`
     },
     // Unsafe deserialization vulnerabilities from MITRE
     {
@@ -59,7 +59,7 @@ if (userSession.userProfile && userSession.userProfile.__proto__) {
     Object.setPrototypeOf(userSession.userProfile, userSession.userProfile.__proto__);
 }`,
       correct: false,
-      explanation: 'Direct from MITRE: Unsafe JSON deserialization with prototype manipulation. Attackers can inject malicious __proto__ properties to pollute object prototypes and execute arbitrary code.'
+      explanation: 'Unsafe JSON deserialization with prototype manipulation. Attackers can inject malicious __proto__ properties to pollute object prototypes and execute arbitrary code.'
     },
     {
       code: `const sessionObj = eval('(' + serializedData + ')');

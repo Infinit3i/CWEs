@@ -25,12 +25,12 @@ export const cwe476SystemProperty: Exercise = {
     {
       code: `const cmd = process.env.EXEC_CMD; if (cmd === null || cmd === undefined) { throw new Error('EXEC_CMD environment variable not set'); } const trimmedCmd = cmd.trim();`,
       correct: true,
-      explanation: `Correct! This validates the environment variable exists before calling methods on it. The MITRE example shows "if the property doesn't exist, getProperty() returns null, triggering a NullPointerException on trim()".`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `String cmd = System.getProperty("cmd"); cmd = cmd.trim();`,
       correct: false,
-      explanation: 'Direct from MITRE: "If the property doesn\'t exist, getProperty() returns null" but the code proceeds to call trim() on NULL, "triggering a NullPointerException".'
+      explanation: '"If the property doesn\'t exist, getProperty() returns null" but the code proceeds to call trim() on NULL, "triggering a NullPointerException".'
     },
     {
       code: `const cmd = process.env.EXEC_CMD; try { const trimmedCmd = cmd.trim(); } catch (error) { return "Command failed"; }`,

@@ -28,17 +28,17 @@ export const cwe434ResumeUpload: Exercise = {
     {
       code: `const allowedMimes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']; const allowedExts = ['.pdf', '.doc', '.docx']; if (!allowedMimes.includes(req.file.mimetype)) { throw new Error('Invalid file type'); } const ext = path.extname(originalName).toLowerCase(); if (!allowedExts.includes(ext)) { throw new Error('Invalid extension'); } const safeFilename = 'resume_' + Date.now() + ext; const finalPath = path.resolve('./public/resumes/', safeFilename);`,
       correct: true,
-      explanation: `Correct! This validates both MIME type and file extension against strict whitelists for document types, then generates a safe filename. This prevents executable uploads and ensures the file stays within the intended directory, blocking MITRE attack patterns.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `$target = "resumes/" . basename($_FILES['uploadedfile']['name']); if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target)) { echo "Resume uploaded"; }`,
       correct: false,
-      explanation: 'Direct from MITRE: No file type validation allows uploading executable files like "malicious.php" containing "<?php system($_GET[\'cmd\']); ?>", enabling remote code execution via direct file access.'
+      explanation: 'No file type validation allows uploading executable files like "malicious.php" containing "<?php system($_GET[\'cmd\']); ?>", enabling remote code execution via direct file access.'
     },
     {
       code: `if (originalName.endsWith('.pdf') || originalName.endsWith('.doc') || originalName.endsWith('.docx')) { const finalPath = './public/resumes/' + originalName; }`,
       correct: false,
-      explanation: 'MITRE pattern: Simple extension checking is bypassed by double extensions like "malicious.php.pdf" where servers may process the .php extension despite the .pdf suffix.'
+      explanation: 'Simple extension checking is bypassed by double extensions like "malicious.php.pdf" where servers may process the .php extension despite the .pdf suffix.'
     },
     {
       code: `if (req.file.mimetype.includes('application/')) { const finalPath = './public/resumes/' + originalName; fs.renameSync(req.file.path, finalPath); }`,

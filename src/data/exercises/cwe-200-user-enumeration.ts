@@ -86,7 +86,7 @@ if (existingUser.length > 0) {
   return;
 }`,
       correct: true,
-      explanation: `Correct! This prevents user enumeration by providing identical responses whether the email exists or not. Attackers cannot determine which emails are registered because both scenarios return the same success message and status code. The system still handles existing users appropriately by sending a notification email, but this is done without revealing the account's existence to potential attackers.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

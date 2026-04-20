@@ -13,52 +13,52 @@ export const cwe89Login: Exercise = {
     {
       code: `const query = "SELECT id FROM users WHERE username = ? AND password = ?";`,
       correct: true,
-      explanation: `Correct! This approach uses two parameter placeholders (?) which fundamentally changes how the database processes the query. Instead of concatenating strings like "+ username + " and "+ password +" directly into the SQL command, parameterized queries separate the SQL logic from the data. The database engine first parses and compiles the SQL structure "SELECT id FROM users WHERE username = ? AND password = ?" as a prepared statement. Then it binds the actual username and password values to the placeholders using a completely separate mechanism. This prevents injection because even if a user enters malicious input like "admin' OR '1'='1", the database treats this entire string as a literal username to search for, not as SQL code containing an OR condition. The parameter binding process automatically handles escaping and ensures data type safety.`
+      explanation: `Use ? placeholders - database treats input as data, not code`
     },
     {
-      code: `const query = "SELECT id FROM users WHERE username = '" + username.replace(/'/g, "''") + "' AND password = '" + password.replace(/'/g, "''") + "'";`,
+      code: `const query = "SELECT id FROM users WHERE username = '" + username.replace(/'/g, "''") + "' AND password = '" + password + "'";`,
       correct: false,
-      explanation: 'Wrong approach! Escaping quotes is incomplete - many other injection techniques still work.'
+      explanation: 'Escaping quotes is incomplete - other injection techniques work'
     },
     {
       code: `const query = "SELECT id FROM users WHERE username = '" + username + "' AND password = MD5('" + password + "')";`,
       correct: false,
-      explanation: 'Still vulnerable! Adding MD5 doesn\'t prevent injection in the username parameter.'
+      explanation: 'MD5 only affects password - username still injectable'
     },
     {
-      code: `const query = "SELECT id FROM users WHERE username = '" + username.toLowerCase() + "' AND password = '" + password.toLowerCase() + "'";`,
+      code: `const query = "SELECT id FROM users WHERE username = '" + username.toLowerCase() + "' AND password = '" + password + "'";`,
       correct: false,
-      explanation: 'toLowerCase() doesn\'t prevent SQL injection - still vulnerable to all injection attacks.'
+      explanation: 'toLowerCase() doesn\'t prevent SQL injection attacks'
     },
     {
-      code: `const query = "SELECT id FROM users WHERE username = '" + username.substring(0, 50) + "' AND password = '" + password.substring(0, 50) + "'";`,
+      code: `const query = "SELECT id FROM users WHERE username = '" + username.substring(0, 50) + "' AND password = '" + password + "'";`,
       correct: false,
-      explanation: 'Truncating input doesn\'t prevent injection. Short malicious payloads can still work.'
+      explanation: 'Truncating input doesn\'t prevent injection - short payloads work'
     },
     {
-      code: `const query = "SELECT id FROM users WHERE username = '" + username.trim() + "' AND password = '" + password.trim() + "'";`,
+      code: `const query = "SELECT id FROM users WHERE username = '" + username.trim() + "' AND password = '" + password + "'";`,
       correct: false,
-      explanation: 'trim() only removes whitespace. This is still completely vulnerable to SQL injection.'
+      explanation: 'trim() only removes whitespace - still vulnerable'
     },
     {
-      code: `const query = "SELECT id FROM users WHERE username = '" + encodeURIComponent(username) + "' AND password = '" + encodeURIComponent(password) + "'";`,
+      code: `const query = "SELECT id FROM users WHERE username = '" + encodeURIComponent(username) + "' AND password = '" + password + "'";`,
       correct: false,
-      explanation: 'URL encoding is for HTTP, not SQL. This doesn\'t prevent SQL injection attacks.'
+      explanation: 'URL encoding is for HTTP, not SQL protection'
     },
     {
-      code: `const query = "SELECT id FROM users WHERE username = '" + username.replace(/[^a-zA-Z0-9]/g, '') + "' AND password = '" + password.replace(/[^a-zA-Z0-9]/g, '') + "'";`,
+      code: `const query = "SELECT id FROM users WHERE username = '" + username.replace(/[^a-zA-Z0-9]/g, '') + "' AND password = '" + password + "'";`,
       correct: false,
-      explanation: 'Better but still wrong approach. Input sanitization is error-prone compared to parameterized queries.'
+      explanation: 'Input filtering is error-prone - use parameterized queries'
     },
     {
-      code: `const query = "SELECT id FROM users WHERE UPPER(username) = '" + username.toUpperCase() + "' AND UPPER(password) = '" + password.toUpperCase() + "'";`,
+      code: `const query = "SELECT id FROM users WHERE UPPER(username) = '" + username.toUpperCase() + "' AND password = '" + password + "'";`,
       correct: false,
-      explanation: 'Adding UPPER() functions doesn\'t prevent injection - still concatenating user input directly.'
+      explanation: 'UPPER() doesn\'t prevent injection - still concatenating input'
     },
     {
       code: `const query = "SELECT id FROM users WHERE username LIKE '" + username + "%' AND password = '" + password + "'";`,
       correct: false,
-      explanation: 'Using LIKE instead of = doesn\'t prevent injection and makes it even easier to exploit.'
+      explanation: 'LIKE doesn\'t prevent injection - makes it easier'
     }
   ]
 }

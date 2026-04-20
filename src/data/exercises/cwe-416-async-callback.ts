@@ -37,17 +37,17 @@ export const cwe416AsyncCallback: Exercise = {
     {
       code: `if (!isResourceFreed(resourceHandle)) { const processedData = processResultWithResource(resourceHandle, result); callback(null, processedData); } else { callback(new Error('Resource unavailable')); }`,
       correct: true,
-      explanation: `Correct! Checking if the resource is still allocated before use prevents use-after-free in race conditions. If timeout occurred and freed the resource, we properly handle the error instead of accessing freed memory.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const processedData = processResultWithResource(resourceHandle, result);`,
       correct: false,
-      explanation: 'Classic use-after-free race condition: If timeout fires before async completion, resourceHandle is deallocated but still accessed in success callback. This can cause crashes or data corruption.'
+Use after free causes crashes'
     },
     {
       code: `try { const processedData = processResultWithResource(resourceHandle, result); callback(null, processedData); } catch(e) { callback(e); }`,
       correct: false,
-      explanation: 'Exception handling cannot prevent use-after-free. Memory access to freed resource occurs before exceptions can be caught, potentially causing immediate application crash.'
+      explanation: 'Try-catch cannot prevent vulnerability'
     },
     {
       code: `if (resourceHandle) { const processedData = processResultWithResource(resourceHandle, result); callback(null, processedData); }`,

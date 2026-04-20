@@ -23,12 +23,12 @@ export const cwe668SessionData: Exercise = {
     {
       code: `const allowedFields = ['username', 'preferences', 'lastActivity']; if (!allowedFields.includes(requestedField)) throw new Error('Field not accessible'); return session[requestedField];`,
       correct: true,
-      explanation: `Correct! Whitelisting accessible fields ensures sensitive session data like authentication tokens or internal flags remain within their intended sphere and are not exposed to client code.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `return session[requestedField];`,
       correct: false,
-      explanation: 'Direct from MITRE: Unrestricted field access exposes sensitive session data to wrong spheres. Clients could access internal authentication tokens or admin flags.'
+      explanation: 'Unrestricted field access exposes sensitive session data to wrong spheres. Clients could access internal authentication tokens or admin flags.'
     },
     {
       code: `if (requestedField !== 'password') return session[requestedField];`,

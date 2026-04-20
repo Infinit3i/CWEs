@@ -161,7 +161,7 @@ if (sourceAccount.length === 0) {
   });
 }`,
       correct: true,
-      explanation: `Correct! This prevents information exposure by logging detailed validation errors securely on the server while returning only generic error messages to the client. The error ID allows developers to correlate user reports with server logs without exposing sensitive business logic, database schema, account ownership details, or system configuration that attackers could use to understand the application's internal workings and plan targeted attacks.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

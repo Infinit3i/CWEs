@@ -39,13 +39,13 @@ if (allowedDomains.includes(url.hostname)) {
   window.location.href = '/dashboard';
 }`,
       correct: true,
-      explanation: `Correct! This implements domain allowlisting to prevent open redirects. By parsing the URL and checking the hostname against a predefined list of trusted domains, we ensure users can only be redirected to legitimate parts of our application. If an attacker tries to inject 'http://evil.com' as the redirect URL, the hostname check will fail and the user will be safely redirected to the default dashboard instead.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {
       code: `window.location.href = redirectUrl;`,
       correct: false,
-      explanation: 'Direct from MITRE: Unvalidated redirect allows attackers to send users to malicious sites. An attacker could craft a link like "myapp.com/oauth?state=http://phishing-site.com" to steal credentials.'
+      explanation: 'Unvalidated redirect allows attackers to send users to malicious sites. An attacker could craft a link like "myapp.com/oauth?state=http://phishing-site.com" to steal credentials.'
     },
     {
       code: `if (!redirectUrl.includes('javascript:')) { window.location.href = redirectUrl; }`,

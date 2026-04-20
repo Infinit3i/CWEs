@@ -21,12 +21,12 @@ export const cwe617NumericRange: Exercise = {
     {
       code: `if (quantity <= 0) { throw new RangeError('Quantity must be positive'); } if (quantity > 1000) { throw new RangeError('Quantity cannot exceed 1000'); }`,
       correct: true,
-      explanation: `Correct! Using explicit range validation with proper exceptions prevents assertions from being triggered by invalid user input while maintaining business logic constraints.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `assert(quantity > 0, 'Quantity must be positive');`,
       correct: false,
-      explanation: 'Direct from MITRE: Negative or zero quantities provided by users trigger this assertion, causing application crashes. Input validation should not rely on assertions.'
+      explanation: 'Negative or zero quantities provided by users trigger this assertion, causing application crashes. Input validation should not rely on assertions.'
     },
     {
       code: `assert(quantity && quantity > 0 && quantity <= 1000);`,

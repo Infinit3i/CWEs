@@ -50,12 +50,12 @@ export const cwe362SessionCheck: Exercise = {
     {
       code: `const result = await Session.findOneAndUpdate({ sessionId, userId, expiresAt: { $gte: now } }, { expiresAt: newExpiry, lastActivity: now }, { returnDocument: 'after' }); if (!result) throw new Error('Session expired or invalid');`,
       correct: true,
-      explanation: `Correct! Atomic findOneAndUpdate with expiry condition prevents race conditions between checking and updating sessions. This ensures expired sessions cannot be extended and valid sessions are updated atomically.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `if (session.expiresAt < now) {`,
       correct: false,
-      explanation: 'From MITRE: Race condition allows concurrent requests to check session expiry before deletion occurs. This can result in expired sessions being extended or used after they should have been invalidated.'
+      explanation: 'Race condition allows concurrent requests to check session expiry before deletion occurs. This can result in expired sessions being extended or used after they should have been invalidated.'
     },
     {
       code: `const sessionCopy = {...session}; if (sessionCopy.expiresAt < now) {`,

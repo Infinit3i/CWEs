@@ -28,12 +28,12 @@ export const cwe668ApiEndpoints: Exercise = {
     {
       code: `if (document.department !== userRole && document.accessLevel !== 'public') throw new Error('Access denied'); return document;`,
       correct: true,
-      explanation: `Correct! Validating that the user's role matches the document department or the document is public ensures users only access resources within their authorized sphere.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `return { id: document.id, title: document.title, content: document.content, department: document.department };`,
       correct: false,
-      explanation: 'Direct from MITRE: No authorization check allows users to access documents from any department. This exposes resources to the wrong sphere based on user roles.'
+      explanation: 'No authorization check allows users to access documents from any department. This exposes resources to the wrong sphere based on user roles.'
     },
     {
       code: `if (userRole === 'admin') return document; return { id: document.id, title: document.title };`,

@@ -71,14 +71,14 @@ export const cwe77FileBackup: Exercise = {
   });
 }`,
       correct: true,
-      explanation: `Correct! Using spawn() with individual arguments prevents command injection. The filename is properly validated and sanitized, and arguments are passed separately rather than as a concatenated string.`
+      explanation: `Use proper cryptographic functions`
     },
     // Command injection vulnerabilities from MITRE
     {
       code: `const cmd = \`tar -czf \${backupDir}/\${fileName}_backup.tar.gz \${fileName}\`;
 exec(cmd);`,
       correct: false,
-      explanation: 'Direct from MITRE: Unescaped user input in shell commands. A filename like "test.txt; rm -rf /" would execute as "tar -czf backup.tar.gz test.txt; rm -rf /" destroying the file system.'
+      explanation: 'Unescaped user input in shell commands. A filename like "test.txt; rm -rf /" would execute as "tar -czf backup.tar.gz test.txt; rm -rf /" destroying the file system.'
     },
     {
       code: `const cmd = '/bin/ls -l ' + fileName;

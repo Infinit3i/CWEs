@@ -51,7 +51,7 @@ if (!isOwner && !isAdmin) {
 deleteFile(fileId);
 return { success: true, message: \`File \${fileId} deleted\` };`,
       correct: true,
-      explanation: `Correct! This validates the JWT token server-side to get the authenticated user ID and roles, then properly checks ownership against the file metadata. All authorization decisions are based on verified server-side data.`
+      explanation: `Validate authorization for each resource`
     },
     // Authorization bypass vulnerabilities
     {

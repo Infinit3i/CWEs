@@ -40,12 +40,12 @@ export const cwe416CacheInvalidation: Exercise = {
     {
       code: `if (operation !== 'invalidate' && !(operation === 'expire' && isCacheExpired(cacheEntry))) { updateCacheStatistics(cacheEntry, operation); }`,
       correct: true,
-      explanation: `Correct! This condition checks both explicit invalidation and expiration scenarios before accessing the cache entry. It prevents use-after-free by only updating statistics when the cache entry hasn't been deallocated.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `updateCacheStatistics(cacheEntry, operation);`,
       correct: false,
-      explanation: 'MITRE use-after-free pattern: cacheEntry is deallocated in invalidate and expire operations but still accessed for statistics. This can corrupt memory or cause crashes when accessing freed cache data.'
+Use after free causes crashes'
     },
     {
       code: `if (operation !== "invalidate") { updateCacheStatistics(cacheEntry, operation); }`,

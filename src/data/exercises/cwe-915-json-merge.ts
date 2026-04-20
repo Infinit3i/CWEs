@@ -32,12 +32,12 @@ export const cwe915JsonMerge: Exercise = {
   target[key] = source[key];
 }`,
       correct: true,
-      explanation: `Correct! Blocking dangerous property names prevents prototype pollution during object merging. This stops attacks using "__proto__", "constructor.prototype", or direct "prototype" manipulation to modify Object.prototype.`
+      explanation: `Validate merge operations`
     },
     {
       code: `target[key] = source[key];`,
       correct: false,
-      explanation: 'Direct from MITRE: Unchecked property assignment during object merging enables prototype pollution via paths like {"__proto__": {"isAdmin": true}}.'
+      explanation: 'Unchecked property assignment during object merging enables prototype pollution via paths like {"__proto__": {"isAdmin": true}}.'
     },
     {
       code: `if (source.hasOwnProperty(key)) target[key] = source[key];`,

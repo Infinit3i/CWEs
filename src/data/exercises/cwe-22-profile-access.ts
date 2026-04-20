@@ -25,12 +25,12 @@ export const cwe22ProfileAccess: Exercise = {
     {
       code: `const safeName = username.replace(/[^a-zA-Z0-9_-]/g, ''); if (!safeName || safeName !== username) throw new Error('Invalid username'); const profilePath = path.resolve('/var/www/profiles/' + safeName + '.json');`,
       correct: true,
-      explanation: `Correct! This validates that the username contains only safe characters (alphanumeric, underscore, dash) and rejects any input containing path traversal characters. The strict character whitelist prevents all forms of directory traversal.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const profilePath = '/users/cwe/profiles/' + username + '.json';`,
       correct: false,
-      explanation: 'Direct from MITRE: This pattern enables attackers to inject "../../../etc/passwd%00" to escape the intended directory and access sensitive files, with null byte truncation bypassing the .json extension.'
+      explanation: 'This pattern enables attackers to inject "../../../etc/passwd%00" to escape the intended directory and access sensitive files, with null byte truncation bypassing the .json extension.'
     },
     {
       code: `const cleaned = username.replace('../', ''); const profilePath = '/var/www/profiles/' + cleaned + '.json';`,
@@ -40,7 +40,7 @@ export const cwe22ProfileAccess: Exercise = {
     {
       code: `if (username.startsWith('user_')) { const profilePath = '/var/www/profiles/' + username + '.json'; }`,
       correct: false,
-      explanation: 'MITRE pattern: startsWith() validation can be bypassed. Input like "user_../../etc/passwd" passes validation yet still contains effective traversal sequences.'
+      explanation: 'startsWith() validation can be bypassed. Input like "user_../../etc/passwd" passes validation yet still contains effective traversal sequences.'
     },
     {
       code: `const profilePath = path.join('/var/www/profiles', username + '.json');`,

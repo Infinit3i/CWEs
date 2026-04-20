@@ -24,12 +24,12 @@ export const cwe352EmailChange: Exercise = {
     {
       code: `const csrfToken = generateCSRFToken(req.session); app.post('/change-email', (req, res) => { if (req.body._csrf !== req.session.csrfToken) { return res.status(403).send('CSRF token mismatch'); }`,
       correct: true,
-      explanation: `Correct! CSRF tokens prevent the MITRE attack scenario where malicious sites auto-submit forms. Without access to the victim's session-specific token, attackers cannot craft valid requests even with knowledge of the endpoint structure.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `if (!session_is_registered("username")) { echo "invalid session detected!"; exit; } update_profile();`,
       correct: false,
-      explanation: 'Direct from MITRE: Session validation alone cannot prevent CSRF since attackers forge requests through the user\'s browser within existing authenticated sessions, allowing email changes without user consent.'
+      explanation: 'Session validation alone cannot prevent CSRF since attackers forge requests through the user\'s browser within existing authenticated sessions, allowing email changes without user consent.'
     },
     {
       code: `if ($origin !== "https://trusted-site.com") { die("Invalid origin"); } update_email($newEmail);`,

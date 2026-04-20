@@ -29,12 +29,12 @@ export const cwe665BufferManagement: Exercise = {
     {
       code: `this.buffer = new Array(size).fill(null); this.size = size; this.itemCount = 0;`,
       correct: true,
-      explanation: `Correct! Using fill(null) ensures all buffer slots start with known values, preventing access to previous data. Tracking size and item count helps maintain buffer state integrity.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `this.buffer = new Array(size);`,
       correct: false,
-      explanation: 'Direct from MITRE: Uninitialized array elements contain undefined values or previous memory contents. Reading from unwritten positions may expose sensitive data from previous buffer uses.'
+      explanation: 'Uninitialized array elements contain undefined values or previous memory contents. Reading from unwritten positions may expose sensitive data from previous buffer uses.'
     },
     {
       code: `this.buffer = [];`,

@@ -60,7 +60,7 @@ profileCache[cacheKey] = {
   // Exclude SSN, credit cards, tokens, and other sensitive data
 };`,
       correct: true,
-      explanation: `Correct! Excluding sensitive data like SSN, credit cards, and authentication tokens from cache prevents unauthorized access to personal and financial information while maintaining performance benefits.`
+      explanation: `Clear session cache properly`
     },
     {
       code: `profileCache[cacheKey] = {
@@ -73,7 +73,7 @@ profileCache[cacheKey] = {
   }
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Caching sensitive personal data like SSN, credit cards, and authentication tokens enables identity theft and unauthorized access if cache is compromised.'
+      explanation: 'Caching sensitive personal data like SSN, credit cards, and authentication tokens enables identity theft and unauthorized access if cache is compromised.'
     },
     {
       code: `const maskedSSN = profile.socialSecurityNumber.replace(/\\d(?=\\d{4})/g, '*');

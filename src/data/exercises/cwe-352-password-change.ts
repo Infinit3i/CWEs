@@ -27,12 +27,12 @@ export const cwe352PasswordChange: Exercise = {
     {
       code: `app.post('/change-password', isAuthenticated, csrfProtection, (req, res) => { const token = req.body._csrf || req.headers['csrf-token']; if (!token || !validateCSRFToken(token, req.session.csrfSecret)) { return res.status(403).json({ error: 'CSRF token invalid' }); }`,
       correct: true,
-      explanation: `Correct! CSRF tokens prevent malicious sites from auto-submitting password change forms. Even if attackers know the current password, they cannot forge the session-specific token required to complete the request, protecting against automated CSRF attacks.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `function SendAttack() { form.currentPassword = "user123"; form.newPassword = "attacker456"; form.submit(); }`,
       correct: false,
-      explanation: 'Direct from MITRE: This JavaScript automatically submits a hidden form when the page loads, changing the victim\'s password silently while they\'re logged in. No user interaction required for the attack to succeed.'
+      explanation: 'This JavaScript automatically submits a hidden form when the page loads, changing the victim\'s password silently while they\'re logged in. No user interaction required for the attack to succeed.'
     },
     {
       code: `if (!isset($_SESSION['username'])) { echo "invalid session detected!"; exit; } change_password($_POST['newPassword']);`,

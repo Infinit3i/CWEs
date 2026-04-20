@@ -40,7 +40,7 @@ export const cwe642HiddenFieldPrice: Exercise = {
     {
       code: `price: getAuthorativeProductPrice(formData[\`product_\${i}\`])`,
       correct: true,
-      explanation: `Correct! Retrieves price from authoritative database rather than trusting client-provided hidden form fields. This prevents price manipulation where customers modify hidden fields to purchase items for arbitrary prices.`
+      explanation: `Get price from database not hidden fields`
     },
     {
       code: `price: parseFloat(formData[\`price_\${i}\`]) // Trust client price`,

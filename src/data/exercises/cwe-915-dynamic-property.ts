@@ -37,12 +37,12 @@ if (ALLOWED_PROPERTIES.has(propertyName)) {
   current[finalProp] = propertyValue;
 }`,
       correct: true,
-      explanation: `Correct! Using a Set-based allowlist of specific property paths prevents both prototype pollution and unauthorized property modification. This ensures only legitimate API properties can be updated.`
+      explanation: `Restrict dynamic property access`
     },
     {
       code: `current[finalProp] = propertyValue;`,
       correct: false,
-      explanation: 'Direct from MITRE: Unchecked dynamic property assignment allows attackers to modify arbitrary object properties including prototype chain pollution.'
+      explanation: 'Unchecked dynamic property assignment allows attackers to modify arbitrary object properties including prototype chain pollution.'
     },
     {
       code: `if (propertyName.charAt(0) !== '_') current[finalProp] = propertyValue;`,

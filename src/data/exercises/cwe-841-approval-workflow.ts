@@ -42,7 +42,7 @@ export const cwe841ApprovalWorkflow: Exercise = {
     {
       code: `if (action === 'publish' && document.status === 'approved') {`,
       correct: true,
-      explanation: `Correct! Enforces the required approval workflow where documents must be approved before publication. This prevents workflow bypass where unapproved content could be published, maintaining content quality and compliance requirements.`
+      explanation: `Check approval before proceeding`
     },
     {
       code: `if (action === 'publish') { // No workflow validation`,

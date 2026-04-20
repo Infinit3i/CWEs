@@ -47,7 +47,7 @@ const authContext = {
   clientMetadata: clientAuthData // Keep separate, don't use for auth decisions
 };`,
       correct: true,
-      explanation: `Correct! Only using verified token data for authentication decisions prevents privilege escalation. Client-provided data is kept separate and cannot override security-critical properties from the trusted JWT.`
+      explanation: `Verify authentication sources`
     },
     {
       code: `const authContext = {
@@ -56,7 +56,7 @@ const authContext = {
   authenticated: true
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Merging untrusted client data with trusted authentication tokens allows privilege escalation. Clients can include {"role": "admin"} to bypass authorization controls.'
+      explanation: 'Merging untrusted client data with trusted authentication tokens allows privilege escalation. Clients can include {"role": "admin"} to bypass authorization controls.'
     },
     {
       code: `Object.assign(decodedToken, clientAuthData);

@@ -83,7 +83,7 @@ const accessQuery = \`
 
 const docResult = await db.query(accessQuery, [documentId, currentUserId, currentUserId]);`,
       correct: true,
-      explanation: `Correct! This implements proper authorization by checking multiple access conditions: document ownership, public visibility, or explicit sharing permissions. The query ensures users can only access documents they own, public documents, or documents explicitly shared with them. This prevents unauthorized access while supporting legitimate sharing functionality and prevents horizontal privilege escalation through document ID manipulation.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

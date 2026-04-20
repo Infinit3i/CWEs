@@ -36,7 +36,7 @@ export const cwe125MessageProcessing: Exercise = {
     {
       code: `if (messageLength <= messageBody.length && messageLength <= MESSAGE_SIZE) { /* copy loop */ } else { throw new Error('Invalid message length'); }`,
       correct: true,
-      explanation: `Correct! Validating that messageLength doesn't exceed both the source buffer size and destination buffer prevents out-of-bounds reads from messageBody and out-of-bounds writes to processedMessage. This ensures safe copying within allocated boundaries.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `processedMessage[index] = messageBody[index];`,

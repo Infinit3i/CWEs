@@ -51,7 +51,7 @@ export const cwe345DataIntegrity: Exercise = {
     {
       code: `if (!verifyPackageSignature(packageData, packageInfo.signature, trustedPublicKeys)) { throw new Error('Package signature verification failed'); }`,
       correct: true,
-      explanation: `Correct! Uses cryptographic signature verification with trusted public keys instead of checksums. This ensures package authenticity and prevents attackers from distributing malicious packages with matching checksums.`
+      explanation: `Verify data integrity`
     },
     {
       code: `const calculatedChecksum = await calculateSHA1(packageData); // SHA1 checksum only`,

@@ -48,7 +48,7 @@ const finalConfig = {
   source: 'merged'
 };`,
       correct: true,
-      explanation: `Correct! Allowlisting specific user-configurable properties prevents injection of security-critical configuration. This blocks attempts to override dangerous settings like database credentials or security flags while allowing safe user preferences.`
+      explanation: `Validate config data sources`
     },
     {
       code: `const finalConfig = {
@@ -57,7 +57,7 @@ const finalConfig = {
   loaded: true
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Accepting arbitrary user configuration overrides enables security bypass. Users can override critical settings like database URLs, admin flags, or security configurations (CAPEC-75).'
+      explanation: 'Accepting arbitrary user configuration overrides enables security bypass. Users can override critical settings like database URLs, admin flags, or security configurations (CAPEC-75).'
     },
     {
       code: `Object.assign(baseConfig, userOverrides);

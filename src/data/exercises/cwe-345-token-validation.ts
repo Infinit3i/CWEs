@@ -51,7 +51,7 @@ export const cwe345TokenValidation: Exercise = {
     {
       code: `const expectedSignature = generateHMAC(header + '.' + payload, secretKey); if (signature !== expectedSignature) { return { valid: false, reason: 'Invalid signature' }; }`,
       correct: true,
-      explanation: `Correct! Verifies JWT signature using HMAC with a secret key before trusting token contents. This prevents token forgery where attackers create fake tokens or modify token claims without proper cryptographic validation.`
+      explanation: `Validate token signatures`
     },
     {
       code: `// Token appears valid return { valid: true, userId: decodedPayload.sub, role: decodedPayload.role };`,

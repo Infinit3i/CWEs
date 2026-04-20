@@ -54,7 +54,7 @@ function updateProgress(current, total) {
   return results;
 }`,
       correct: true,
-      explanation: `Correct! Pre-addition overflow checking prevents index calculations from wrapping around. This ensures array access remains within valid bounds and prevents buffer overread vulnerabilities.`
+      explanation: `Use proper cryptographic functions`
     },
     // Array indexing overflow vulnerabilities
     {

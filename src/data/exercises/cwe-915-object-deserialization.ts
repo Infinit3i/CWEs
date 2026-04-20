@@ -38,12 +38,12 @@ if (SAFE_PREFIXES.some(prefix => path.startsWith(prefix))) {
   current[keys[keys.length - 1]] = value;
 }`,
       correct: true,
-      explanation: `Correct! Restricting deserialization to safe path prefixes prevents prototype pollution. This blocks dangerous paths like "__proto__.isAdmin" or "constructor.prototype.polluted" while allowing legitimate session data.`
+      explanation: `Prevent object deserialization attacks`
     },
     {
       code: `current[keys[keys.length - 1]] = value;`,
       correct: false,
-      explanation: 'Direct from MITRE: Unchecked object property assignment during deserialization enables prototype pollution via crafted session data.'
+      explanation: 'Unchecked object property assignment during deserialization enables prototype pollution via crafted session data.'
     },
     {
       code: `if (keys[keys.length - 1] !== '__proto__') current[keys[keys.length - 1]] = value;`,

@@ -49,7 +49,7 @@ for (const record of dnsResponse[section]) {
   }
 }`,
       correct: true,
-      explanation: `Correct! Only caching the exact requested record prevents DNS cache poisoning. This blocks attackers from injecting malicious extra records in the additional/authority sections that could redirect future queries to attacker-controlled servers.`
+      explanation: `Validate DNS responses`
     },
     {
       code: `for (const record of dnsResponse[section]) {
@@ -61,7 +61,7 @@ for (const record of dnsResponse[section]) {
   };
 }`,
       correct: false,
-      explanation: 'Direct from MITRE: Caching all DNS records including additional/authority sections enables cache poisoning. Attackers can inject malicious records for unrelated domains (CAPEC-142).'
+      explanation: 'Caching all DNS records including additional/authority sections enables cache poisoning. Attackers can inject malicious records for unrelated domains (CAPEC-142).'
     },
     {
       code: `if (section === 'answers') {

@@ -22,12 +22,12 @@ export const cwe369BatchProcessing: Exercise = {
     {
       code: `if (timeElapsedSeconds === 0) { return { rate: 'Instantaneous', itemsProcessed: itemsProcessed, timeElapsed: timeElapsedSeconds, estimatedCompletion: 'Instant' }; } const itemsPerSecond = itemsProcessed / timeElapsedSeconds;`,
       correct: true,
-      explanation: `Correct! Checking for zero timeElapsedSeconds and providing a meaningful response for instantaneous processing prevents crashes while handling the edge case appropriately.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const itemsPerSecond = itemsProcessed / timeElapsedSeconds;`,
       correct: false,
-      explanation: 'Direct from MITRE: When timeElapsedSeconds is zero (instantaneous or measurement error), this division causes an application crash. Input validation is needed.'
+      explanation: 'When timeElapsedSeconds is zero (instantaneous or measurement error), this division causes an application crash. Input validation is needed.'
     },
     {
       code: `const itemsPerSecond = timeElapsedSeconds > 0 ? itemsProcessed / timeElapsedSeconds : itemsProcessed * 1000;`,

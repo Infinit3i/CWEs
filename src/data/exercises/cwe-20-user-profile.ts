@@ -29,7 +29,7 @@ export const cwe20UserProfile: Exercise = {
     {
       code: `const safeBirthday = escapeHTML(birthday); const safeHomepage = escapeHTML(homepage);`,
       correct: true,
-      explanation: `Correct! HTML escaping converts dangerous characters like <, >, and & to safe entities (&lt;, &gt;, &amp;). This prevents injection of script tags or malicious HTML while preserving the original content for display purposes.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `<p>Birthday: \${birthday}</p>`,

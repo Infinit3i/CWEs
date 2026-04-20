@@ -28,12 +28,12 @@ export const cwe476HostLookup: Exercise = {
     {
       code: `const hp = gethostbyaddr(addr, 4, AF_INET); if (hp === null || hp === undefined) { throw new Error('Host lookup failed'); } hostname = hp.h_name;`,
       correct: true,
-      explanation: `Correct! This validates the return value before dereferencing. The MITRE example shows that "if gethostbyaddr() fails, it returns NULL" causing a crash when accessing hp.h_name without null checking.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `void host_lookup(char *user_supplied_addr) { struct hostent *hp; hp = gethostbyaddr(addr, sizeof(struct in_addr), AF_INET); strcpy(hostname, hp->h_name); }`,
       correct: false,
-      explanation: 'Direct from MITRE: "If gethostbyaddr() fails, it returns NULL" but the code proceeds to dereference NULL in strcpy(), causing a crash when hp->h_name is accessed.'
+      explanation: '"If gethostbyaddr() fails, it returns NULL" but the code proceeds to dereference NULL in strcpy(), causing a crash when hp->h_name is accessed.'
     },
     {
       code: `const hp = gethostbyaddr(addr, 4, AF_INET); try { hostname = hp.h_name; } catch (e) { hostname = "unknown"; }`,

@@ -41,12 +41,12 @@ export const cwe306AdminApi: Exercise = {
     {
       code: `async createUserAccount(req: Request, res: Response) { const user = await this.authenticateAdmin(req); if (!user || user.role !== 'admin') { return res.status(403).json({ error: 'Admin access required' }); }`,
       correct: true,
-      explanation: `Correct! Administrative functions must verify both authentication (who is the user) and authorization (does the user have admin privileges) before allowing sensitive operations like user creation.`
+      explanation: `Require authentication before access`
     },
     {
       code: `async createUserAccount(req: Request, res: Response) {`,
       correct: false,
-      explanation: 'From MITRE: "There is no authentication mechanism to ensure that the user creating this bank account object has the authority to create new bank accounts." Same applies to user accounts - anyone can create admin users.'
+      explanation: '"There is no authentication mechanism to ensure that the user creating this bank account object has the authority to create new bank accounts." Same applies to user accounts - anyone can create admin users.'
     },
     {
       code: `async createUserAccount(req: Request, res: Response) { if (!req.headers.authorization) { return res.status(401).json({ error: 'Authorization header required' }); }`,

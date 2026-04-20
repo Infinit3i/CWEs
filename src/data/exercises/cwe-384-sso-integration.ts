@@ -66,7 +66,7 @@ return {
   user: { username: ssoData.username, email: ssoData.email }
 };`,
       correct: true,
-      explanation: `Correct! Creating a new session ID after SSO authentication prevents session fixation attacks. This ensures attackers cannot pre-establish a session and then hijack it after successful SSO authentication.`
+      explanation: `New session for SSO login`
     },
     {
       code: `sessions[sessionId] = {
@@ -75,7 +75,7 @@ return {
   ssoAuthenticated: true
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Reusing existing session ID after SSO authentication enables session fixation. Attackers can establish a session, initiate SSO flow, then hijack authenticated session.'
+      explanation: 'Reusing existing session ID after SSO authentication enables session fixation. Attackers can establish a session, initiate SSO flow, then hijack authenticated session.'
     },
     {
       code: `if (sessions[sessionId]) {

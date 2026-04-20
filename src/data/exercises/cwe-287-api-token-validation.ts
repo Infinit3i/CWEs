@@ -37,7 +37,7 @@ export const cwe287ApiToken: Exercise = {
   return { authenticated: false };
 }`,
       correct: true,
-      explanation: `Correct! Proper JWT signature verification ensures the token is cryptographically valid and hasn't been tampered with. The role comes from the verified token payload, not client-controlled headers.`
+      explanation: `Validate credentials server-side with expiration`
     },
     // Authentication bypass vulnerabilities
     {
@@ -46,7 +46,7 @@ if (tokenValue.length > 0 && userRole === 'admin') {
     return { authenticated: true, role: 'admin' };
 }`,
       correct: false,
-      explanation: 'Trusting client-provided role headers allows privilege escalation. Attackers can send X-User-Role: admin with any valid token to gain administrative access.'
+      explanation: 'Client-controlled role headers allow privilege escalation.'
     },
     {
       code: `if (tokenValue && req.headers['x-authenticated'] === 'true') {
@@ -54,14 +54,14 @@ if (tokenValue.length > 0 && userRole === 'admin') {
     return { authenticated: true, role: role };
 }`,
       correct: false,
-      explanation: 'Multiple client-controlled headers compound the authentication bypass. Attackers control both authentication state and role assignment.'
+      explanation: 'Multiple client-controlled headers bypass authentication.'
     },
     {
       code: `if (tokenValue.includes('admin') || req.headers['admin-flag'] === '1') {
     return { authenticated: true, role: 'admin' };
 }`,
       correct: false,
-      explanation: 'String matching in tokens and client-controlled flags create multiple bypass vectors. Attackers can inject "admin" strings or set header flags.'
+      explanation: 'String matching and client flags create bypass vectors.'
     },
     {
       code: `const decoded = Buffer.from(tokenValue, 'base64').toString();
@@ -69,7 +69,7 @@ if (JSON.parse(decoded).role === 'admin') {
     return { authenticated: true, role: 'admin' };
 }`,
       correct: false,
-      explanation: 'Base64 decoding without signature verification allows token forgery. Attackers can craft tokens with any role since there is no cryptographic protection.'
+      explanation: 'Base64 decoding without signature verification allows forgery.'
     },
     {
       code: `if (tokenValue.length >= 32 && req.headers['user-type'] === 'administrator') {

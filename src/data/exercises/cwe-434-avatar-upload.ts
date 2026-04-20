@@ -26,12 +26,12 @@ export const cwe434AvatarUpload: Exercise = {
     {
       code: `const allowedTypes = ['image/jpeg', 'image/png', 'image/gif']; const allowedExts = ['.jpg', '.jpeg', '.png', '.gif']; if (!allowedTypes.includes(req.file.mimetype) || !allowedExts.includes(path.extname(filename).toLowerCase())) { return res.status(400).json({ error: 'Invalid file type' }); } const safeFilename = crypto.randomUUID() + path.extname(filename).toLowerCase();`,
       correct: true,
-      explanation: `Correct! This validates both MIME type and file extension, then generates a safe random filename. This prevents the MITRE attack where "malicious.php" uploads containing "<?php system($_GET['cmd']); ?>" could be executed via direct URL access.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const target = "pictures/" + basename($_FILES['uploadedfile']['name']); if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target)) { echo "Upload successful"; }`,
       correct: false,
-      explanation: 'Direct from MITRE: No validation allows uploading "malicious.php" containing "<?php system($_GET[\'cmd\']); ?>", then executing arbitrary commands via "http://server.example.com/pictures/malicious.php?cmd=ls%20-l".'
+      explanation: 'No validation allows uploading "malicious.php" containing "<?php system($_GET[\'cmd\']); ?>", then executing arbitrary commands via "http://server.example.com/pictures/malicious.php?cmd=ls%20-l".'
     },
     {
       code: `if (req.file.mimetype.startsWith('image/')) { const uploadPath = path.join(__dirname, 'public/avatars/', filename); fs.writeFileSync(uploadPath, req.file.buffer); }`,

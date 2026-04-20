@@ -107,7 +107,7 @@ export const cwe77ImageProcessor: Exercise = {
   });
 }`,
       correct: true,
-      explanation: `Correct! Using spawn() with validated arguments prevents command injection. File paths are sanitized, parameters are validated and converted to safe types, and arguments are passed as an array.`
+      explanation: `Use proper cryptographic functions`
     },
     // Image processing command injection vulnerabilities
     {

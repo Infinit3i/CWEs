@@ -27,17 +27,17 @@ export const cwe352FundTransfer: Exercise = {
     {
       code: `const doubleSubmitCSRF = require('./csrf-middleware'); app.post('/api/transfer', authenticateBanking, doubleSubmitCSRF, (req, res) => { if (!req.csrfTokenValid) { return res.status(403).json({ error: 'Invalid CSRF token' }); }`,
       correct: true,
-      explanation: `Correct! CSRF protection is critical for financial operations. The double-submit cookie pattern or synchronizer tokens prevent malicious sites from auto-submitting transfer forms, protecting users from unauthorized transactions even while logged into their banking session.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `<BODY onload="javascript:SendAttack();"> <form action="http://bank.example.com/api/transfer" method="post"> <input type="hidden" name="toAccount" value="attacker123"> <input type="hidden" name="amount" value="10000"> </form>`,
       correct: false,
-      explanation: 'Direct from MITRE: This hidden form auto-submits when loaded, transferring funds to the attacker\'s account while the victim is logged into their banking session. No user interaction required.'
+      explanation: 'This hidden form auto-submits when loaded, transferring funds to the attacker\'s account while the victim is logged into their banking session. No user interaction required.'
     },
     {
       code: `if (!req.session.authenticated) { return res.status(401).json({ error: 'Authentication required' }); } processTransfer(fromAccount, toAccount, amount);`,
       correct: false,
-      explanation: 'MITRE pattern: Authentication alone cannot prevent CSRF since attackers exploit existing authenticated sessions through the user\'s browser, making unauthorized transfers appear legitimate.'
+      explanation: 'Authentication alone cannot prevent CSRF since attackers exploit existing authenticated sessions through the user\'s browser, making unauthorized transfers appear legitimate.'
     },
     {
       code: `if (parseFloat(amount) > 1000) { return res.status(403).json({ error: 'Amount too large' }); } processTransfer(fromAccount, toAccount, amount);`,

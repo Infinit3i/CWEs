@@ -21,12 +21,12 @@ export const cwe617JsonParsing: Exercise = {
     {
       code: `if (!data.hasOwnProperty('action')) { throw new Error('Action field required'); } if (!data.action || data.action.length === 0) { throw new Error('Action cannot be empty'); }`,
       correct: true,
-      explanation: `Correct! Using explicit checks with proper error throwing prevents assertions from being triggered by malformed JSON while providing clear error messages for API clients.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `assert(data.hasOwnProperty('action'), 'Action field required');`,
       correct: false,
-      explanation: 'Direct from MITRE: Malformed JSON without action field triggers this assertion, causing server crashes. API input validation should use proper error responses, not assertions.'
+      explanation: 'Malformed JSON without action field triggers this assertion, causing server crashes. API input validation should use proper error responses, not assertions.'
     },
     {
       code: `assert(data && data.hasOwnProperty('action'), 'Valid data with action required');`,

@@ -39,7 +39,7 @@ if (!canDelete) {
 }
 return { success: true, message: \`Account \${userId} deleted\` };`,
       correct: true,
-      explanation: `Correct! This uses proper JWT token verification, validates the token server-side, and checks authorization based on verified user identity or admin role. All authorization decisions are made using trusted server-side data.`
+      explanation: `Validate authorization for each resource`
     },
     // Authorization bypass vulnerabilities
     {

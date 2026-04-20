@@ -27,7 +27,7 @@ const template = allowedTemplates[templateName];
 if (!template) throw new Error('Invalid template');
 return template(data);`,
       correct: true,
-      explanation: `Correct! This uses a predefined allowlist of template functions instead of dynamic code generation. Each template is a pre-compiled function, eliminating the need for eval() and preventing code injection through template parameters.`
+      explanation: `Use proper cryptographic functions`
     },
     // MITRE-inspired wrong answers
     {

@@ -33,12 +33,12 @@ export const cwe913EvalInjection: Exercise = {
 if (!ALLOWED_TOKENS.test(userExpression)) throw new Error('Invalid characters');
 return new Function(fullCode)();`,
       correct: true,
-      explanation: `Correct! Restricting input to safe mathematical characters prevents code injection. This blocks dangerous JavaScript like "process.exit()" or "require('fs')" while allowing legitimate mathematical expressions.`
+      explanation: `Avoid eval with dynamic input`
     },
     {
       code: `return new Function(fullCode)();`,
       correct: false,
-      explanation: 'Direct from MITRE: Dynamic code execution with user input allows arbitrary JavaScript injection. Attackers can execute "process.exit()" or "require(\'child_process\').exec(\'rm -rf /\')".'
+      explanation: 'Dynamic code execution with user input allows arbitrary JavaScript injection. Attackers can execute "process.exit()" or "require(\'child_process\').exec(\'rm -rf /\')".'
     },
     {
       code: `return eval(fullCode);`,

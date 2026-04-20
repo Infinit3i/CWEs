@@ -27,17 +27,17 @@ export const cwe78FileListing: Exercise = {
     {
       code: `const command = ['ls', '-l', '/home/' + userName.replace(/[^a-zA-Z0-9_-]/g, '')];`,
       correct: true,
-      explanation: `Correct! Using an array for command arguments prevents shell interpretation and input sanitization removes dangerous characters. This prevents command injection while safely constructing the file path for the intended ls operation.`
+      explanation: `Use array arguments to prevent injection`
     },
     {
       code: `const command = 'ls -l /home/' + userName;`,
       correct: false,
-      explanation: 'MITRE PHP-style command injection: User input directly concatenated into shell command. Attacker can inject commands like "user; rm -rf /" or "user && cat /etc/passwd" to execute arbitrary system commands.'
+      explanation: '      explanation: 'User input allows command injection'
     },
     {
       code: `const command = 'ls -l /home/' + userName.replace(';', '');`,
       correct: false,
-      explanation: 'Incomplete filtering only removes semicolons. Attackers can use other command separators like && (user && malicious_cmd), || (user || cmd), | (user | cmd), or backticks for command substitution.'
+      explanation: 'Removing semicolons only misses other separators'
     },
     {
       code: `const command = 'ls -l /home/' + encodeURIComponent(userName);`,
@@ -72,7 +72,7 @@ export const cwe78FileListing: Exercise = {
     {
       code: `if (userName.includes('..')) { throw new Error('Invalid path'); } const command = 'ls -l /home/' + userName;`,
       correct: false,
-      explanation: 'Path traversal check misses command injection. While preventing "../" attacks, this allows command separators that enable arbitrary command execution beyond path manipulation.'
+      explanation: '      explanation: 'User input allows command injection'
     }
   ]
 }

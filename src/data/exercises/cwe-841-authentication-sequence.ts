@@ -43,52 +43,52 @@ export const cwe841AuthenticationSequence: Exercise = {
     {
       code: `if (command === 'LIST' && sessionState.authenticated) {`,
       correct: true,
-      explanation: `Correct! Enforces authentication before allowing directory listing. This follows MITRE's pattern where all file operations must occur after proper authentication workflow completion, preventing unauthorized directory enumeration.`
+      explanation: `Check authentication before listing files`
     },
     {
       code: `if (command === 'LIST') { // No authentication check`,
       correct: false,
-      explanation: 'Direct MITRE vulnerability pattern. Allows directory listing without authentication, violating the required login workflow sequence and exposing file system structure to unauthorized users.'
+      explanation: 'Lists files without authentication check'
     },
     {
       code: `if (command === 'LIST' && sessionState.username) {`,
       correct: false,
-      explanation: 'Checks username but not authentication status. Users can list files after providing username without completing password verification, bypassing the authentication workflow.'
+      explanation: 'Username set but password not verified'
     },
     {
       code: `if (command === 'LIST' && sessionState.currentDirectory) {`,
       correct: false,
-      explanation: 'Validates directory state but ignores authentication workflow. Any session with a directory set can list files regardless of authentication completion, violating access control sequence.'
+      explanation: 'Directory exists but user not authenticated'
     },
     {
       code: `if (command === 'LIST' && args !== '/root') {`,
       correct: false,
-      explanation: 'Path-based restriction but no authentication requirement. Unauthenticated users can list any directory except /root, still violating the authentication-before-access workflow requirement.'
+      explanation: 'Blocks root folder but allows unauthenticated access'
     },
     {
       code: `if (command === 'LIST') { if (!sessionState.authenticated) return 'Warning: not authenticated'; return listFiles();`,
       correct: false,
-      explanation: 'Warns about authentication but still executes command. The workflow violation occurs as directory listing proceeds without enforcing the mandatory authentication prerequisite.'
+      explanation: 'Warns but still lists files without authentication'
     },
     {
       code: `if (command === 'LIST' && (sessionState.authenticated || args === 'public')) {`,
       correct: false,
-      explanation: 'Creates exception for public listings, violating consistent workflow enforcement. Attackers can bypass authentication by requesting public directory, subverting the login sequence requirement.'
+      explanation: 'Public folder bypass skips authentication requirement'
     },
     {
       code: `if (command === 'LIST' && sessionState.connectionTime > 0) {`,
       correct: false,
-      explanation: 'Time-based check instead of authentication workflow. Any established connection can list files regardless of authentication status, completely bypassing the required login sequence.'
+      explanation: 'Connection time check bypasses login requirement'
     },
     {
       code: `if (command === 'LIST' && sessionState.attempts < 3) {`,
       correct: false,
-      explanation: 'Attempt-based access control ignores authentication workflow. Users with few login attempts can list directories without authentication, violating the sequential access requirement.'
+      explanation: 'Failed attempt count bypasses authentication step'
     },
     {
       code: `if (command === 'LIST') { const hasPermission = checkQuickPermission(); if (hasPermission) return listFiles();`,
       correct: false,
-      explanation: 'Alternative permission check bypasses authentication workflow. Creates unauthorized pathway to file listing that violates the established authentication-first business logic sequence.'
+      explanation: 'Permission check bypasses authentication workflow'
     }
   ]
 }

@@ -35,7 +35,7 @@ export const cwe20BoardDimensions: Exercise = {
     {
       code: `if (width > 0 && height > 0 && width <= MAX_DIMENSION && height <= MAX_DIMENSION) { const totalSquares = width * height; } else { throw new Error('Invalid dimensions'); }`,
       correct: true,
-      explanation: `Correct! Validating that both dimensions are positive prevents negative values that could cause integer overflow in multiplication. This ensures array allocation uses valid positive sizes and prevents memory allocation issues.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const totalSquares = width * height;`,

@@ -37,7 +37,7 @@ export const cwe125ConfigParser: Exercise = {
     {
       code: `if (sectionIndex >= 0 && sectionIndex < Math.min(configLines.length, MAX_LINES)) { const headerLine = configLines[sectionIndex]; }`,
       correct: true,
-      explanation: `Correct! Validating that sectionIndex is non-negative and within actual array bounds prevents out-of-bounds reads. Negative indices or indices beyond array length can read invalid memory or cause crashes.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const headerLine = configLines[sectionIndex];`,

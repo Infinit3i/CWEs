@@ -27,12 +27,12 @@ export const cwe352AdminDelete: Exercise = {
     {
       code: `const csrf = require('csurf'); app.delete('/admin/users/:userId', requireAdmin, csrf({ cookie: { httpOnly: true, secure: true, sameSite: 'strict' } }), (req, res) => {`,
       correct: true,
-      explanation: `Correct! CSRF protection with secure cookie settings prevents the MITRE attack scenario where privileged users are tricked into performing destructive actions. The SameSite=strict setting provides additional protection against cross-site requests.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `app.delete('/admin/users/:userId', (req, res) => { if (!req.session || !req.session.isAdmin) { return res.status(401).json({ error: 'Admin required' }); }`,
       correct: false,
-      explanation: 'MITRE pattern: When a privileged user is compromised via CSRF, "consequences may include obtaining complete control over the web application—deleting or stealing data" because session validation alone is insufficient.'
+      explanation: 'When a privileged user is compromised via CSRF, "consequences may include obtaining complete control over the web application—deleting or stealing data" because session validation alone is insufficient.'
     },
     {
       code: `app.delete('/admin/users/:userId', requireAdmin, (req, res) => { if (req.headers['user-agent'] && req.headers['user-agent'].includes('Mozilla')) { // Proceed with deletion }`,

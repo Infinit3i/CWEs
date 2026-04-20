@@ -35,12 +35,12 @@ export const cwe476HttpResponse: Exercise = {
     {
       code: `const cleanup = () => { if (response !== null && response !== undefined && response.body) { response.body.close(); } }; try { response = client.do(request); } catch (error) { cleanup(); return null; }`,
       correct: true,
-      explanation: `Correct! This validates that response is not null before attempting to access its properties. The MITRE Go example shows "defer response.Body.Close()" executing before error checking, causing a panic when response is nil.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `func HandleRequest(client http.Client, request *http.Request) (*http.Response, error) { response, err := client.Do(request); defer response.Body.Close(); if err != nil { return nil, err; } }`,
       correct: false,
-      explanation: 'Direct from MITRE: "The defer statement executes before error checking. A nil response causes a panic" because defer evaluates immediately, accessing Body.Close() on a nil response when client.Do() fails.'
+      explanation: '"The defer statement executes before error checking. A nil response causes a panic" because defer evaluates immediately, accessing Body.Close() on a nil response when client.Do() fails.'
     },
     {
       code: `const cleanup = () => { try { response.body.close(); } catch (e) { console.log("Cleanup failed"); } }; response = client.do(request);`,

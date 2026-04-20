@@ -83,7 +83,7 @@ export const cwe502MessageQueue: Exercise = {
   return { success: true, processedMessage: sanitized };
 }`,
       correct: true,
-      explanation: `Correct! Restricting to JSON format with message type validation and field allowlisting prevents code execution. This approach safely processes only expected message properties without executing embedded code.`
+      explanation: `Use proper cryptographic functions`
     },
     // Message queue deserialization vulnerabilities
     {

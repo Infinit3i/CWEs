@@ -41,12 +41,12 @@ if (!ALLOWED_PLUGINS.has(pluginName)) {
 }
 const plugin = await import(pluginPath);`,
       correct: true,
-      explanation: `Correct! Allowlisting specific plugin names prevents loading of unauthorized modules. This blocks attempts to import dangerous modules like '../../../etc/passwd' or system modules while allowing only approved plugins.`
+      explanation: `Whitelist allowed imports`
     },
     {
       code: `const plugin = await import(pluginPath);`,
       correct: false,
-      explanation: 'Direct from MITRE: Unchecked dynamic imports allow loading arbitrary modules. Attackers can use directory traversal like "../../dangerous-module" or import system modules with elevated privileges.'
+      explanation: 'Unchecked dynamic imports allow loading arbitrary modules. Attackers can use directory traversal like "../../dangerous-module" or import system modules with elevated privileges.'
     },
     {
       code: `const plugin = require('./plugins/' + pluginName);`,

@@ -26,12 +26,12 @@ export const cwe476IntentReceiver: Exercise = {
     {
       code: `const urlToOpen = intent.getStringExtra("URLToOpen"); if (urlToOpen === null || urlToOpen === undefined) { console.log("No URL provided in intent"); return; } const urlLength = urlToOpen.length;`,
       correct: true,
-      explanation: `Correct! This validates the intent data exists before accessing properties. The MITRE example shows "Missing intent data returns null; calling length() on null causes application crash" when the URLToOpen extra is not provided.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `public void onReceive(Context context, Intent intent) { String URL = intent.getStringExtra("URLToOpen"); int length = URL.length(); }`,
       correct: false,
-      explanation: 'Direct from MITRE: "Missing intent data returns null" but the code proceeds to call length() on NULL, causing a NullPointerException and application crash when the URLToOpen extra is not provided.'
+      explanation: '"Missing intent data returns null" but the code proceeds to call length() on NULL, causing a NullPointerException and application crash when the URLToOpen extra is not provided.'
     },
     {
       code: `const urlToOpen = intent.getStringExtra("URLToOpen"); try { const urlLength = urlToOpen.length; } catch (error) { console.log("Error processing URL"); }`,

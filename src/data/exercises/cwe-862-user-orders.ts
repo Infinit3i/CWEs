@@ -31,12 +31,12 @@ export const cwe862UserOrders: Exercise = {
     {
       code: `const query = \`SELECT o.*, p.card_number, p.amount, p.billing_address FROM orders o LEFT JOIN payments p ON o.id = p.order_id WHERE o.id = ? AND o.user_id = ?\`; db.query(query, [orderId, req.user.id], (err, results) => {`,
       correct: true,
-      explanation: `Correct! This adds user ownership validation by including "AND o.user_id = ?" in the WHERE clause, ensuring users can only access their own order history and payment information. This prevents horizontal privilege escalation attacks.`
+      explanation: `Check user permissions before access`
     },
     {
       code: `if (!session_is_registered("username")) { echo "invalid session detected!"; exit; } show_order_details($orderId);`,
       correct: false,
-      explanation: 'Direct from MITRE: Authentication without ownership validation allows "authenticated attackers to provide any arbitrary identifier" to access other customers\' order and payment information.'
+      explanation: 'Authentication without ownership validation allows "authenticated attackers to provide any arbitrary identifier" to access other customers\' order and payment information.'
     },
     {
       code: `if (req.user && req.user.authenticated) { // User logged in, show any order details const query = \'SELECT * FROM orders WHERE id = ?\'; }`,

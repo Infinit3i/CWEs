@@ -69,7 +69,7 @@ if (allowedPaths.includes(urlPath)) {
   res.redirect('/login');
 }`,
       correct: true,
-      explanation: `Correct! This implements path allowlisting for post-authentication redirects. By parsing the return URL and extracting only the pathname, then checking it against a predefined list of safe internal paths, we prevent open redirects while maintaining good user experience. Even if an attacker injects "http://evil.com/dashboard", only the "/dashboard" path is extracted and validated, then combined with our trusted domain for safe redirection.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

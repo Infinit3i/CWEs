@@ -30,7 +30,7 @@ export const cwe125BufferReader: Exercise = {
     {
       code: `if (startOffset >= 0 && startOffset + readLength <= dataBuffer.length) { /* read loop */ } else { throw new Error('Invalid read parameters'); }`,
       correct: true,
-      explanation: `Correct! Validating that startOffset is non-negative and that startOffset + readLength doesn't exceed buffer length prevents out-of-bounds reads. This ensures all bytes being read are within the allocated buffer boundaries.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const byteValue = dataBuffer[startOffset + i];`,

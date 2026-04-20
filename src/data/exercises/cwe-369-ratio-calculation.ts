@@ -22,12 +22,12 @@ export const cwe369RatioCalculation: Exercise = {
     {
       code: `if (successCount === 0) { return { ratio: Infinity, description: 'No successful operations', errors: errorCount, successes: successCount }; } const errorRatio = errorCount / successCount;`,
       correct: true,
-      explanation: `Correct! Checking for zero successCount and returning Infinity (mathematically correct for division by zero) with appropriate description prevents crashes while providing meaningful information.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const errorRatio = errorCount / successCount;`,
       correct: false,
-      explanation: 'Direct from MITRE: When successCount is zero, this division causes an application crash. The function needs to validate the denominator before performing division.'
+      explanation: 'When successCount is zero, this division causes an application crash. The function needs to validate the denominator before performing division.'
     },
     {
       code: `const errorRatio = successCount === 0 ? 0 : errorCount / successCount;`,

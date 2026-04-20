@@ -42,7 +42,7 @@ if ((fs.statSync(keyPath).mode & parseInt('777', 8)) !== parseInt('600', 8)) {
   throw new Error('Private key permissions not secure');
 }`,
       correct: true,
-      explanation: `Correct! This sets appropriate permissions for different types of cryptographic files: certificates can be publicly readable (644), but private keys must be owner-only (600). The private key directory is also restricted (700) for additional security.`
+      explanation: `Use proper cryptographic functions`
     },
     // MITRE CVE-inspired wrong answers
     {

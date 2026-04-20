@@ -58,7 +58,7 @@ export const cwe190TimestampCalculation: Exercise = {
   return { expiresAt: new Date(currentTime + timeoutMs) };
 }`,
       correct: true,
-      explanation: `Correct! Checking for overflow before each addition prevents timestamp wraparound. This ensures session expiration times remain valid and don't wrap to past dates due to integer overflow.`
+      explanation: `Use proper cryptographic functions`
     },
     // Timestamp calculation overflow vulnerabilities
     {

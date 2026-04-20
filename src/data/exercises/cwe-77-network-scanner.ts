@@ -100,7 +100,7 @@ export const cwe77NetworkScanner: Exercise = {
   });
 }`,
       correct: true,
-      explanation: `Correct! Using spawn() with validated arguments prevents command injection. IP address validation, parameter sanitization, and argument array usage ensure safe command execution.`
+      explanation: `Use proper cryptographic functions`
     },
     // Network scanning command injection vulnerabilities
     {

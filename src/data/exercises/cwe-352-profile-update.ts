@@ -26,12 +26,12 @@ export const cwe352ProfileUpdate: Exercise = {
     {
       code: `const csrf = require('csurf'); const csrfProtection = csrf({ cookie: true }); app.post('/api/profile', authenticateUser, csrfProtection, (req, res) => {`,
       correct: true,
-      explanation: `Correct! CSRF tokens ensure that requests originate from the legitimate application. The token is generated server-side and must be included in the request. Attackers cannot forge requests without access to the victim's valid token, preventing unauthorized profile changes.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `app.post('/api/profile', (req, res) => { if (!req.session.username) { return res.status(401).json({ error: 'Not authenticated' }); }`,
       correct: false,
-      explanation: 'Direct from MITRE: Session validation alone cannot prevent CSRF since attackers forge requests through the user\'s browser within existing authenticated sessions. The browser automatically includes session cookies.'
+      explanation: 'Session validation alone cannot prevent CSRF since attackers forge requests through the user\'s browser within existing authenticated sessions. The browser automatically includes session cookies.'
     },
     {
       code: `app.post('/api/profile', authenticateUser, (req, res) => { if (req.headers.referer && !req.headers.referer.includes('trusted-domain.com')) { return res.status(403).json({ error: 'Invalid referer' }); }`,

@@ -39,52 +39,52 @@ export const cwe642SessionTimeout: Exercise = {
     {
       code: `const serverMaxAge = getServerSessionTimeout(); if (sessionAge > serverMaxAge) {`,
       correct: true,
-      explanation: `Correct! Uses server-defined session timeout rather than trusting client-provided values. This prevents attackers from setting arbitrary session durations in their cookies to maintain unauthorized access indefinitely.`
+      explanation: `Use server timeout not client setting`
     },
     {
       code: `if (sessionAge > sessionData.maxAge) { // Trust client timeout`,
       correct: false,
-      explanation: 'Direct MITRE vulnerability pattern. Trusting client-provided session timeout allows attackers to set maxAge to years or decades, maintaining persistent access beyond intended security policies.'
+      explanation: 'Client sets timeout enabling permanent sessions'
     },
     {
       code: `const cappedMaxAge = Math.min(sessionData.maxAge, 86400000); if (sessionAge > cappedMaxAge) {`,
       correct: false,
-      explanation: 'Caps timeout at 24 hours but still trusts client data. Attackers can set maxAge to the maximum allowed value, extending sessions far beyond typical security requirements.'
+      explanation: 'Caps at 24 hours but client controls value'
     },
     {
       code: `if (sessionAge > (sessionData.maxAge || 3600000)) {`,
       correct: false,
-      explanation: 'Provides fallback but primary value is client-controlled. Attackers who provide maxAge values bypass the fallback, allowing extended session durations through cookie manipulation.'
+      explanation: 'Fallback exists but client value overrides'
     },
     {
       code: `const adjustedMaxAge = sessionData.maxAge * 0.8; if (sessionAge > adjustedMaxAge) {`,
       correct: false,
-      explanation: 'Arbitrary reduction still relies on client data. Attackers can set maxAge to large values where even 80% provides unauthorized extended access beyond security policies.'
+      explanation: 'Reduces timeout but client sets base value'
     },
     {
       code: `if (sessionData.maxAge < 1800000 && sessionAge > sessionData.maxAge) {`,
       correct: false,
-      explanation: 'Only enforces timeout for short sessions but allows unlimited access for longer client-set durations. Sessions with maxAge >= 30 minutes never expire, violating security policies.'
+      explanation: 'Short sessions timeout but long ones never expire'
     },
     {
       code: `const hashedMaxAge = crypto.createHash('sha256').update(sessionData.maxAge.toString()).digest('hex'); if (sessionAge > parseInt(hashedMaxAge.substring(0, 8), 16)) {`,
       correct: false,
-      explanation: 'Hashing client data creates unpredictable timeouts but doesn\'t solve the trust issue. The timeout becomes arbitrary rather than enforcing actual security policies.'
+      explanation: 'Hashing creates arbitrary timeouts'
     },
     {
       code: `if (sessionAge > sessionData.maxAge && sessionData.enforceTimeout !== false) {`,
       correct: false,
-      explanation: 'Allows client to disable timeout enforcement entirely through enforceTimeout flag. Attackers can set enforceTimeout=false to bypass any session expiration controls.'
+      explanation: 'Client can disable timeout enforcement'
     },
     {
       code: `const multiplier = sessionData.userType === 'premium' ? 2 : 1; if (sessionAge > sessionData.maxAge * multiplier) {`,
       correct: false,
-      explanation: 'User type multiplier but both userType and maxAge are client-controlled. Attackers can set userType=premium and high maxAge values for extended unauthorized access.'
+      explanation: 'User type and timeout both client-controlled'
     },
     {
       code: `if (sessionAge > sessionData.maxAge) { console.warn('Session timeout from client data'); return { valid: false };`,
       correct: false,
-      explanation: 'Logs warning about client control but still uses client data for critical security decision. The fundamental trust boundary violation remains unaddressed.'
+      explanation: 'Warns but still uses client timeout data'
     }
   ]
 }

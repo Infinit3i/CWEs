@@ -19,12 +19,12 @@ export const cwe732FilePermissions: Exercise = {
     {
       code: `fs.writeFileSync('/tmp/secret.txt', secretData, { mode: 0o600 });`,
       correct: true,
-      explanation: `Correct! Mode 0o600 grants read/write permissions only to the file owner, protecting sensitive data from other users. This follows the principle of least privilege for file access.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `fs.writeFileSync('/tmp/secret.txt', secretData, { mode: 0o666 });`,
       correct: false,
-      explanation: 'Direct from MITRE: Mode 0o666 grants read/write access to owner, group, and others. Any user on the system can read or modify secret data.'
+      explanation: 'Mode 0o666 grants read/write access to owner, group, and others. Any user on the system can read or modify secret data.'
     },
     {
       code: `fs.writeFileSync('/tmp/secret.txt', secretData, { mode: 0o777 });`,

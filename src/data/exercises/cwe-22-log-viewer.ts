@@ -26,17 +26,17 @@ export const cwe22LogViewer: Exercise = {
     {
       code: `const safeName = path.basename(logFile); const logPath = path.resolve('/var/log/app/', safeName); const expectedPrefix = path.resolve('/var/log/app/'); if (!logPath.startsWith(expectedPrefix + '/') && logPath !== expectedPrefix) throw new Error('Access denied');`,
       correct: true,
-      explanation: `Correct! This solution uses basename() to strip directories, resolves the full path, then validates it stays within /var/log/app/. The boundary check prevents any form of directory escape while still allowing legitimate log files.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const logPath = '/users/cwe/profiles/' + logFile;`,
       correct: false,
-      explanation: 'Direct from MITRE: This concatenation allows attackers to inject "../../../etc/passwd" to escape the intended log directory and access sensitive system files.'
+      explanation: 'This concatenation allows attackers to inject "../../../etc/passwd" to escape the intended log directory and access sensitive system files.'
     },
     {
       code: `const filtered = logFile.replace('../', ''); const logPath = path.join('/var/log/app/', filtered);`,
       correct: false,
-      explanation: 'MITRE pattern: Removing only the first "../" fails against attacks like "../../../etc/passwd" where multiple traversal sequences exist.'
+      explanation: 'Removing only the first "../" fails against attacks like "../../../etc/passwd" where multiple traversal sequences exist.'
     },
     {
       code: `if (logFile.startsWith('app_')) { const logPath = path.join('/var/log/app/', logFile); }`,

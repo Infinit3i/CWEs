@@ -29,12 +29,12 @@ export const cwe862FileSharing: Exercise = {
     {
       code: `const query = 'SELECT f.filename, f.filepath, f.mimetype FROM shared_files f LEFT JOIN file_permissions p ON f.id = p.file_id WHERE f.id = ? AND (f.owner_id = ? OR p.user_id = ? OR f.is_public = 1)'; db.query(query, [fileId, req.user.id, req.user.id], (err, results) => {`,
       correct: true,
-      explanation: `Correct! This implements comprehensive authorization by checking file ownership, explicit permissions, or public access status. Users can only download files they own, have been granted access to, or that are publicly available, preventing unauthorized file access.`
+      explanation: `Check user permissions before access`
     },
     {
       code: `if (!session_is_registered("username")) { echo "invalid session detected!"; exit; } download_file($fileId);`,
       correct: false,
-      explanation: 'Direct from MITRE: Authentication-only validation allows any authenticated user to download any file by providing arbitrary file identifiers, exposing private documents and sensitive data.'
+      explanation: 'Authentication-only validation allows any authenticated user to download any file by providing arbitrary file identifiers, exposing private documents and sensitive data.'
     },
     {
       code: `if (req.user && req.user.id) { // User authenticated, allow download of any file const query = \'SELECT * FROM shared_files WHERE id = ?\'; }`,

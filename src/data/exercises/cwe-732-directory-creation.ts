@@ -24,12 +24,12 @@ export const cwe732DirectoryCreation: Exercise = {
     {
       code: `fs.mkdirSync(path, { recursive: true, mode: 0o700 });`,
       correct: true,
-      explanation: `Correct! Mode 0o700 creates the directory with read/write/execute permissions only for the owner. This prevents other users from accessing the workspace during the window between creation and ownership change.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `fs.mkdirSync(path, { recursive: true });`,
       correct: false,
-      explanation: 'Direct from MITRE: Default permissions typically create world-readable directories (0o755). Other users can access the workspace before ownership is applied.'
+      explanation: 'Default permissions typically create world-readable directories (0o755). Other users can access the workspace before ownership is applied.'
     },
     {
       code: `fs.mkdirSync(path, { recursive: true, mode: 0o755 });`,

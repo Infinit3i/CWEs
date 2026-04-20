@@ -54,7 +54,7 @@ responseCache[cacheKey] = {
   // Do not cache API keys, tokens, or other sensitive data
 };`,
       correct: true,
-      explanation: `Correct! Excluding API keys and sensitive authentication data from cache prevents credential exposure. This maintains caching benefits while protecting sensitive information from unauthorized access.`
+      explanation: `Remove API keys from cache`
     },
     {
       code: `responseCache[cacheKey] = {
@@ -66,7 +66,7 @@ responseCache[cacheKey] = {
   }
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Caching API keys and authentication tokens enables unauthorized access. Attackers who access cache memory can extract and reuse these credentials.'
+      explanation: 'Caching API keys and authentication tokens enables unauthorized access. Attackers who access cache memory can extract and reuse these credentials.'
     },
     {
       code: `const maskedApiKey = apiKey.substring(0, 8) + '***';

@@ -36,27 +36,27 @@ export const cwe798AdminPassword: Exercise = {
     {
       code: `if (await this.verifyAdminCredentials(username, password)) {`,
       correct: true,
-      explanation: `Correct! Administrative credentials should be verified against secure credential stores, not embedded constants. This prevents shared backdoors across all device instances while enabling proper credential rotation.`
+      explanation: `Store credentials in environment variables`
     },
     {
       code: `if (username === 'admin' && password === 'Mew!') {`,
       correct: false,
-      explanation: 'Direct from MITRE: "Every instance of this program can be placed into diagnostic mode with the same password." Hard-coded admin passwords create universal backdoors.'
+      explanation: 'Hard-coded admin passwords create universal backdoors.'
     },
     {
       code: `if (username === 'admin' && password === '68af404b513073584c4b6f22b6c63e6b') {`,
       correct: false,
-      explanation: 'From MITRE: Cryptographic-looking strings are still hard-coded credentials. Hex-encoded passwords provide no security when embedded in source code.'
+      explanation: 'Hex-encoded passwords still hard-coded.'
     },
     {
       code: `if (username === 'admin' && crypto.createHash('md5').update(password).digest('hex') === 'a9b4c5d6e7f8') {`,
       correct: false,
-      explanation: 'Hard-coded password hashes in source code are vulnerable to rainbow table attacks and still represent embedded credential verification logic.'
+      explanation: 'Hard-coded hashes vulnerable to rainbow tables.'
     },
     {
       code: `if (username === 'admin' && password === Buffer.from('TWV3IQ==', 'base64').toString()) {`,
       correct: false,
-      explanation: 'Base64-encoded passwords remain hard-coded credentials. The encoding provides no security and is easily decoded by attackers reviewing source code.'
+      explanation: 'Base64-encoded passwords still hard-coded.'
     },
     {
       code: `const adminPassword = process.env.DEVICE_MODEL + '_admin_2024'; if (username === 'admin' && password === adminPassword) {`,

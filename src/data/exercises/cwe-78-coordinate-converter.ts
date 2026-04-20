@@ -27,7 +27,7 @@ export const cwe78CoordinateConverter: Exercise = {
     {
       code: `const sanitizedCoords = latlonCoords.replace(/[^0-9.,-]/g, ''); const command = ['latlon2utm.exe', '-' + sanitizedCoords];`,
       correct: true,
-      explanation: `Correct! Sanitizing input to only allow numbers, decimal points, commas, and hyphens (valid for coordinates) and using array syntax prevents shell interpretation. This blocks command injection while preserving valid coordinate data.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const command = 'latlon2utm.exe -' + latlonCoords;`,
@@ -72,7 +72,7 @@ export const cwe78CoordinateConverter: Exercise = {
     {
       code: `const command = 'latlon2utm.exe -' + latlonCoords.toLowerCase();`,
       correct: false,
-      explanation: 'Case conversion does not prevent command injection. Lowercase shell commands and metacharacters remain fully functional for executing arbitrary commands.'
+      explanation: 'User input allows command injection'
     }
   ]
 }

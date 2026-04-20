@@ -63,7 +63,7 @@ return {
   targetAccount: targetAccountId
 };`,
       correct: true,
-      explanation: `Correct! Creating a new session ID for account switching prevents session fixation attacks. This ensures attackers cannot maintain access to sessions during sensitive account switching operations.`
+      explanation: `New session when switching accounts`
     },
     {
       code: `sessions[currentSessionId] = {
@@ -72,7 +72,7 @@ return {
   switched: true
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Maintaining existing session ID during account switching enables session fixation. Attackers with the original session automatically gain access to the new account.'
+      explanation: 'Maintaining existing session ID during account switching enables session fixation. Attackers with the original session automatically gain access to the new account.'
     },
     {
       code: `Object.assign(currentSession, {

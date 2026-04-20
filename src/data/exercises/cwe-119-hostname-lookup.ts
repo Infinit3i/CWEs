@@ -58,7 +58,7 @@ function performDNSLookup(addr) {
   return hostname;
 }`,
       correct: true,
-      explanation: `Correct! Proper bounds checking validates hostname length before copying. This prevents buffer overflow by ensuring the resolved hostname fits within safe limits, following MITRE recommendations for input validation.`
+      explanation: `Use proper cryptographic functions`
     },
     // Buffer overflow vulnerabilities from MITRE
     {
@@ -68,7 +68,7 @@ for (let i = 0; i < resolvedHostname.length; i++) {
     hostname[i] = resolvedHostname[i];
 }`,
       correct: false,
-      explanation: 'Direct from MITRE: Unchecked copy loop allows buffer overflow. A hostname longer than 64 characters will overwrite memory beyond the allocated buffer, potentially corrupting adjacent data structures.'
+      explanation: 'Unchecked copy loop allows buffer overflow. A hostname longer than 64 characters will overwrite memory beyond the allocated buffer, potentially corrupting adjacent data structures.'
     },
     {
       code: `const hostname = new Array(64);

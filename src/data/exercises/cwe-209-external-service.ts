@@ -164,7 +164,7 @@ res.status(500).json({
   message: 'Please try again later or contact support if the problem persists'
 });`,
       correct: true,
-      explanation: `Correct! This prevents information exposure by logging essential debugging information securely on the server while returning only a generic error message to the client. The error ID enables correlation between user reports and server logs without exposing sensitive service provider details, API keys, configuration information, or system architecture that attackers could use to compromise third-party integrations or plan targeted attacks.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

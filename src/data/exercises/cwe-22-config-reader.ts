@@ -24,12 +24,12 @@ export const cwe22ConfigReader: Exercise = {
     {
       code: `const validConfigs = ['database', 'redis', 'email', 'logging']; if (!validConfigs.includes(configName)) throw new Error('Invalid config'); const configPath = path.join(configDir, configName + '.conf');`,
       correct: true,
-      explanation: `Correct! Using a strict whitelist of allowed configuration names prevents all path traversal attempts. This approach ensures only predefined, legitimate configuration files can be accessed regardless of any traversal sequences in the input.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const configPath = '/users/cwe/profiles/' + configName + '.conf';`,
       correct: false,
-      explanation: 'Direct from MITRE: String concatenation with user input enables attackers to inject "../../../etc/passwd%00" to escape the config directory and access sensitive files.'
+      explanation: 'String concatenation with user input enables attackers to inject "../../../etc/passwd%00" to escape the config directory and access sensitive files.'
     },
     {
       code: `const sanitized = configName.replace('../', ''); const configPath = configDir + sanitized + '.conf';`,
@@ -39,7 +39,7 @@ export const cwe22ConfigReader: Exercise = {
     {
       code: `if (configName.startsWith('cfg_')) { const configPath = configDir + configName + '.conf'; }`,
       correct: false,
-      explanation: 'MITRE pattern: startsWith() validation can be bypassed with "cfg_../../../etc/passwd" that satisfies the prefix check but contains traversal sequences.'
+      explanation: 'startsWith() validation can be bypassed with "cfg_../../../etc/passwd" that satisfies the prefix check but contains traversal sequences.'
     },
     {
       code: `const configPath = path.resolve(configDir, configName + '.conf');`,

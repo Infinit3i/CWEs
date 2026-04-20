@@ -32,7 +32,7 @@ export const cwe78SystemProperty: Exercise = {
     {
       code: `const allowedScripts = ['/opt/scripts/backup.sh', '/opt/scripts/cleanup.sh']; if (allowedScripts.includes(scriptName)) { exec(scriptName, callback); }`,
       correct: true,
-      explanation: `Correct! Using an allowlist of permitted scripts prevents arbitrary command execution. This ensures only pre-approved, trusted scripts can be executed regardless of what values are provided through environment variables or configuration.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `exec(scriptName, (error, stdout, stderr) => {`,
@@ -47,7 +47,7 @@ export const cwe78SystemProperty: Exercise = {
     {
       code: `const command = '/bin/bash ' + scriptName; exec(command, callback);`,
       correct: false,
-      explanation: 'Hardcoding bash wrapper still allows command injection. Attacker can set scriptName to "-c rm -rf /" or similar bash flags to execute arbitrary commands.'
+      explanation: 'User input allows command injection'
     },
     {
       code: `if (!scriptName.includes(';') && !scriptName.includes('&')) { exec(scriptName, callback); }`,
@@ -77,7 +77,7 @@ export const cwe78SystemProperty: Exercise = {
     {
       code: `const command = ['/bin/sh', '-c', scriptName]; spawn(command[0], command.slice(1), callback);`,
       correct: false,
-      explanation: 'Using spawn with shell still enables command injection. The "-c" flag allows arbitrary command execution through the scriptName parameter, maintaining the vulnerability.'
+      explanation: 'User input allows command injection'
     }
   ]
 }

@@ -69,12 +69,12 @@ export const cwe269PrivilegeDrop: Exercise = {
     {
       code: `await this.dropPrivileges(); this.elevated = false; throw new Error('Invalid secure file format');`,
       correct: true,
-      explanation: `Correct! Privileges must be dropped immediately when exceptions occur. Using try-finally blocks or proper cleanup ensures elevated privileges are never left active after operations complete or fail.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `throw new Error('Invalid secure file format');`,
       correct: false,
-      explanation: 'From MITRE: "If os.mkdir() throws an exception, lowerPrivileges() never executes, leaving the program indefinitely in raised privilege state." Same issue - exceptions bypass privilege cleanup.'
+      explanation: '"If os.mkdir() throws an exception, lowerPrivileges() never executes, leaving the program indefinitely in raised privilege state." Same issue - exceptions bypass privilege cleanup.'
     },
     {
       code: `console.error('Format validation failed'); throw new Error('Invalid secure file format');`,

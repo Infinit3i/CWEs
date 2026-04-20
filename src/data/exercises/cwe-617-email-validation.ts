@@ -21,12 +21,12 @@ export const cwe617EmailValidation: Exercise = {
     {
       code: `if (!email) { return res.status(400).json({ error: 'Email address is required' }); }`,
       correct: true,
-      explanation: `Correct! Using proper HTTP error response instead of assertions prevents application crashes. This returns a meaningful error to the client without terminating the server process.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `assert(email != null, 'Email address is required');`,
       correct: false,
-      explanation: 'Direct from MITRE: Assertion triggered by missing email parameter causes AssertionError, crashing the application. External input should never reach assertions.'
+      explanation: 'Assertion triggered by missing email parameter causes AssertionError, crashing the application. External input should never reach assertions.'
     },
     {
       code: `assert(email && email.length > 0, 'Valid email required');`,

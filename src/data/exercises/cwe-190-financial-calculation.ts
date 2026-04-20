@@ -53,7 +53,7 @@ export const cwe190FinancialCalculation: Exercise = {
   return { revenue: totalRevenue };
 }`,
       correct: true,
-      explanation: `Correct! Checking for overflow before addition prevents integer wraparound in financial calculations. This ensures revenue calculations remain accurate even with large sales volumes.`
+      explanation: `Use proper cryptographic functions`
     },
     // Financial calculation overflow vulnerabilities
     {

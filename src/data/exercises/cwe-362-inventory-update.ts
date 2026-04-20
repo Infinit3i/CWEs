@@ -53,12 +53,12 @@ export const cwe362InventoryUpdate: Exercise = {
     {
       code: `const result = await Product.findByIdAndUpdate(productId, { $inc: { stockQuantity: -quantity } }, { returnDocument: 'after' }); if (result.stockQuantity < 0) { await Product.findByIdAndUpdate(productId, { $inc: { stockQuantity: quantity } }); throw new Error('Insufficient inventory'); }`,
       correct: true,
-      explanation: `Correct! Atomic database operations with conditional rollback prevent inventory overselling. Using findByIdAndUpdate with $inc ensures the decrement operation is atomic, preventing race conditions between checking and updating stock.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const availableStock = product.stockQuantity;`,
       correct: false,
-      explanation: 'From MITRE: Race condition in e-commerce systems allows overselling when multiple orders check the same inventory level before any update occurs. This leads to negative inventory and unfulfillable orders.'
+      explanation: 'Race condition in e-commerce systems allows overselling when multiple orders check the same inventory level before any update occurs. This leads to negative inventory and unfulfillable orders.'
     },
     {
       code: `const availableStock = product.stockQuantity; if (quantity > 10) { await new Promise(resolve => setTimeout(resolve, 200)); }`,

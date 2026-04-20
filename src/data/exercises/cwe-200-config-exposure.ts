@@ -71,7 +71,7 @@ if (['app-settings.json'].includes(filename) && req.user?.role !== 'admin') {
 
 const configPath = path.join(__dirname, 'config', 'public', filename);`,
       correct: true,
-      explanation: `Correct! This implements an allowlist approach that only permits access to specific, safe configuration files. By restricting access to predefined files and requiring admin privileges for sensitive configurations, we prevent exposure of database credentials, API keys, and other sensitive system information. The public subdirectory further isolates safe configs from sensitive ones.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

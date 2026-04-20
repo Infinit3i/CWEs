@@ -55,12 +55,12 @@ export const cwe269DataAccess: Exercise = {
     {
       code: `if (!this.canAccessCustomer(requestingUser, customerId) || (includeFinancials && !this.canAccessFinancials(requestingUser, customerId))) { throw new Error('Insufficient privileges for requested data access'); }`,
       correct: true,
-      explanation: `Correct! Data access should validate both general permission and specific authorization for the target customer and data type. This prevents sales staff from accessing all customer financials and ensures proper data segregation.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `if (!requestingUser.permissions.includes('read_customer_data')) {`,
       correct: false,
-      explanation: 'From MITRE: Generic permission checking without validating specific data access allows users to retrieve any customer data. This violates principle of least privilege and data access segregation.'
+      explanation: 'Generic permission checking without validating specific data access allows users to retrieve any customer data. This violates principle of least privilege and data access segregation.'
     },
     {
       code: `if (includeFinancials && !requestingUser.permissions.includes('read_financial_data')) { throw new Error('No permission for financial data'); } if (!requestingUser.permissions.includes('read_customer_data')) {`,

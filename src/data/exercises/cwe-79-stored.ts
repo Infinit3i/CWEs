@@ -36,84 +36,66 @@ export const cwe79Stored: Exercise = {
   options: [
     {
       code: `const commentDiv = document.createElement('div');
-commentDiv.className = 'comment';
-const authorSpan = document.createElement('strong');
-authorSpan.textContent = comment.author;
-const textSpan = document.createElement('span');
-textSpan.textContent = ': ' + comment.text;
-const timeSpan = document.createElement('span');
-timeSpan.className = 'timestamp';
-timeSpan.textContent = comment.timestamp;
-commentDiv.appendChild(authorSpan);
-commentDiv.appendChild(textSpan);
-commentDiv.appendChild(timeSpan);
+commentDiv.textContent = comment.author + ': ' + comment.text;
 document.getElementById('comments').appendChild(commentDiv);`,
       correct: true,
-      explanation: `Correct! This creates DOM elements programmatically and uses textContent to safely insert user data. Even if comment.text contains malicious scripts like <script>alert('XSS')</script>, they will be treated as plain text and not executed.`
+      explanation: `Use createElement and textContent for safe comment display`
     },
     // MITRE demonstrative examples as wrong answers
     {
-      code: `const commentHtml = \`<div class="comment"><strong>\${comment.author}</strong>: \${comment.text}</div>\`;
-document.getElementById('comments').innerHTML += commentHtml;`,
+      code: `document.getElementById('comments').innerHTML += \`<div>\${comment.author}: \${comment.text}</div>\`;`,
       correct: false,
-      explanation: 'Direct from MITRE: This is stored XSS where malicious scripts in comment.text get saved to the database and executed every time the page loads. An attacker can inject <script>document.cookie="stolen="+document.cookie</script> to steal session cookies from all visitors.'
+      explanation: 'Stored XSS - malicious `<script>` persists and executes for all users'
     },
     {
-      code: `const sanitized = comment.text.replace(/<script>/gi, '');
-const commentHtml = \`<div class="comment"><strong>\${comment.author}</strong>: \${sanitized}</div>\`;
-document.getElementById('comments').innerHTML += commentHtml;`,
+      code: `const clean = comment.text.replace(/<script>/gi, '');
+document.getElementById('comments').innerHTML += \`<div>\${clean}</div>\`;`,
       correct: false,
-      explanation: 'From MITRE examples: Simple script tag removal is insufficient. Attackers can bypass with <img src=x onerror=alert(1)>, <svg onload=alert(1)>, or nested tags like <scr<script>ipt>alert(1)</script>.'
+      explanation: 'Script tag removal incomplete - `<img onerror>` bypasses filter'
     },
     {
       code: `const escaped = comment.text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const commentHtml = \`<div class="comment"><strong>\${comment.author}</strong>: \${escaped}</div>\`;
-document.getElementById('comments').innerHTML += commentHtml;`,
+document.getElementById('comments').innerHTML += \`<div>\${escaped}</div>\`;`,
       correct: false,
-      explanation: 'While HTML entity encoding helps prevent some XSS, using innerHTML can still be dangerous if the author field is not similarly encoded or if there are other injection points in the template.'
+      explanation: 'HTML encoding incomplete - author field still vulnerable'
     },
     {
       code: `const encoded = encodeURIComponent(comment.text);
-const commentHtml = \`<div class="comment"><strong>\${comment.author}</strong>: \${encoded}</div>\`;
-document.getElementById('comments').innerHTML += commentHtml;`,
+document.getElementById('comments').innerHTML += \`<div>\${encoded}</div>\`;`,
       correct: false,
-      explanation: 'URL encoding is not appropriate for HTML context. While it may prevent some attacks, the browser may decode the content in certain contexts, and URL encoding creates poor user experience for legitimate content.'
+      explanation: 'URL encoding wrong for HTML - creates poor user experience'
     },
     {
-      code: `const cleaned = comment.text.substring(0, 100);
-const commentHtml = \`<div class="comment"><strong>\${comment.author}</strong>: \${cleaned}</div>\`;
-document.getElementById('comments').innerHTML += commentHtml;`,
+      code: `const short = comment.text.substring(0, 100);
+document.getElementById('comments').innerHTML += \`<div>\${short}</div>\`;`,
       correct: false,
-      explanation: 'Length truncation does not prevent XSS. Short but effective payloads like <img src=x onerror=alert(1)> can execute malicious code within character limits.'
+      explanation: 'Length limits don\'t prevent XSS - short payloads work'
     },
     {
       code: `const filtered = comment.text.replace(/javascript:/gi, '');
-const commentHtml = \`<div class="comment"><strong>\${comment.author}</strong>: \${filtered}</div>\`;
-document.getElementById('comments').innerHTML += commentHtml;`,
+document.getElementById('comments').innerHTML += \`<div>\${filtered}</div>\`;`,
       correct: false,
-      explanation: 'Filtering specific protocols is insufficient. Many XSS vectors do not use javascript: URLs, such as event handlers (onerror=), data URLs, or direct script injection.'
+      explanation: 'Protocol filtering incomplete - event handlers don\'t use javascript:'
     },
     {
       code: `const safe = comment.text.replace(/[<>"']/g, '');
-const commentHtml = \`<div class="comment"><strong>\${comment.author}</strong>: \${safe}</div>\`;
-document.getElementById('comments').innerHTML += commentHtml;`,
+document.getElementById('comments').innerHTML += \`<div>\${safe}</div>\`;`,
       correct: false,
-      explanation: 'Removing HTML special characters helps but is incomplete. Event handlers can execute without some of these characters, and removing quotes/brackets may not prevent all injection vectors.'
+      explanation: 'Removing special chars incomplete - event handlers still work'
     },
     {
       code: `const template = document.querySelector('#comment-template');
 const clone = template.content.cloneNode(true);
-clone.querySelector('.author').innerHTML = comment.author;
 clone.querySelector('.text').innerHTML = comment.text;
 document.getElementById('comments').appendChild(clone);`,
       correct: false,
-      explanation: 'While using templates is a good practice, this still uses innerHTML to set user content, making it vulnerable to XSS. The template approach provides structure but doesn\'t solve the injection vulnerability.'
+      explanation: 'Templates with innerHTML still vulnerable - use textContent'
     },
     {
-      code: `const commentHtml = \`<div class="comment"><strong>\${DOMPurify.sanitize(comment.author)}</strong>: \${comment.text}</div>\`;
-document.getElementById('comments').innerHTML += commentHtml;`,
+      code: `const clean = DOMPurify.sanitize(comment.author);
+document.getElementById('comments').innerHTML += \`<div>\${clean}: \${comment.text}</div>\`;`,
       correct: false,
-      explanation: 'While DOMPurify sanitizes the author field, comment.text remains unsanitized and vulnerable to XSS injection. Partial sanitization creates a false sense of security while leaving attack vectors open.'
+      explanation: 'Partial DOMPurify - comment.text still vulnerable to XSS'
     }
   ]
 }

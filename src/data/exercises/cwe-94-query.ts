@@ -38,7 +38,7 @@ const whereClause = filters.where ? \` WHERE \${db.escape(filters.where)}\` : ''
 const orderClause = orderBy ? \` ORDER BY \${db.escape(orderBy)}\` : '';
 return (db) => db.query(\`SELECT * FROM \${tableName}\${whereClause}\${orderClause}\`);`,
       correct: true,
-      explanation: `Correct! This uses allowlists for tables and columns, proper parameterization with db.escape(), and returns a pre-built query function without dynamic code evaluation. This prevents injection while maintaining query flexibility.`
+      explanation: `Use proper cryptographic functions`
     },
     // Code injection vulnerabilities
     {

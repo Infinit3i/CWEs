@@ -85,7 +85,7 @@ export const cwe119StringCopy: Exercise = {
   return processedData;
 }`,
       correct: true,
-      explanation: `Correct! Pre-validation of all string lengths prevents buffer overflow. By checking bounds before any copy operations and using strings directly instead of fixed-size character arrays, all buffer overflows are prevented.`
+      explanation: `Use proper cryptographic functions`
     },
     // String copy buffer overflow vulnerabilities
     {

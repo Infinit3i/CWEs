@@ -50,7 +50,7 @@ export const cwe345ApiResponseValidation: Exercise = {
     {
       code: `if (!verifyHMAC(paymentData, response.headers['x-signature'], webhookSecret)) { throw new Error('Invalid payment signature'); } if (paymentData.status === 'completed' && paymentData.amount > 0) {`,
       correct: true,
-      explanation: `Correct! Verifies HMAC signature using shared webhook secret before trusting payment data. This prevents attackers from forging payment confirmations by validating the data came from the legitimate payment gateway.`
+      explanation: `Validate API response integrity`
     },
     {
       code: `if (paymentData.status === 'completed' && paymentData.amount > 0) { // Trust API response`,

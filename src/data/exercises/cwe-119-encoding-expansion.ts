@@ -104,7 +104,7 @@ function encodeHTMLEntities(userInput) {
   return outputBuffer.slice(0, bufferIndex).join('');
 }`,
       correct: true,
-      explanation: `Correct! Proper expansion ratio calculation and bounds checking prevents overflow. The buffer is sized for maximum possible expansion, and each write operation is bounds-checked before execution.`
+      explanation: `Use proper cryptographic functions`
     },
     // Encoding expansion vulnerabilities from MITRE
     {
@@ -118,7 +118,7 @@ for (let i = 0; i < userInput.length; i++) {
     outputBuffer[bufferIndex++] = ';';
 }`,
       correct: false,
-      explanation: 'Direct from MITRE: Insufficient expansion buffer with HTML entities. 4x expansion is inadequate - strings with many ampersands need 5x expansion, causing buffer overflow.'
+      explanation: 'Insufficient expansion buffer with HTML entities. 4x expansion is inadequate - strings with many ampersands need 5x expansion, causing buffer overflow.'
     },
     {
       code: `const outputBuffer = new Array(userInput.length * 2);

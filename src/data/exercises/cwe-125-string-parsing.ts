@@ -30,7 +30,7 @@ export const cwe125StringParsing: Exercise = {
     {
       code: `if (tokenIndex >= 0 && tokenIndex < tokens.length) { tokenValue = tokens[tokenIndex]; } else { tokenValue = null; }`,
       correct: true,
-      explanation: `Correct! Validating both negative and positive bounds prevents out-of-bounds reads. Negative indices can access array elements from the end (array[-1] in some contexts) or read undefined memory, while large indices read past array end.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `tokenValue = tokens[tokenIndex];`,
@@ -50,7 +50,7 @@ export const cwe125StringParsing: Exercise = {
     {
       code: `try { tokenValue = tokens[tokenIndex]; } catch(e) { tokenValue = null; }`,
       correct: false,
-      explanation: 'Exception handling cannot prevent out-of-bounds reads. Array access at negative indices occurs before exceptions can prevent potential information disclosure.'
+      explanation: 'Try-catch cannot prevent vulnerability'
     },
     {
       code: `if (typeof tokenIndex === 'number' && tokenIndex < tokens.length) { tokenValue = tokens[tokenIndex]; }`,

@@ -38,12 +38,12 @@ W3xY4zA5bC6dE7fG8hI9jK0lM1nO2pQ3rS4tU5vW6xY7zA8bC9dE0fG1hI2jK3lM4n
     {
       code: `const sshPrivateKey = process.env.SSH_PRIVATE_KEY?.replace(/\\\\n/g, '\\n');`,
       correct: true,
-      explanation: `Correct! SSH private keys stored in environment variables (with proper newline handling) keep cryptographic credentials out of source code. CI/CD systems can inject these securely without code exposure.`
+      explanation: `Store credentials in environment variables`
     },
     {
       code: `const sshPrivateKey = \`-----BEGIN RSA PRIVATE KEY-----\nMIIEpAIBAAKCAQEA2+5L8f9K7x3Q8mZ4w...\n-----END RSA PRIVATE KEY-----\`;`,
       correct: false,
-      explanation: 'From MITRE: Embedding private cryptographic keys in source code exposes them to anyone with repository access. SSH keys provide direct server access and are high-value targets.'
+      explanation: 'Embedding private cryptographic keys in source code exposes them to anyone with repository access. SSH keys provide direct server access and are high-value targets.'
     },
     {
       code: `const sshPrivateKey = atob('LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ==');`,

@@ -74,7 +74,7 @@ const safeInfo = {
 
 res.json(safeInfo);`,
       correct: true,
-      explanation: `Correct! This implements proper access control and environment restrictions for debug endpoints. By requiring admin privileges and disabling the endpoint in production, we prevent unauthorized access to sensitive system information. The safe response includes only basic operational data without exposing credentials, user data, or system internals that could be used for attacks.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

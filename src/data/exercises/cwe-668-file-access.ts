@@ -24,12 +24,12 @@ export const cwe668FileAccess: Exercise = {
     {
       code: `const filePath = path.resolve(userDir, filename); if (!filePath.startsWith(path.resolve(userDir))) throw new Error('Access denied');`,
       correct: true,
-      explanation: `Correct! Using path.resolve() and checking that the resolved path stays within the user directory prevents directory traversal attacks. This ensures users can only access files in their intended sphere.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const filePath = path.join(userDir, filename);`,
       correct: false,
-      explanation: 'Direct from MITRE: path.join() does not prevent directory traversal. An attacker can use "../../../etc/passwd" to access system files outside their directory sphere.'
+      explanation: 'path.join() does not prevent directory traversal. An attacker can use "../../../etc/passwd" to access system files outside their directory sphere.'
     },
     {
       code: `const filePath = userDir + '/' + filename;`,

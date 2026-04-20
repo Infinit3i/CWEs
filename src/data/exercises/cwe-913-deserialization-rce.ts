@@ -48,12 +48,12 @@ return {
   preferences: sessionObject.preferences || {}
 };`,
       correct: true,
-      explanation: `Correct! Avoiding execution of deserialized code and only using static data properties prevents RCE. This approach treats serialized data as pure data rather than executable content, blocking injection of malicious JavaScript.`
+      explanation: `Prevent unsafe deserialization`
     },
     {
       code: `const restoreFunction = new Function('session', sessionObject.restoreCode);`,
       correct: false,
-      explanation: 'Direct from MITRE: Executing code from deserialized data enables RCE. Attackers can inject "require(\'child_process\').exec(\'malicious-command\')" to achieve system compromise.'
+      explanation: 'Executing code from deserialized data enables RCE. Attackers can inject "require(\'child_process\').exec(\'malicious-command\')" to achieve system compromise.'
     },
     {
       code: `eval(sessionObject.restoreCode);`,

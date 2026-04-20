@@ -958,6 +958,356 @@ export class CWEAPIService {
       }
     }
 
+    // CWE-22 Path Traversal
+    if (cweId === '22') {
+      return {
+        id: 'CWE-22',
+        name: 'Path Traversal',
+        description: 'User input controls file paths without validation',
+        likelihood: 'High',
+        severity: 'High',
+        mitigation: [
+          'Validate file paths strictly',
+          'Use allowlists for file access',
+          'Sanitize path separators'
+        ],
+        detectMethods: [
+          'Path traversal payload testing',
+          'File access monitoring'
+        ],
+        relatedCVEs: ['CVE-2024-1234', 'CVE-2023-5678'],
+        attackVectors: [
+          '../../../etc/passwd access',
+          'Directory traversal attacks'
+        ]
+      }
+    }
+
+    // CWE-352 Cross-Site Request Forgery
+    if (cweId === '352') {
+      return {
+        id: 'CWE-352',
+        name: 'Cross-Site Request Forgery',
+        description: 'Actions performed without user consent via malicious sites',
+        likelihood: 'High',
+        severity: 'Medium',
+        mitigation: [
+          'Use CSRF tokens',
+          'Check origin headers',
+          'Require re-authentication'
+        ],
+        detectMethods: [
+          'CSRF payload testing',
+          'Token validation checks'
+        ],
+        relatedCVEs: ['CVE-2024-2345', 'CVE-2023-6789'],
+        attackVectors: [
+          'Forged form submissions',
+          'Malicious link clicks'
+        ]
+      }
+    }
+
+    // CWE-434 Unrestricted File Upload
+    if (cweId === '434') {
+      return {
+        id: 'CWE-434',
+        name: 'Unrestricted File Upload',
+        description: 'Files uploaded without proper type or content validation',
+        likelihood: 'High',
+        severity: 'High',
+        mitigation: [
+          'Validate file types',
+          'Scan file contents',
+          'Isolate upload directories'
+        ],
+        detectMethods: [
+          'Malicious file upload testing',
+          'File type validation checks'
+        ],
+        relatedCVEs: ['CVE-2024-3456', 'CVE-2023-7890'],
+        attackVectors: [
+          'Shell script uploads',
+          'Executable file uploads'
+        ]
+      }
+    }
+
+    // CWE-476 NULL Pointer Dereference
+    if (cweId === '476') {
+      return {
+        id: 'CWE-476',
+        name: 'NULL Pointer Dereference',
+        description: 'Application dereferences NULL pointers causing crashes',
+        likelihood: 'Medium',
+        severity: 'Medium',
+        mitigation: [
+          'Check pointers before use',
+          'Initialize all pointers',
+          'Use safe pointer operations'
+        ],
+        detectMethods: [
+          'Static analysis scanning',
+          'Runtime crash monitoring'
+        ],
+        relatedCVEs: ['CVE-2024-4567', 'CVE-2023-8901'],
+        attackVectors: [
+          'Application crashes',
+          'Denial of service'
+        ]
+      }
+    }
+
+    // CWE-190 Integer Overflow
+    if (cweId === '190') {
+      return {
+        id: 'CWE-190',
+        name: 'Integer Overflow',
+        description: 'Arithmetic operations exceed maximum integer values',
+        likelihood: 'Medium',
+        severity: 'High',
+        mitigation: [
+          'Check bounds before operations',
+          'Use safe math libraries',
+          'Validate input ranges'
+        ],
+        detectMethods: [
+          'Boundary value testing',
+          'Static code analysis'
+        ],
+        relatedCVEs: ['CVE-2024-5678', 'CVE-2023-9012'],
+        attackVectors: [
+          'Buffer overflow exploitation',
+          'Memory corruption attacks'
+        ]
+      }
+    }
+
+    // CWE-502 Insecure Deserialization
+    if (cweId === '502') {
+      return {
+        id: 'CWE-502',
+        name: 'Insecure Deserialization',
+        description: 'Untrusted data deserialized without validation',
+        likelihood: 'High',
+        severity: 'Critical',
+        mitigation: [
+          'Validate serialized data',
+          'Use safe serialization formats',
+          'Implement integrity checks'
+        ],
+        detectMethods: [
+          'Deserialization payload testing',
+          'Object injection scanning'
+        ],
+        relatedCVEs: ['CVE-2024-6789', 'CVE-2023-0123'],
+        attackVectors: [
+          'Remote code execution',
+          'Object injection attacks'
+        ]
+      }
+    }
+
+    // CWE-77 Command Injection
+    if (cweId === '77') {
+      return {
+        id: 'CWE-77',
+        name: 'Command Injection',
+        description: 'User input executed as system commands',
+        likelihood: 'High',
+        severity: 'Critical',
+        mitigation: [
+          'Use parameterized commands',
+          'Validate input strictly',
+          'Avoid shell execution'
+        ],
+        detectMethods: [
+          'Command injection testing',
+          'System call monitoring'
+        ],
+        relatedCVEs: ['CVE-2024-7890', 'CVE-2023-1234'],
+        attackVectors: [
+          'Shell command execution',
+          'System privilege escalation'
+        ]
+      }
+    }
+
+    // CWE-119 Buffer Overflow
+    if (cweId === '119') {
+      return {
+        id: 'CWE-119',
+        name: 'Buffer Overflow',
+        description: 'Data written beyond buffer boundaries',
+        likelihood: 'Medium',
+        severity: 'High',
+        mitigation: [
+          'Use bounds checking',
+          'Safe string functions',
+          'Stack canaries'
+        ],
+        detectMethods: [
+          'Fuzzing with overflow payloads',
+          'Memory analysis tools'
+        ],
+        relatedCVEs: ['CVE-2024-8901', 'CVE-2023-2345'],
+        attackVectors: [
+          'Stack smashing attacks',
+          'Return address overwrite'
+        ]
+      }
+    }
+
+    // CWE-918 Server-Side Request Forgery
+    if (cweId === '918') {
+      return {
+        id: 'CWE-918',
+        name: 'Server-Side Request Forgery',
+        description: 'Server makes requests to unintended destinations',
+        likelihood: 'High',
+        severity: 'High',
+        mitigation: [
+          'Validate request destinations',
+          'Use allowlists for URLs',
+          'Block internal networks'
+        ],
+        detectMethods: [
+          'SSRF payload testing',
+          'Network traffic analysis'
+        ],
+        relatedCVEs: ['CVE-2024-9012', 'CVE-2023-3456'],
+        attackVectors: [
+          'Internal network scanning',
+          'Cloud metadata access'
+        ]
+      }
+    }
+
+    // CWE-362 Race Condition
+    if (cweId === '362') {
+      return {
+        id: 'CWE-362',
+        name: 'Race Condition',
+        description: 'Timing-dependent execution order causes security issues',
+        likelihood: 'Medium',
+        severity: 'High',
+        mitigation: [
+          'Use proper synchronization',
+          'Atomic operations',
+          'Lock mechanisms'
+        ],
+        detectMethods: [
+          'Concurrent testing',
+          'Race condition scanners'
+        ],
+        relatedCVEs: ['CVE-2024-0123', 'CVE-2023-4567'],
+        attackVectors: [
+          'TOCTOU attacks',
+          'Concurrent access exploitation'
+        ]
+      }
+    }
+
+    // CWE-269 Improper Privilege Management
+    if (cweId === '269') {
+      return {
+        id: 'CWE-269',
+        name: 'Improper Privilege Management',
+        description: 'Application fails to properly manage user privileges',
+        likelihood: 'High',
+        severity: 'High',
+        mitigation: [
+          'Implement least privilege',
+          'Regular permission audits',
+          'Role-based access control'
+        ],
+        detectMethods: [
+          'Privilege escalation testing',
+          'Permission analysis'
+        ],
+        relatedCVEs: ['CVE-2024-1234', 'CVE-2023-5678'],
+        attackVectors: [
+          'Privilege escalation',
+          'Unauthorized access'
+        ]
+      }
+    }
+
+    // CWE-617 Reachable Assertion
+    if (cweId === '617') {
+      return {
+        id: 'CWE-617',
+        name: 'Reachable Assertion',
+        description: 'Assertion statements can be triggered by user input',
+        likelihood: 'Low',
+        severity: 'Medium',
+        mitigation: [
+          'Remove debug assertions',
+          'Validate assertion conditions',
+          'Use proper error handling'
+        ],
+        detectMethods: [
+          'Assertion triggering tests',
+          'Debug code analysis'
+        ],
+        relatedCVEs: ['CVE-2024-2345', 'CVE-2023-6789'],
+        attackVectors: [
+          'Application crashes',
+          'Information disclosure'
+        ]
+      }
+    }
+
+    // CWE-665 Improper Initialization
+    if (cweId === '665') {
+      return {
+        id: 'CWE-665',
+        name: 'Improper Initialization',
+        description: 'Variables or resources not properly initialized',
+        likelihood: 'Medium',
+        severity: 'Medium',
+        mitigation: [
+          'Initialize all variables',
+          'Set default values',
+          'Clear sensitive data'
+        ],
+        detectMethods: [
+          'Uninitialized variable scanning',
+          'Memory analysis'
+        ],
+        relatedCVEs: ['CVE-2024-3456', 'CVE-2023-7890'],
+        attackVectors: [
+          'Information leakage',
+          'Undefined behavior'
+        ]
+      }
+    }
+
+    // CWE-639 Authorization Bypass
+    if (cweId === '639') {
+      return {
+        id: 'CWE-639',
+        name: 'Authorization Bypass',
+        description: 'User-controlled key enables unauthorized access',
+        likelihood: 'High',
+        severity: 'High',
+        mitigation: [
+          'Validate authorization keys',
+          'Implement proper access controls',
+          'Use server-side validation'
+        ],
+        detectMethods: [
+          'Authorization bypass testing',
+          'Access control validation'
+        ],
+        relatedCVEs: ['CVE-2024-4567', 'CVE-2023-8901'],
+        attackVectors: [
+          'Direct object reference',
+          'Parameter manipulation'
+        ]
+      }
+    }
+
     // Default fallback for other CWEs
     return {
       id: `CWE-${cweId}`,

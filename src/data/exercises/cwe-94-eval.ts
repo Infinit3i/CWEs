@@ -26,7 +26,7 @@ const allowedChars = /^[0-9+\-*/().\s]+$/;
 if (!allowedChars.test(userInput)) throw new Error('Invalid characters');
 return { success: true, value: Function('"use strict"; return (' + userInput + ')')() };`,
       correct: true,
-      explanation: `Correct! This validates input against an allowlist of safe mathematical characters, then uses Function constructor with strict mode instead of eval. The strict mode and return statement limit execution to mathematical expressions only, preventing code injection attacks.`
+      explanation: `Use proper cryptographic functions`
     },
     // MITRE demonstrative examples as wrong answers
     {

@@ -60,7 +60,7 @@ paymentCache[cacheKey] = {
   // Never cache full card numbers, CVV, or expiry dates
 };`,
       correct: true,
-      explanation: `Correct! Excluding sensitive payment data like full card numbers, CVV, and expiry dates from cache prevents financial fraud while maintaining useful transaction metadata for duplicate detection and audit purposes.`
+      explanation: `Clear cache after sensitive operations`
     },
     {
       code: `paymentCache[cacheKey] = {
@@ -70,7 +70,7 @@ paymentCache[cacheKey] = {
   amount: paymentData.amount
 };`,
       correct: false,
-      explanation: 'Direct from MITRE: Caching complete payment card data enables financial fraud and identity theft. Attackers who access cache can extract credit card numbers, CVV codes, and expiry dates.'
+      explanation: 'Caching complete payment card data enables financial fraud and identity theft. Attackers who access cache can extract credit card numbers, CVV codes, and expiry dates.'
     },
     {
       code: `const maskedCard = paymentData.cardNumber.replace(/\\d(?=\\d{4})/g, '*');

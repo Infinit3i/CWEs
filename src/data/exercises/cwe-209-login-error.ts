@@ -122,7 +122,7 @@ if (userResult.length === 0 || !passwordValid || user.account_status !== 'active
   });
 }`,
       correct: true,
-      explanation: `Correct! This prevents information exposure by providing identical responses for all authentication failures, regardless of whether the account exists, password is wrong, or account is disabled. Attackers cannot distinguish between these scenarios, preventing user enumeration. The consistent timing and generic error message eliminate information leakage while still providing appropriate security logging.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

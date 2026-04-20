@@ -49,13 +49,13 @@ if (allowedProtocols.includes(url.protocol)) {
   res.status(400).send('Invalid redirect URL');
 }`,
       correct: true,
-      explanation: `Correct! This validates the URL protocol before redirecting to prevent malicious schemes. By parsing the URL and checking that it uses http: or https:, we block dangerous protocols like javascript:, file:, or data: that could execute code or access local files. This prevents attackers from creating short URLs that redirect to malicious payloads while still allowing legitimate web redirects.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {
       code: `res.redirect(302, mapping.originalUrl);`,
       correct: false,
-      explanation: 'Direct from MITRE: Unvalidated redirect accepts any URL stored in database. Attackers can create short URLs pointing to phishing sites, malware, or javascript: schemes to execute code.'
+      explanation: 'Unvalidated redirect accepts any URL stored in database. Attackers can create short URLs pointing to phishing sites, malware, or javascript: schemes to execute code.'
     },
     {
       code: `if (mapping.originalUrl.includes('http')) { res.redirect(302, mapping.originalUrl); }`,

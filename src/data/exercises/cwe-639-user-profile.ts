@@ -65,7 +65,7 @@ if (currentUserId !== parseInt(requestedUserId) && currentUserRole !== 'admin') 
 
 const userResult = await db.query(userQuery, [requestedUserId]);`,
       correct: true,
-      explanation: `Correct! This implements proper object-level authorization by verifying that users can only access their own profile, unless they have admin privileges. By comparing the authenticated user's ID with the requested user ID, we prevent horizontal privilege escalation where users could access other users' sensitive information like salary and SSN. The admin role exception provides necessary administrative functionality while maintaining security.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

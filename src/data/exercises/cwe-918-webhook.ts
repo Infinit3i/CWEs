@@ -38,12 +38,12 @@ export const cwe918Webhook: Exercise = {
     {
       code: `if (!this.isValidWebhookUrl(callbackUrl)) throw new Error('Invalid webhook URL'); const response = await fetch(callbackUrl, {`,
       correct: true,
-      explanation: `Correct! URL validation with allowlists of permitted domains/protocols prevents SSRF attacks. Webhook URLs should be validated against registered, trusted destinations before making requests.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const response = await fetch(callbackUrl, {`,
       correct: false,
-      explanation: 'From MITRE: Direct user input to URL parameters enables SSRF. Attackers can target internal services like http://169.254.169.254/latest/meta-data/ for cloud metadata access.'
+      explanation: 'Direct user input to URL parameters enables SSRF. Attackers can target internal services like http://169.254.169.254/latest/meta-data/ for cloud metadata access.'
     },
     {
       code: `const url = new URL(callbackUrl); if (url.hostname === 'localhost') throw new Error('Invalid host'); const response = await fetch(callbackUrl, {`,

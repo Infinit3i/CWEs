@@ -90,7 +90,7 @@ if (parseInt(userId) !== authenticatedUserId) {
 
 await db.query(updateQuery, updateValues);`,
       correct: true,
-      explanation: `Correct! This prevents authorization bypass by ensuring users can only update their own account settings. By comparing the userId from the request body with the authenticated user's ID from the session, we prevent horizontal privilege escalation where attackers could modify other users' email addresses, privacy settings, or even account types by manipulating the userId parameter in the request.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {

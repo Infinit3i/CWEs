@@ -60,7 +60,7 @@ export const cwe287OAuthValidation: Exercise = {
   }
 }`,
       correct: true,
-      explanation: `Correct! Proper OAuth validation requires server-side verification with the OAuth provider. This ensures tokens are valid, active, and haven't been tampered with by checking against the authoritative source.`
+      explanation: `Validate credentials server-side with expiration`
     },
     // OAuth validation vulnerabilities
     {

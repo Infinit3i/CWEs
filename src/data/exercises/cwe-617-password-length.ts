@@ -22,12 +22,12 @@ export const cwe617PasswordLength: Exercise = {
     {
       code: `const errors = []; if (password.length < 8) errors.push('Password must be at least 8 characters'); if (!/[A-Z]/.test(password)) errors.push('Password must contain uppercase letter'); if (errors.length > 0) throw new ValidationError(errors);`,
       correct: true,
-      explanation: `Correct! Collecting validation errors and throwing appropriate exceptions prevents assertions from being triggered by user input while providing comprehensive error reporting.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `assert(password.length >= 8, 'Password must be at least 8 characters');`,
       correct: false,
-      explanation: 'Direct from MITRE: Short passwords provided by users trigger this assertion, causing application crashes. Password validation should use proper error handling, not assertions.'
+      explanation: 'Short passwords provided by users trigger this assertion, causing application crashes. Password validation should use proper error handling, not assertions.'
     },
     {
       code: `assert(password && password.length >= 8, 'Valid password required');`,

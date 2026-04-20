@@ -29,7 +29,7 @@ export const cwe787NegativeIndex: Exercise = {
     {
       code: `if (foundIndex !== -1) { /* perform replacement */ } else { return destBuffer; }`,
       correct: true,
-      explanation: `Correct! Checking that foundIndex is not -1 before proceeding prevents the negative index calculation. When search text is not found, we safely return the original buffer instead of attempting writes at negative indices that could corrupt memory before the buffer.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `writeIndex = foundIndex - destBuffer.length;`,

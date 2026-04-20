@@ -31,7 +31,7 @@ export const cwe20PurchaseQuantity: Exercise = {
     {
       code: `if (quantity > 0 && Number.isInteger(quantity)) { const totalCost = ITEM_PRICE * quantity; } else { throw new Error('Invalid quantity'); }`,
       correct: true,
-      explanation: `Correct! Validating that quantity is positive and an integer prevents negative quantities that would result in credits instead of charges. This ensures only legitimate purchases where the user pays money rather than receiving money.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `const totalCost = ITEM_PRICE * quantity;`,

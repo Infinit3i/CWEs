@@ -33,7 +33,7 @@ fs.writeSync(fd, JSON.stringify(logData));
 fs.closeSync(fd);
 return { success: true, logPath: logPath };`,
       correct: true,
-      explanation: `Correct! This explicitly sets file permissions to 0o600 (owner read/write only), following the principle of least privilege. This prevents other users from reading potentially sensitive log data or modifying the log files.`
+      explanation: `Use proper cryptographic functions`
     },
     // MITRE CVE-inspired wrong answers
     {

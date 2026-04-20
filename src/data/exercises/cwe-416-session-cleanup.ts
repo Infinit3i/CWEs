@@ -36,12 +36,12 @@ export const cwe416SessionCleanup: Exercise = {
     {
       code: `let sessionValid = true; /* track in switch */ if (sessionValid) { auditLog('Session operation completed', sessionData); }`,
       correct: true,
-      explanation: `Correct! Tracking session validity throughout the function and only logging when valid prevents use-after-free. Setting sessionValid = false when deallocating ensures audit logging only occurs with valid session data.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `auditLog('Session operation completed', sessionData);`,
       correct: false,
-      explanation: 'MITRE use-after-free pattern: sessionData is deallocated in logout and timeout cases but still accessed in audit logging. This can crash the application or log data from reallocated memory.'
+Use after free causes crashes'
     },
     {
       code: `if (action !== "logout" && action !== "timeout") { auditLog('Session operation completed', sessionData); }`,
@@ -56,7 +56,7 @@ export const cwe416SessionCleanup: Exercise = {
     {
       code: `try { auditLog('Session operation completed', sessionData); } catch(e) { auditLog('Session logging failed'); }`,
       correct: false,
-      explanation: 'Exception handling cannot prevent use-after-free vulnerability. Memory access to freed session data occurs before any exception handling.'
+      explanation: 'Try-catch cannot prevent vulnerability'
     },
     {
       code: `if (sessionData !== null) { auditLog('Session operation completed', sessionData); }`,

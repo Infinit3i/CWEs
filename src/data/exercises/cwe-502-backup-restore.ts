@@ -78,7 +78,7 @@ export const cwe502BackupRestore: Exercise = {
   return { success: true, data: restoredData };
 }`,
       correct: true,
-      explanation: `Correct! HMAC signature verification ensures backup integrity and authenticity. Property allowlisting and value sanitization prevent deserialization attacks by only processing safe, expected data fields.`
+      explanation: `Use proper cryptographic functions`
     },
     // Backup restoration deserialization vulnerabilities
     {

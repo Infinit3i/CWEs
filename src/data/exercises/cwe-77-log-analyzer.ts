@@ -81,7 +81,7 @@ export const cwe77LogAnalyzer: Exercise = {
   });
 }`,
       correct: true,
-      explanation: `Correct! Using spawn() with separate arguments prevents command injection. Input validation and path sanitization ensure only legitimate log files are accessed, and the search pattern is passed as a discrete argument.`
+      explanation: `Use proper cryptographic functions`
     },
     // Log analysis command injection vulnerabilities
     {

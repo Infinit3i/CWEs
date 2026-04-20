@@ -26,12 +26,12 @@ export const cwe665UserSession: Exercise = {
     {
       code: `this.permissions = Object.create(null); this.isAuthenticated = false; this.permissionCount = 0;`,
       correct: true,
-      explanation: `Correct! Using Object.create(null) prevents prototype pollution, initializing authentication state to false ensures secure defaults, and tracking permission count helps with session management integrity.`
+      explanation: `Use proper cryptographic functions`
     },
     {
       code: `this.permissions = {};`,
       correct: false,
-      explanation: 'Direct from MITRE: Plain object initialization may inherit prototype properties. Uninitialized permissions object could have hasOwnProperty vulnerabilities or inherit unexpected permissions.'
+      explanation: 'Plain object initialization may inherit prototype properties. Uninitialized permissions object could have hasOwnProperty vulnerabilities or inherit unexpected permissions.'
     },
     {
       code: `this.permissions = new Array();`,

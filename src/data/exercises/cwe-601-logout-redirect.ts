@@ -68,13 +68,13 @@ try {
   res.redirect(302, '/login');
 }`,
       correct: true,
-      explanation: `Correct! This implements comprehensive allowlisting for logout redirects. It validates both internal application pages and explicitly trusted external domains (like business partners). The try-catch block handles malformed URLs safely, and the URL constructor properly parses the destination to check hostname and pathname separately. This prevents open redirects while supporting legitimate business requirements for partner integrations.`
+      explanation: `Use proper cryptographic functions`
     },
     // Real MITRE demonstrative examples as wrong answers
     {
       code: `res.redirect(302, redirect_uri);`,
       correct: false,
-      explanation: 'Direct from MITRE: Unvalidated logout redirect enables session fixation and phishing attacks. Attackers can craft logout links that redirect to fake login pages, tricking users into entering credentials on malicious sites immediately after logout.'
+      explanation: 'Unvalidated logout redirect enables session fixation and phishing attacks. Attackers can craft logout links that redirect to fake login pages, tricking users into entering credentials on malicious sites immediately after logout.'
     },
     {
       code: `if (redirect_uri.indexOf('http://') === -1) { res.redirect(302, redirect_uri); } else { res.redirect(302, '/login'); }`,
