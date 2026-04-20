@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe665CryptoState: Exercise = {
   cweId: 'CWE-665',
   name: 'Improper Initialization - Cryptographic State Management',
+  language: 'PHP',
 
   vulnerableFunction: `class CryptoManager {
   constructor() {

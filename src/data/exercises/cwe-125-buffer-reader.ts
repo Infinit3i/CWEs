@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe125BufferReader: Exercise = {
   cweId: 'CWE-125',
   name: 'Out-of-bounds Read - Binary Data Reader',
+  language: 'C',
 
   vulnerableFunction: `function readBinaryData(dataBuffer, startOffset, readLength) {
   const result = [];

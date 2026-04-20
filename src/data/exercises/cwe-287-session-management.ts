@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe287SessionManagement: Exercise = {
   cweId: 'CWE-287',
   name: 'Improper Authentication - Session Management System',
+  language: 'Python',
 
   vulnerableFunction: `function validateUserSession(req) {
   const sessionId = req.cookies.sessionid;

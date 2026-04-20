@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe840PurchaseLimits: Exercise = {
   cweId: 'CWE-840',
   name: 'Business Logic Errors - Purchase Quantity Limits',
+  language: 'C#',
 
   vulnerableFunction: `function addToCart(productId, quantity, userId) {
   const product = getProduct(productId);

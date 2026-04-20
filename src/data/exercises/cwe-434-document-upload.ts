@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe434DocumentUpload: Exercise = {
   cweId: 'CWE-434',
   name: 'Unrestricted Upload - Document Upload',
+  language: 'PHP',
 
   vulnerableFunction: `@PostMapping("/upload/document")
 public ResponseEntity<?> uploadDocument(@RequestParam("file") MultipartFile file) {

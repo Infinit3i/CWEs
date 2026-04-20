@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe362CounterIncrement: Exercise = {
   cweId: 'CWE-362',
   name: 'Race Condition - Analytics Counter',
+  language: 'Go',
 
   vulnerableFunction: `class AnalyticsService {
   private cache = new Map<string, number>();

@@ -7,25 +7,48 @@ import type { Exercise } from '@/data/exercises'
 export const cwe22FileDownload: Exercise = {
   cweId: 'CWE-22',
   name: 'Path Traversal - File Download Endpoint',
+  language: 'Python',
 
-  vulnerableFunction: `app.get('/api/download/:filename', (req, res) => {
-  const filename = req.params.filename;
-  const filePath = path.join(__dirname, 'uploads', filename);
+  vulnerableFunction: `from flask import Flask, request, send_file, abort
+import os
+import os.path
 
-  if (fs.existsSync(filePath)) {
-    res.download(filePath);
-  } else {
-    res.status(404).send('File not found');
-  }
-});`,
+app = Flask(__name__)
+UPLOAD_DIR = "/var/www/uploads"
 
-  vulnerableLine: `const filePath = path.join(__dirname, 'uploads', filename);`,
+@app.route('/api/download/<filename>')
+def download_file(filename):
+    # Vulnerable path construction
+    file_path = os.path.join(UPLOAD_DIR, filename)
+
+    if os.path.exists(file_path):
+        return send_file(file_path, as_attachment=True)
+    else:
+        abort(404, "File not found")`,
+
+  vulnerableLine: `file_path = os.path.join(UPLOAD_DIR, filename)`,
 
   options: [
     {
-      code: `const safeName = path.basename(filename); const filePath = path.join(__dirname, 'uploads', safeName); const normalized = path.resolve(filePath); if (!normalized.startsWith(path.resolve(__dirname, 'uploads'))) throw new Error('Access denied');`,
+      code: `@app.route('/api/download/<filename>')
+def download_file(filename):
+    # Sanitize filename - remove path components
+    safe_name = os.path.basename(filename)
+    file_path = os.path.join(UPLOAD_DIR, safe_name)
+
+    # Resolve and validate path stays within upload directory
+    resolved_path = os.path.realpath(file_path)
+    upload_real = os.path.realpath(UPLOAD_DIR)
+
+    if not resolved_path.startswith(upload_real + os.sep):
+        abort(403, "Access denied")
+
+    if os.path.exists(resolved_path):
+        return send_file(resolved_path, as_attachment=True)
+    else:
+        abort(404, "File not found")`,
       correct: true,
-      explanation: `Use proper cryptographic functions`
+      explanation: `Use os.path.basename() and validate resolved path stays within allowed directory`
     },
     {
       code: `const filePath = '/users/cwe/profiles/' + filename;`,

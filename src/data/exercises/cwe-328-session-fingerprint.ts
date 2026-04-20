@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe328SessionFingerprint: Exercise = {
   cweId: 'CWE-328',
   name: 'Weak Hash - Session Security Fingerprint',
+  language: 'JavaScript',
 
   vulnerableFunction: `function createSessionFingerprint(userAgent, ipAddress, sessionId) {
   const crypto = require('crypto');

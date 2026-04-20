@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe524FinancialDataCache: Exercise = {
   cweId: 'CWE-524',
   name: 'Financial Data Cache - Payment Processing Cache',
+  language: 'JavaScript',
 
   vulnerableFunction: `function processPayment(paymentData, userId) {
   const cacheKey = \`payment:\${userId}:\${paymentData.transactionId}\`;

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe345TokenValidation: Exercise = {
   cweId: 'CWE-345',
   name: 'Insufficient Verification of Data Authenticity - Authentication Tokens',
+  language: 'JavaScript',
 
   vulnerableFunction: `function validateAuthToken(token, requiredRole) {
   try {

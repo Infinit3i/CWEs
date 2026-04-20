@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe502ConfigLoader: Exercise = {
   cweId: 'CWE-502',
   name: 'Deserialization of Untrusted Data - Dynamic Configuration Loader',
+  language: 'Java',
 
   vulnerableFunction: `function loadDynamicConfig(configPath) {
   const fs = require('fs');

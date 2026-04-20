@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe352FundTransfer: Exercise = {
   cweId: 'CWE-352',
   name: 'Cross-Site Request Forgery - Fund Transfer',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.post('/api/transfer', authenticateBanking, (req, res) => {
   const { toAccount, amount, description } = req.body;

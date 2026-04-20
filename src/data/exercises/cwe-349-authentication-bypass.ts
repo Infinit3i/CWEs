@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe349AuthenticationBypass: Exercise = {
   cweId: 'CWE-349',
   name: 'Authentication Bypass - Token Plus Extra Data',
+  language: 'JavaScript',
 
   vulnerableFunction: `function authenticateRequest(trustedJwtToken, clientAuthData) {
   // Verify the trusted JWT token

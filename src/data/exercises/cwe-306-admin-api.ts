@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe306AdminApi: Exercise = {
   cweId: 'CWE-306',
   name: 'Missing Authentication - Administrative API',
+  language: 'C',
 
   vulnerableFunction: `class AdminController {
   async createUserAccount(req: Request, res: Response) {

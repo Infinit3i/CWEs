@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe89Search: Exercise = {
   cweId: 'CWE-89',
   name: 'SQL Injection - Product Search',
+  language: 'JavaScript',
   vulnerableFunction: `function searchProducts(searchTerm, sortBy, filterCategory) {
   const baseQuery = "SELECT * FROM products WHERE name LIKE '%" + searchTerm + "%'";
   const categoryFilter = " AND category = '" + filterCategory + "'";

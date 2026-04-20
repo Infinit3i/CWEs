@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe434ResumeUpload: Exercise = {
   cweId: 'CWE-434',
   name: 'Unrestricted Upload - Resume Upload',
+  language: 'PHP',
 
   vulnerableFunction: `app.post('/careers/upload-resume', (req, res) => {
   const upload = multer({ dest: './public/resumes/' });

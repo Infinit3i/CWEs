@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe362SessionCheck: Exercise = {
   cweId: 'CWE-362',
   name: 'Race Condition - Session Validation',
+  language: 'Go',
 
   vulnerableFunction: `class SessionManager {
   async validateAndExtendSession(sessionId: string, userId: string) {

@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe369ResourceAllocation: Exercise = {
   cweId: 'CWE-369',
   name: 'Divide By Zero - Resource Per User Calculation',
+  language: 'Go',
 
   vulnerableFunction: `function calculateResourcesPerUser(totalResources, activeUsers) {
   // Distribute resources evenly among active users

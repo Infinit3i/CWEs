@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe732ConfigFiles: Exercise = {
   cweId: 'CWE-732',
   name: 'Incorrect Permission Assignment - Configuration File Security',
+  language: 'C',
 
   vulnerableFunction: `function deployConfiguration(config) {
   const fs = require('fs');

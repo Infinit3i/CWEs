@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe434AvatarUpload: Exercise = {
   cweId: 'CWE-434',
   name: 'Unrestricted Upload - Avatar Upload',
+  language: 'PHP',
 
   vulnerableFunction: `app.post('/upload/avatar', upload.single('avatar'), (req, res) => {
   if (!req.file) {

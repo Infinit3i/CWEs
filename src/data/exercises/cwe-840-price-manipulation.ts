@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe840PriceManipulation: Exercise = {
   cweId: 'CWE-840',
   name: 'Business Logic Errors - Order Price Calculation',
+  language: 'C#',
 
   vulnerableFunction: `function processOrder(orderItems, customerData) {
   let totalPrice = 0;

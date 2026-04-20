@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe209ApiValidation: Exercise = {
   cweId: 'CWE-209',
   name: 'Information Exposure - API Validation Errors',
+  language: 'Java',
 
   vulnerableFunction: `app.post('/api/transfer-funds', authenticateUser, async (req, res) => {
   try {

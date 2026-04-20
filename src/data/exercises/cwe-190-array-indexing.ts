@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe190ArrayIndexing: Exercise = {
   cweId: 'CWE-190',
   name: 'Integer Overflow - Array Indexing in Data Processing',
+  language: 'C++',
 
   vulnerableFunction: `function processDataChunks(dataArray, startIndex, chunkSize) {
   const results = [];

@@ -6,6 +6,7 @@ import type { Exercise } from '@/data/exercises'
  */
 export const cwe79Form: Exercise = {
   cweId: 'CWE-79',
+  language: 'JavaScript',
   name: 'Cross-Site Scripting - Contact Form Validation',
 
   vulnerableFunction: `function validateAndShowForm(formData) {

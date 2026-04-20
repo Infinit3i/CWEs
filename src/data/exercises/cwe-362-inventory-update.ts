@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe362InventoryUpdate: Exercise = {
   cweId: 'CWE-362',
   name: 'Race Condition - Inventory Management',
+  language: 'Go',
 
   vulnerableFunction: `class InventoryService {
   async reserveProduct(productId: string, quantity: number, orderId: string) {

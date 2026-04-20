@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe434ImageGallery: Exercise = {
   cweId: 'CWE-434',
   name: 'Unrestricted Upload - Image Gallery Upload',
+  language: 'PHP',
 
   vulnerableFunction: `app.post('/gallery/upload', authenticateUser, (req, res) => {
   const form = new multiparty.Form();

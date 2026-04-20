@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe639InvoiceAccess: Exercise = {
   cweId: 'CWE-639',
   name: 'Authorization Bypass - Invoice Access Control',
+  language: 'PHP',
 
   vulnerableFunction: `app.get('/api/invoices/:invoiceId', authenticateToken, async (req, res) => {
   try {

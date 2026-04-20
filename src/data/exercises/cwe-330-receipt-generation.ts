@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe330ReceiptGeneration: Exercise = {
   cweId: 'CWE-330',
   name: 'Insufficient Randomness - Purchase Receipt URLs',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateReceiptURL(baseUrl, orderTotal) {
   // Seed PRNG with current timestamp

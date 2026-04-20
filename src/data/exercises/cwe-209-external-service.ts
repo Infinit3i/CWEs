@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe209ExternalService: Exercise = {
   cweId: 'CWE-209',
   name: 'Information Exposure - External Service Errors',
+  language: 'Java',
 
   vulnerableFunction: `app.post('/api/send-notification', authenticateUser, async (req, res) => {
   try {

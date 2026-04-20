@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe617JsonParsing: Exercise = {
   cweId: 'CWE-617',
   name: 'Reachable Assertion - JSON Structure Validation',
+  language: 'Go',
 
   vulnerableFunction: `function processApiRequest(requestBody) {
   const data = JSON.parse(requestBody);

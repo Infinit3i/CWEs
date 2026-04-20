@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe352AdminDelete: Exercise = {
   cweId: 'CWE-352',
   name: 'Cross-Site Request Forgery - Admin User Deletion',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.delete('/admin/users/:userId', requireAdmin, (req, res) => {
   const { userId } = req.params;

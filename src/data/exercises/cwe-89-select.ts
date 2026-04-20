@@ -3,16 +3,50 @@ import type { Exercise } from '@/data/exercises'
 export const cwe89Select: Exercise = {
   cweId: 'CWE-89',
   name: 'SQL Injection - User Data Query',
-  vulnerableFunction: `function getUserData(userId) {
-  const query = "SELECT * FROM users WHERE id = " + userId;
-  return database.query(query);
+  language: 'C#',
+  vulnerableFunction: `using System.Data.SqlClient;
+
+public class UserService
+{
+    public DataTable GetUserData(string userId)
+    {
+        string query = "SELECT * FROM users WHERE id = " + userId;
+
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(query, connection);
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataTable result = new DataTable();
+
+            connection.Open();
+            adapter.Fill(result);
+
+            return result;
+        }
+    }
 }`,
-  vulnerableLine: `const query = "SELECT * FROM users WHERE id = " + userId;`,
+  vulnerableLine: `string query = "SELECT * FROM users WHERE id = " + userId;`,
   options: [
     {
-      code: `const query = "SELECT * FROM users WHERE id = ?";`,
+      code: `public DataTable GetUserData(string userId)
+{
+    string query = "SELECT * FROM users WHERE id = @userId";
+
+    using (SqlConnection connection = new SqlConnection(connectionString))
+    {
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@userId", userId);
+        SqlDataAdapter adapter = new SqlDataAdapter(command);
+        DataTable result = new DataTable();
+
+        connection.Open();
+        adapter.Fill(result);
+
+        return result;
+    }
+}`,
       correct: true,
-      explanation: `Use ? placeholders - database treats input as data, not code`
+      explanation: `Use parameterized queries with @parameters - database treats input as data, not code`
     },
     {
       code: `const query = "SELECT * FROM users WHERE id = '" + userId + "'";`,

@@ -3,75 +3,84 @@ import type { Exercise } from '@/data/exercises'
 export const cwe89Update: Exercise = {
   cweId: 'CWE-89',
   name: 'SQL Injection - User Profile Update',
-  vulnerableFunction: `function updateUserProfile(userId, name, email) {
-  const nameQuery = "UPDATE users SET name = '" + name + "' WHERE id = " + userId;
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = " + userId;
-  database.query(nameQuery);
-  database.query(emailQuery);
-  return { success: true };
-}`,
-  vulnerableLine: `const nameQuery = "UPDATE users SET name = '" + name + "' WHERE id = " + userId;
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = " + userId;`,
+  language: 'PHP',
+  vulnerableFunction: `<?php
+function updateUserProfile($userId, $name, $email) {
+    global $db;
+
+    $nameQuery = "UPDATE users SET name = '" . $name . "' WHERE id = " . $userId;
+    $emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = " . $userId;
+
+    $db->query($nameQuery);
+    $db->query($emailQuery);
+
+    return array('success' => true);
+}
+?>`,
+  vulnerableLine: `$nameQuery = "UPDATE users SET name = '" . $name . "' WHERE id = " . $userId;
+    $emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = " . $userId;`,
   options: [
     {
-      code: `const nameQuery = "UPDATE users SET name = ? WHERE id = ?";
-  const emailQuery = "UPDATE users SET email = ? WHERE id = ?";`,
+      code: `$stmt = $db->prepare("UPDATE users SET name = ? WHERE id = ?");
+$stmt->execute([$name, $userId]);
+$stmt = $db->prepare("UPDATE users SET email = ? WHERE id = ?");
+$stmt->execute([$email, $userId]);`,
       correct: true,
-      explanation: `Use ? placeholders - database treats input as data, not code`
+      explanation: `Use prepared statements with placeholders - database treats input as data, not code`
     },
     {
-      code: `const nameQuery = "UPDATE users SET name = '" + name.replace(/'/g, "\\'") + "' WHERE id = " + userId;
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = " + userId;`,
+      code: `$nameQuery = "UPDATE users SET name = '" . addslashes($name) . "' WHERE id = " . $userId;
+$emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = " . $userId;`,
       correct: false,
-      explanation: 'Escaping quotes is incomplete - other injection techniques work'
+      explanation: 'addslashes() only escapes quotes and backslashes - other SQL injection techniques like UNION attacks still work'
     },
     {
-      code: `const nameQuery = "UPDATE users SET name = '" + sanitize(name) + "' WHERE id = " + userId;
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = " + userId;`,
+      code: `$nameQuery = "UPDATE users SET name = '" . mysqli_real_escape_string($db, $name) . "' WHERE id = " . $userId;
+$emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = " . $userId;`,
       correct: false,
-      explanation: 'Custom sanitization is error-prone - use parameterized queries'
+      explanation: 'mysqli_real_escape_string() helps but only applied to name field - email field remains vulnerable'
     },
     {
-      code: `const nameQuery = "UPDATE users SET name = '" + name + "' WHERE id = '" + userId + "'";
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = '" + userId + "'";`,
+      code: `$nameQuery = "UPDATE users SET name = '" . $name . "' WHERE id = '" . $userId . "'";
+$emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = '" . $userId . "'";`,
       correct: false,
-      explanation: 'Adding quotes doesn\'t prevent injection - still concatenating input'
+      explanation: 'Adding quotes around numeric fields doesn\'t prevent injection - attackers can close quotes and inject malicious SQL'
     },
     {
-      code: `const nameQuery = "UPDATE users SET name = " + JSON.stringify(name) + " WHERE id = " + userId;
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = " + userId;`,
+      code: `$nameQuery = "UPDATE users SET name = " . json_encode($name) . " WHERE id = " . $userId;
+$emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = " . $userId;`,
       correct: false,
-      explanation: 'JSON.stringify doesn\'t prevent all SQL injection forms'
+      explanation: 'json_encode() adds quotes but doesn\'t prevent all SQL injection forms - email field remains unprotected'
     },
     {
-      code: `const nameQuery = \`UPDATE users SET name = '\${name}' WHERE id = \${userId}\`;
-  const emailQuery = \`UPDATE users SET email = '\${email}' WHERE id = \${userId}\`;`,
+      code: `$nameQuery = "UPDATE users SET name = '$name' WHERE id = $userId";
+$emailQuery = "UPDATE users SET email = '$email' WHERE id = $userId";`,
       correct: false,
-      explanation: 'Template literals are still string concatenation - vulnerable'
+      explanation: 'Double quotes vs single quotes provides no protection - variable interpolation still creates concatenated strings vulnerable to injection'
     },
     {
-      code: `const nameQuery = "UPDATE users SET name = '" + encodeURIComponent(name) + "' WHERE id = " + userId;
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = " + userId;`,
+      code: `$nameQuery = "UPDATE users SET name = '" . urlencode($name) . "' WHERE id = " . $userId;
+$emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = " . $userId;`,
       correct: false,
-      explanation: 'URL encoding is for HTTP, not SQL protection'
+      explanation: 'urlencode() is for HTTP URLs, not SQL protection - characters like quotes become %27 but SQL still executes injected code'
     },
     {
-      code: `const nameQuery = "UPDATE users SET name = '" + name.substring(0, 100) + "' WHERE id = " + userId;
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = " + userId;`,
+      code: `$nameQuery = "UPDATE users SET name = '" . substr($name, 0, 100) . "' WHERE id = " . $userId;
+$emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = " . $userId;`,
       correct: false,
-      explanation: 'Truncating input doesn\'t prevent injection - short payloads work'
+      explanation: 'Truncating input doesn\'t prevent injection - short SQL payloads like \'; DROP TABLE users; -- work within length limits'
     },
     {
-      code: `const nameQuery = "UPDATE users SET name = '" + name.toLowerCase() + "' WHERE id = " + userId;
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = " + userId;`,
+      code: `$nameQuery = "UPDATE users SET name = '" . strtolower($name) . "' WHERE id = " . $userId;
+$emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = " . $userId;`,
       correct: false,
-      explanation: 'toLowerCase() doesn\'t prevent SQL injection attacks'
+      explanation: 'strtolower() doesn\'t prevent SQL injection - payloads work in lowercase: \'; drop table users; --'
     },
     {
-      code: `const nameQuery = "UPDATE users SET name = '" + name.replace(/[<>]/g, '') + "' WHERE id = " + userId;
-  const emailQuery = "UPDATE users SET email = '" + email + "' WHERE id = " + userId;`,
+      code: `$nameQuery = "UPDATE users SET name = '" . preg_replace('/[<>]/', '', $name) . "' WHERE id = " . $userId;
+$emailQuery = "UPDATE users SET email = '" . $email . "' WHERE id = " . $userId;`,
       correct: false,
-      explanation: 'Removing HTML chars doesn\'t prevent SQL injection'
+      explanation: 'Removing HTML characters doesn\'t prevent SQL injection - SQL metacharacters like quotes and semicolons remain'
     }
   ]
 }

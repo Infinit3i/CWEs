@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe829ExternalScript: Exercise = {
   cweId: 'CWE-829',
   name: 'Inclusion of Functionality from Untrusted Control Sphere - Widget Integration',
+  language: 'JavaScript',
 
   vulnerableFunction: `function loadDashboardWidgets(widgetConfigs) {
   const dashboardContainer = document.getElementById('dashboard');

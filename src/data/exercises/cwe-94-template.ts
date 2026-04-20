@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe94Template: Exercise = {
   cweId: 'CWE-94',
   name: 'Code Injection - Template Engine',
+  language: 'JavaScript',
 
   vulnerableFunction: `function renderTemplate(templateName, data) {
   const templateCode = \`

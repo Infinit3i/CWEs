@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe269PrivilegeEscalation: Exercise = {
   cweId: 'CWE-269',
   name: 'Privilege Management - User Role Assignment',
+  language: 'C',
 
   vulnerableFunction: `class UserManagement {
   async assignUserRole(requestingUserId: string, targetUserId: string, newRole: string) {

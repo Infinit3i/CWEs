@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe918ImageFetch: Exercise = {
   cweId: 'CWE-918',
   name: 'Server-Side Request Forgery - Image Fetcher',
+  language: 'JavaScript',
 
   vulnerableFunction: `class ImageProcessingService {
   async fetchAndProcessImage(imageUrl: string, userId: string) {

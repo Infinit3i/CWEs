@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe369BatchProcessing: Exercise = {
   cweId: 'CWE-369',
   name: 'Divide By Zero - Batch Processing Rate',
+  language: 'Go',
 
   vulnerableFunction: `function calculateProcessingRate(itemsProcessed, timeElapsedSeconds) {
   // Calculate items per second processing rate

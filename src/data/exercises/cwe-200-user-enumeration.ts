@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe200UserEnumeration: Exercise = {
   cweId: 'CWE-200',
   name: 'Information Exposure - User Enumeration',
+  language: 'Java',
 
   vulnerableFunction: `app.post('/api/register', async (req, res) => {
   try {

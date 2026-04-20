@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe798ApiKey: Exercise = {
   cweId: 'CWE-798',
   name: 'Hard-coded Credentials - API Gateway Configuration',
+  language: 'Python',
 
   vulnerableFunction: `class PaymentGateway {
   constructor(private config: any) {}

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe22TemplateInclude: Exercise = {
   cweId: 'CWE-22',
   name: 'Path Traversal - Template File Include',
+  language: 'Python',
 
   vulnerableFunction: `function renderTemplate(templateName, data) {
   const templatePath = './templates/' + templateName + '.hbs';

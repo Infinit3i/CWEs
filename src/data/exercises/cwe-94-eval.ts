@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe94Eval: Exercise = {
   cweId: 'CWE-94',
   name: 'Code Injection - Calculator Function',
+  language: 'JavaScript',
 
   vulnerableFunction: `function calculateExpression(userInput) {
   try {

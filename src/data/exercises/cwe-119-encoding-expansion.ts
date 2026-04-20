@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe119EncodingExpansion: Exercise = {
   cweId: 'CWE-119',
   name: 'Memory Buffer Bounds - HTML Entity Encoding Expansion',
+  language: 'C',
 
   vulnerableFunction: `// Simulated C-style function for HTML entity encoding
 function encodeHTMLEntities(userInput) {

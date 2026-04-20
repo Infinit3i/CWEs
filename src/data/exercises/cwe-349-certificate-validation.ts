@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe349CertificateValidation: Exercise = {
   cweId: 'CWE-349',
   name: 'Certificate Validation - Extra Data Acceptance',
+  language: 'JavaScript',
 
   vulnerableFunction: `function validateCertificate(certificateData, trustedCASignature) {
   // Parse certificate and signature data

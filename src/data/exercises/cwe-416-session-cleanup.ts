@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe416SessionCleanup: Exercise = {
   cweId: 'CWE-416',
   name: 'Use After Free - Session Resource Management',
+  language: 'Rust',
 
   vulnerableFunction: `function handleUserSession(sessionId, action) {
   let sessionData = getSessionData(sessionId);

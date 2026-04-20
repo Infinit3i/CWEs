@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe78SystemProperty: Exercise = {
   cweId: 'CWE-78',
   name: 'OS Command Injection - Script Execution via Properties',
+  language: 'Go',
 
   vulnerableFunction: `function executeConfigScript() {
   const { exec } = require('child_process');

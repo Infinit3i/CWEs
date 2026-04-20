@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe306PaymentApi: Exercise = {
   cweId: 'CWE-306',
   name: 'Missing Authentication - Payment Processing',
+  language: 'C',
 
   vulnerableFunction: `class PaymentController {
   async processPayment(req: Request, res: Response) {

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe915ObjectDeserialization: Exercise = {
   cweId: 'CWE-915',
   name: 'Object Deserialization - Session Data Reconstruction',
+  language: 'JavaScript',
 
   vulnerableFunction: `function deserializeSession(sessionData) {
   const parsed = JSON.parse(sessionData);

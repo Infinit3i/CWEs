@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe209FileProcessing: Exercise = {
   cweId: 'CWE-209',
   name: 'Information Exposure - File Processing Errors',
+  language: 'Java',
 
   vulnerableFunction: `app.post('/api/upload', upload.single('file'), async (req, res) => {
   try {

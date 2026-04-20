@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe20PurchaseQuantity: Exercise = {
   cweId: 'CWE-20',
   name: 'Improper Input Validation - Purchase Transaction',
+  language: 'JavaScript',
 
   vulnerableFunction: `function processPurchase(userId, itemId) {
   const ITEM_PRICE = 20.00;

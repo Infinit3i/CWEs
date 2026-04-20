@@ -6,6 +6,7 @@ import type { Exercise } from '@/data/exercises'
  */
 export const cwe79Stored: Exercise = {
   cweId: 'CWE-79',
+  language: 'JavaScript',
   name: 'Cross-Site Scripting - User Comment System',
 
   vulnerableFunction: `function saveAndDisplayComment(commentText, username) {

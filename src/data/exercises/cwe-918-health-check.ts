@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe918HealthCheck: Exercise = {
   cweId: 'CWE-918',
   name: 'Server-Side Request Forgery - Health Check Monitor',
+  language: 'JavaScript',
 
   vulnerableFunction: `class ServiceHealthMonitor {
   async checkEndpointHealth(serviceUrl: string, serviceName: string) {

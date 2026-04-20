@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe209DatabaseError: Exercise = {
   cweId: 'CWE-209',
   name: 'Information Exposure - Database Error Messages',
+  language: 'Java',
 
   vulnerableFunction: `app.get('/api/products/search', async (req, res) => {
   try {

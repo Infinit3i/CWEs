@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe617ArrayBounds: Exercise = {
   cweId: 'CWE-617',
   name: 'Reachable Assertion - Array Index Validation',
+  language: 'Go',
 
   vulnerableFunction: `function getItemByIndex(items, userIndex) {
   const index = parseInt(userIndex);

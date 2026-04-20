@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe862AdminPanel: Exercise = {
   cweId: 'CWE-862',
   name: 'Missing Authorization - Admin Panel Access',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.get('/admin/dashboard', authenticateUser, (req, res) => {
   // Render admin dashboard with sensitive data

@@ -9,6 +9,7 @@ export interface ExerciseOption {
 export interface Exercise {
   cweId: string
   name: string
+  language: string  // Programming language (e.g., "JavaScript", "C", "Python", "Rust")
   vulnerableFunction: string
   vulnerableLine: string
   options: ExerciseOption[]

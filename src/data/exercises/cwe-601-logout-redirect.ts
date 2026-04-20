@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe601LogoutRedirect: Exercise = {
   cweId: 'CWE-601',
   name: 'Open Redirect - Logout Redirect Handler',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.post('/logout', (req, res) => {
   const { redirect_uri } = req.body;

@@ -7,158 +7,132 @@ import type { Exercise } from '@/data/exercises'
 export const cwe119HostnameLookup: Exercise = {
   cweId: 'CWE-119',
   name: 'Memory Buffer Bounds - Network Hostname Lookup',
+  language: 'C++',
 
-  vulnerableFunction: `// Note: This is a simulated C-style function in JavaScript for educational purposes
-function host_lookup(userSuppliedAddr) {
-  // Simulated C-style fixed buffer allocation
-  const HOSTNAME_SIZE = 64;
-  let hostname = new Array(HOSTNAME_SIZE);
+  vulnerableFunction: `#include <cstring>
+#include <stdexcept>
 
-  // Validate address format (basic check)
-  if (!isValidIPFormat(userSuppliedAddr)) {
-    throw new Error('Invalid IP address format');
-  }
+#define HOSTNAME_SIZE 64
 
-  // Simulated DNS lookup that could return long hostname
-  const resolvedHostname = performDNSLookup(userSuppliedAddr);
+class NetworkUtils {
+public:
+    static char* host_lookup(const char* user_supplied_addr) {
+        char hostname[HOSTNAME_SIZE];
 
-  // Copy hostname to fixed buffer (VULNERABLE - no bounds checking)
-  for (let i = 0; i < resolvedHostname.length; i++) {
-    hostname[i] = resolvedHostname[i];
-  }
+        // Validate address format (basic check)
+        if (!is_valid_ip_format(user_supplied_addr)) {
+            throw std::invalid_argument("Invalid IP address format");
+        }
 
-  return hostname.join('').replace(/\\0/g, '');
-}
+        // DNS lookup that could return long hostname
+        const char* resolved_hostname = perform_dns_lookup(user_supplied_addr);
 
-function performDNSLookup(addr) {
-  // Simulated function that might return very long hostnames
-  // Could return something like: "very-long-subdomain.example-with-many-parts.com..."
-  return mockDNSResponse(addr);
-}`,
+        // Copy hostname to fixed buffer (VULNERABLE - no bounds checking)
+        strcpy(hostname, resolved_hostname);
 
-  vulnerableLine: `for (let i = 0; i < resolvedHostname.length; i++) {`,
+        // Return copy (unsafe - local buffer)
+        char* result = new char[HOSTNAME_SIZE];
+        strcpy(result, hostname);
+        return result;
+    }
+
+private:
+    static const char* perform_dns_lookup(const char* addr) {
+        // Could return very long hostnames like:
+        // "very-long-subdomain.example-with-many-parts.com..."
+        return mock_dns_response(addr);
+    }
+};`,
+
+  vulnerableLine: `strcpy(hostname, resolved_hostname);`,
 
   options: [
     {
-      code: `function host_lookup(userSuppliedAddr) {
-  const MAX_HOSTNAME_SIZE = 253; // RFC compliant max hostname length
+      code: `static char* host_lookup(const char* user_supplied_addr) {
+    const int MAX_HOSTNAME_SIZE = 253; // RFC compliant max hostname length
 
-  if (!isValidIPFormat(userSuppliedAddr)) {
-    throw new Error('Invalid IP address format');
-  }
+    if (!is_valid_ip_format(user_supplied_addr)) {
+        throw std::invalid_argument("Invalid IP address format");
+    }
 
-  const resolvedHostname = performDNSLookup(userSuppliedAddr);
+    const char* resolved_hostname = perform_dns_lookup(user_supplied_addr);
 
-  if (resolvedHostname.length > MAX_HOSTNAME_SIZE) {
-    throw new Error('Hostname too long');
-  }
+    // Check hostname length before copying
+    if (strlen(resolved_hostname) >= HOSTNAME_SIZE) {
+        throw std::length_error("Hostname too long for buffer");
+    }
 
-  // Safe copying with bounds checking
-  const hostname = resolvedHostname.substring(0, MAX_HOSTNAME_SIZE);
-  return hostname;
+    char* hostname = new char[HOSTNAME_SIZE];
+    strncpy(hostname, resolved_hostname, HOSTNAME_SIZE - 1);
+    hostname[HOSTNAME_SIZE - 1] = '\\0'; // Ensure null termination
+
+    return hostname;
 }`,
       correct: true,
-      explanation: `Use proper cryptographic functions`
+      explanation: `Use bounds checking and strncpy() with explicit null termination to prevent buffer overflows`
     },
-    // Buffer overflow vulnerabilities from MITRE
     {
-      code: `const HOSTNAME_SIZE = 64;
-let hostname = new Array(HOSTNAME_SIZE);
-for (let i = 0; i < resolvedHostname.length; i++) {
-    hostname[i] = resolvedHostname[i];
+      code: `strcpy(hostname, resolved_hostname);`,
+      correct: false,
+      explanation: 'strcpy() does not perform bounds checking. A hostname longer than 63 characters (64 including null terminator) will overwrite memory beyond the buffer, corrupting adjacent stack variables and potentially causing crashes or security vulnerabilities.'
+    },
+    {
+      code: `char hostname[HOSTNAME_SIZE];
+for (int i = 0; i < strlen(resolved_hostname); i++) {
+    hostname[i] = resolved_hostname[i];
 }`,
       correct: false,
-      explanation: 'Unchecked copy loop allows buffer overflow. A hostname longer than 64 characters will overwrite memory beyond the allocated buffer, potentially corrupting adjacent data structures.'
+      explanation: 'Manual character-by-character copy without bounds checking. This loop can write beyond the buffer boundary and also fails to null-terminate the string, causing undefined behavior in subsequent string operations.'
     },
     {
-      code: `const hostname = new Array(64);
-resolvedHostname.split('').forEach((char, index) => {
-    hostname[index] = char;
-});`,
+      code: `char* hostname = (char*)malloc(HOSTNAME_SIZE);
+memcpy(hostname, resolved_hostname, strlen(resolved_hostname));`,
       correct: false,
-      explanation: 'forEach without bounds checking creates the same vulnerability. Long hostnames will write beyond the 64-character buffer boundary, causing memory corruption.'
+      explanation: 'memcpy() with unchecked length parameter allows buffer overflow. If resolved_hostname is longer than HOSTNAME_SIZE, memcpy will write beyond the allocated buffer boundary.'
     },
     {
-      code: `let hostname = '';
-for (let i = 0; i < resolvedHostname.length && i < 64; i++) {
-    hostname += resolvedHostname[i];
-}
-// But then copy to fixed buffer unsafely
-const buffer = new Array(32);
-for (let i = 0; i < hostname.length; i++) {
-    buffer[i] = hostname[i];
+      code: `char hostname[HOSTNAME_SIZE];
+int i = 0;
+while (resolved_hostname[i]) {
+    hostname[i] = resolved_hostname[i];
+    i++;
 }`,
       correct: false,
-      explanation: 'Safe initial copy followed by unsafe secondary copy. The second loop can still overflow the 32-character buffer if the hostname is longer than the destination buffer.'
+      explanation: 'While loop without destination buffer bounds checking. The loop continues until it hits the null terminator of the source, potentially writing far beyond the destination buffer.'
     },
     {
-      code: `const hostname = new Array(64);
-let index = 0;
-while (index < resolvedHostname.length) {
-    hostname[index] = resolvedHostname[index];
-    index++;
+      code: `char hostname[HOSTNAME_SIZE];
+strncat(hostname, resolved_hostname, HOSTNAME_SIZE);`,
+      correct: false,
+      explanation: 'strncat() on uninitialized buffer is undefined behavior. The destination must be properly initialized, and strncat appends rather than copies, making it inappropriate for this use case.'
+    },
+    {
+      code: `char hostname[HOSTNAME_SIZE];
+if (strlen(resolved_hostname) < 100) {
+    strcpy(hostname, resolved_hostname);
 }`,
       correct: false,
-      explanation: 'While loop without bounds checking on destination buffer. This creates the same overflow vulnerability as the for loop, writing past the 64-character boundary.'
+      explanation: 'Insufficient bounds checking with unsafe function. Checking for length < 100 when buffer is only 64 bytes still allows overflow for hostnames 64-99 characters long.'
     },
     {
-      code: `const maxLen = Math.min(resolvedHostname.length, 63);
-const hostname = new Array(64);
-for (let i = 0; i <= maxLen; i++) {
-    hostname[i] = resolvedHostname[i];
+      code: `char hostname[HOSTNAME_SIZE];
+strncpy(hostname, resolved_hostname, HOSTNAME_SIZE);`,
+      correct: false,
+      explanation: 'strncpy() without explicit null termination. If the source string equals or exceeds HOSTNAME_SIZE, strncpy will not null-terminate the destination, creating an invalid C string.'
+    },
+    {
+      code: `sprintf(hostname, "%s", resolved_hostname);`,
+      correct: false,
+      explanation: 'sprintf() does not perform bounds checking on the destination buffer. Long hostnames will overflow the buffer, causing stack corruption and potential security vulnerabilities.'
+    },
+    {
+      code: `char hostname[HOSTNAME_SIZE];
+memset(hostname, 0, HOSTNAME_SIZE);
+if (strlen(resolved_hostname) <= HOSTNAME_SIZE) {
+    strcpy(hostname, resolved_hostname);
 }`,
       correct: false,
-      explanation: 'Off-by-one error in bounds checking. Using <= instead of < means the loop runs one iteration too many, potentially writing past the buffer boundary at index 64.'
-    },
-    {
-      code: `const hostname = new Array(64);
-if (resolvedHostname.length < 100) {
-    for (let i = 0; i < resolvedHostname.length; i++) {
-        hostname[i] = resolvedHostname[i];
-    }
-}`,
-      correct: false,
-      explanation: 'Insufficient bounds checking allows overflow. Checking for length < 100 when the buffer is only 64 characters still allows overflows for hostnames between 64-99 characters.'
-    },
-    {
-      code: `const hostname = Buffer.alloc(64);
-resolvedHostname.split('').forEach((char, index) => {
-    if (index < hostname.length) {
-        hostname[index] = char.charCodeAt(0);
-    }
-});`,
-      correct: false,
-      explanation: 'While this has bounds checking, it silently truncates without error handling. Silent truncation can lead to incomplete hostnames and application logic errors.'
-    },
-    {
-      code: `const hostname = new Array(64);
-const safeCopy = resolvedHostname.substring(0, 64);
-for (let i = 0; i < 64; i++) {
-    hostname[i] = safeCopy[i] || '';
-}`,
-      correct: false,
-      explanation: 'Fixed-size loop ignores actual data length. This can copy undefined values or empty strings when the hostname is shorter than 64 characters, corrupting buffer contents.'
-    },
-    {
-      code: `try {
-    const hostname = new Array(64);
-    for (let i = 0; i < resolvedHostname.length; i++) {
-        hostname[i] = resolvedHostname[i];
-    }
-} catch (e) {
-    console.log('Buffer overflow detected');
-}`,
-      correct: false,
-      explanation: 'Try-catch does not prevent JavaScript array bounds violations. JavaScript arrays automatically expand, so this will not throw an exception but will create an oversized array.'
-    },
-    {
-      code: `const hostname = new Array(64);
-const chunkSize = Math.floor(resolvedHostname.length / 64);
-for (let i = 0; i < 64; i++) {
-    hostname[i] = resolvedHostname[i * chunkSize] || '';
-}`,
-      correct: false,
-      explanation: 'Sampling/chunking strategy corrupts data integrity. This approach loses hostname characters and creates invalid hostnames that may break network operations.'
+      explanation: 'Off-by-one error in bounds checking with unsafe function. A string of exactly HOSTNAME_SIZE characters plus null terminator will overflow. Also strcpy() remains inherently unsafe.'
     }
   ]
 }

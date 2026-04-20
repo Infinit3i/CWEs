@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe77FileBackup: Exercise = {
   cweId: 'CWE-77',
   name: 'Command Injection - Automated File Backup System',
+  language: 'Go',
 
   vulnerableFunction: `function createFileBackup(fileName, backupType) {
   const { exec } = require('child_process');

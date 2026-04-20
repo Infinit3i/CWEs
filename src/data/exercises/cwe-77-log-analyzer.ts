@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe77LogAnalyzer: Exercise = {
   cweId: 'CWE-77',
   name: 'Command Injection - Log File Analysis System',
+  language: 'Go',
 
   vulnerableFunction: `function analyzeLogFile(logPath, searchPattern, outputFormat) {
   const { exec } = require('child_process');

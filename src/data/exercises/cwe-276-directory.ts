@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe276Directory: Exercise = {
   cweId: 'CWE-276',
   name: 'Incorrect Default Permissions - User Data Directory',
+  language: 'C',
 
   vulnerableFunction: `function setupUserDirectory(username) {
   const userDir = \`/home/users/\${username}\`;

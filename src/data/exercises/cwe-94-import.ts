@@ -7,11 +7,13 @@ import type { Exercise } from '@/data/exercises'
 export const cwe94Import: Exercise = {
   cweId: 'CWE-94',
   name: 'Code Injection - Plugin System',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function loadPlugin(pluginName, userConfig) {
   const pluginCode = \`
     export default {
       name: '\${pluginName}',
+      version: '1.0.0',
       config: \${JSON.stringify(userConfig)},
       execute: function() {
         return this.config.message || 'No message';
@@ -41,7 +43,9 @@ return plugin.default;`,
     },
     // Code injection vulnerabilities
     {
-      code: `const pluginCode = \`export default { name: '\${pluginName}', execute: () => '\${userConfig.message}' };\`;
+      code: `const pluginCode = \`export default { name: '\${pluginName}',
+  version: '1.0';
+      execute: () => '\${userConfig.message}' };\`;
 const dataUrl = 'data:text/javascript;base64,' + Buffer.from(pluginCode).toString('base64');
 const plugin = await import(dataUrl);`,
       correct: false,
@@ -58,7 +62,8 @@ throw new Error('Invalid plugin name');`,
     },
     {
       code: `const sanitized = pluginName.replace(/[^a-zA-Z0-9]/g, '');
-const pluginCode = \`export default { name: '\${sanitized}' };\`;
+const pluginCode = \`export default { name: '\${sanitized}',
+  language: 'JavaScript' };\`;
 const blob = new Blob([pluginCode], { type: 'application/javascript' });
 const plugin = await import(URL.createObjectURL(blob));`,
       correct: false,
@@ -67,7 +72,8 @@ const plugin = await import(URL.createObjectURL(blob));`,
     {
       code: `const vm = require('vm');
 const context = { exports: {}, userConfig };
-vm.runInNewContext(\`exports.default = { name: '\${pluginName}' }\`, context);
+vm.runInNewContext(\`exports.default = { name: '\${pluginName}',
+  language: 'JavaScript' }\`, context);
 return context.exports.default;`,
       correct: false,
       explanation: 'VM contexts provide limited security. String interpolation with user input can break out of the intended execution context, and VM sandboxes have known escape techniques.'
@@ -100,7 +106,8 @@ return await import('file://' + pluginPath);`,
     {
       code: `const allowedChars = /^[a-zA-Z0-9_-]+$/;
 if (!allowedChars.test(pluginName)) throw new Error('Invalid characters');
-const moduleCode = \`export const plugin = { name: '\${pluginName}' };\`;
+const moduleCode = \`export const plugin = { name: '\${pluginName}',
+  language: 'JavaScript' };\`;
 const worker = new Worker('data:application/javascript,' + moduleCode);
 return await new Promise(resolve => worker.onmessage = e => resolve(e.data));`,
       correct: false,
@@ -108,7 +115,8 @@ return await new Promise(resolve => worker.onmessage = e => resolve(e.data));`,
     },
     {
       code: `const config = JSON.parse(JSON.stringify(userConfig));
-const moduleCode = \`export default { name: '\${pluginName}', config: \${JSON.stringify(config)} };\`;
+const moduleCode = \`export default { name: '\${pluginName}',
+  language: 'JavaScript', config: \${JSON.stringify(config)} };\`;
 const plugin = await import('data:text/javascript,' + moduleCode);
 return plugin.default;`,
       correct: false,

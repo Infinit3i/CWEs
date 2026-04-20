@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe841WorkflowBypass: Exercise = {
   cweId: 'CWE-841',
   name: 'Improper Enforcement of Behavioral Workflow - Order Processing',
+  language: 'C#',
 
   vulnerableFunction: `function processOrderStep(orderId, stepType, userId) {
   const order = getOrder(orderId);

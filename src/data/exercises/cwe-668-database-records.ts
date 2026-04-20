@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe668DatabaseRecords: Exercise = {
   cweId: 'CWE-668',
   name: 'Exposure of Resource to Wrong Sphere - Database Record Access',
+  language: 'PHP',
 
   vulnerableFunction: `function getUserRecord(requestUserId, targetRecordId) {
   const db = require('./database');

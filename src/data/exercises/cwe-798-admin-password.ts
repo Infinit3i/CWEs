@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe798AdminPassword: Exercise = {
   cweId: 'CWE-798',
   name: 'Hard-coded Credentials - Administrative Backdoor',
+  language: 'Python',
 
   vulnerableFunction: `class DeviceManagement {
   async authenticateAdmin(username: string, password: string) {

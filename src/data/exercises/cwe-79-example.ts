@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe79Example: Exercise = {
   cweId: 'CWE-79',
   name: 'Cross-Site Scripting - User Profile Display',
+  language: 'JavaScript',
 
   vulnerableFunction: `function displayUserWelcome(username) {
   const welcomeDiv = document.getElementById('welcome');

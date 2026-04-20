@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe841ApprovalWorkflow: Exercise = {
   cweId: 'CWE-841',
   name: 'Improper Enforcement of Behavioral Workflow - Document Publishing',
+  language: 'C#',
 
   vulnerableFunction: `function processDocument(documentId, action, userId) {
   const document = getDocument(documentId);

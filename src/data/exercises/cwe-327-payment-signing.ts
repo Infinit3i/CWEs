@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe327PaymentSigning: Exercise = {
   cweId: 'CWE-327',
   name: 'Broken Cryptographic Algorithm - Payment Authorization',
+  language: 'Python',
 
   vulnerableFunction: `function signPaymentTransaction(transactionData, merchantKey) {
   const crypto = require('crypto');

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe863Role: Exercise = {
   cweId: 'CWE-863',
   name: 'Incorrect Authorization - Document Access Control',
+  language: 'JavaScript',
 
   vulnerableFunction: `function accessDocument(documentId, request) {
   const userRoles = request.query.roles?.split(',') || [];

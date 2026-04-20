@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe732DirectoryCreation: Exercise = {
   cweId: 'CWE-732',
   name: 'Incorrect Permission Assignment - User Directory Setup',
+  language: 'C',
 
   vulnerableFunction: `function createUserWorkspace(username) {
   const fs = require('fs');

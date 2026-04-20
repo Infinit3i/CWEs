@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe331SaltGeneration: Exercise = {
   cweId: 'CWE-331',
   name: 'Insufficient Entropy - Password Salt Generation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generatePasswordSalt(username, registrationTime) {
   // Use username as primary entropy source

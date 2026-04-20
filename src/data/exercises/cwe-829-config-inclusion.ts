@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe829ConfigInclusion: Exercise = {
   cweId: 'CWE-829',
   name: 'Inclusion of Functionality from Untrusted Control Sphere - Config Loading',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function loadUserConfiguration(configSource, userId) {
   let configData;

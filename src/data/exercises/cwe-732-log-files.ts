@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe732LogFiles: Exercise = {
   cweId: 'CWE-732',
   name: 'Incorrect Permission Assignment - Application Logging',
+  language: 'C',
 
   vulnerableFunction: `function initializeLogging(logLevel) {
   const fs = require('fs');

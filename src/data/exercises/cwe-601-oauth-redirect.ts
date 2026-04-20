@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe601OauthRedirect: Exercise = {
   cweId: 'CWE-601',
   name: 'Open Redirect - OAuth Callback Handler',
+  language: 'JavaScript',
 
   vulnerableFunction: `function handleOAuthCallback(authCode, state) {
   // Verify auth code with provider

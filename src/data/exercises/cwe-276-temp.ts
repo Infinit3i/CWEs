@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe276Temp: Exercise = {
   cweId: 'CWE-276',
   name: 'Incorrect Default Permissions - Session Storage',
+  language: 'C',
 
   vulnerableFunction: `function saveUserSession(sessionId, userData) {
   const tempDir = '/tmp';

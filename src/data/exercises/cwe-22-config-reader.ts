@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe22ConfigReader: Exercise = {
   cweId: 'CWE-22',
   name: 'Path Traversal - Configuration File Reader',
+  language: 'Python',
 
   vulnerableFunction: `function loadConfig(configName) {
   const configDir = process.env.CONFIG_DIR || './configs/';

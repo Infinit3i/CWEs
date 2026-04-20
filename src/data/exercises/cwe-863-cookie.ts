@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe863Cookie: Exercise = {
   cweId: 'CWE-863',
   name: 'Incorrect Authorization - Medical Records Access',
+  language: 'JavaScript',
 
   vulnerableFunction: `function viewMedicalRecord(patientId, request) {
   const role = request.cookies.role;

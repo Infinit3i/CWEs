@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe502UserSession: Exercise = {
   cweId: 'CWE-502',
   name: 'Deserialization of Untrusted Data - User Session Management',
+  language: 'Java',
 
   vulnerableFunction: `function loadUserSession(sessionToken) {
   if (!sessionToken) {

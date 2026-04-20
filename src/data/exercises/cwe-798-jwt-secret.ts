@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe798JwtSecret: Exercise = {
   cweId: 'CWE-798',
   name: 'Hard-coded Credentials - JWT Signing Secret',
+  language: 'Python',
 
   vulnerableFunction: `class AuthenticationService {
   private jwtSecret = "myCompanySecretKey2024!ForJWTSigning";

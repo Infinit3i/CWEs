@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe78CoordinateConverter: Exercise = {
   cweId: 'CWE-78',
   name: 'OS Command Injection - Coordinate Conversion',
+  language: 'Go',
 
   vulnerableFunction: `function convertCoordinates(latlonCoords) {
   const { exec } = require('child_process');

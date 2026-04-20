@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe345CertificateValidation: Exercise = {
   cweId: 'CWE-345',
   name: 'Insufficient Verification of Data Authenticity - SSL Certificate Validation',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function establishSecureConnection(hostname, port) {
   const options = {

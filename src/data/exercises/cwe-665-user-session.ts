@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe665UserSession: Exercise = {
   cweId: 'CWE-665',
   name: 'Improper Initialization - User Session State',
+  language: 'PHP',
 
   vulnerableFunction: `class UserSession {
   constructor(userId) {

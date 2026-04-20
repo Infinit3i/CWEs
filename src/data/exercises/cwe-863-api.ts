@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe863Api: Exercise = {
   cweId: 'CWE-863',
   name: 'Incorrect Authorization - API Endpoint Protection',
+  language: 'JavaScript',
 
   vulnerableFunction: `function deleteUserAccount(userId, request) {
   const requestingUserId = request.headers['user-id'];

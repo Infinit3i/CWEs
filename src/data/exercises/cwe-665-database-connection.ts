@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe665DatabaseConnection: Exercise = {
   cweId: 'CWE-665',
   name: 'Improper Initialization - Database Connection Pool',
+  language: 'PHP',
 
   vulnerableFunction: `class DatabaseManager {
   constructor() {

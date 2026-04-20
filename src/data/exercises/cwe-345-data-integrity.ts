@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe345DataIntegrity: Exercise = {
   cweId: 'CWE-345',
   name: 'Insufficient Verification of Data Authenticity - Package Downloads',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function downloadAndInstallPackage(packageInfo) {
   const { downloadUrl, packageName, expectedSize, checksum } = packageInfo;

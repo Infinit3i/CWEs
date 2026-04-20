@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe434BackupRestore: Exercise = {
   cweId: 'CWE-434',
   name: 'Unrestricted Upload - Backup File Restore',
+  language: 'PHP',
 
   vulnerableFunction: `app.post('/admin/restore-backup', requireAdmin, (req, res) => {
   const upload = multer({ dest: '/tmp/uploads/' });

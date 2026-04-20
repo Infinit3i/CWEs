@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe352ProfileUpdate: Exercise = {
   cweId: 'CWE-352',
   name: 'Cross-Site Request Forgery - Profile Update',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.post('/api/profile', authenticateUser, (req, res) => {
   const { email, firstName, lastName } = req.body;

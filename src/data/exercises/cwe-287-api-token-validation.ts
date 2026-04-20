@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe287ApiToken: Exercise = {
   cweId: 'CWE-287',
   name: 'Improper Authentication - API Token Validation',
+  language: 'Python',
 
   vulnerableFunction: `function validateAPIRequest(req) {
   const token = req.headers['authorization'];

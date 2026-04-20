@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe327PasswordEncryption: Exercise = {
   cweId: 'CWE-327',
   name: 'Broken Cryptographic Algorithm - Password Database',
+  language: 'Python',
 
   vulnerableFunction: `function encryptPasswordForStorage(password, userSalt) {
   const crypto = require('crypto');

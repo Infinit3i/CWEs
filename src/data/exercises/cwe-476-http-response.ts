@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe476HttpResponse: Exercise = {
   cweId: 'CWE-476',
   name: 'NULL Pointer Dereference - HTTP Response Handling',
+  language: 'Go',
 
   vulnerableFunction: `function handleRequest(client, request) {
   let response = null;

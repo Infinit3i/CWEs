@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe639UserProfile: Exercise = {
   cweId: 'CWE-639',
   name: 'Authorization Bypass - User Profile Access',
+  language: 'PHP',
 
   vulnerableFunction: `app.get('/api/users/:userId/profile', requireAuth, async (req, res) => {
   try {

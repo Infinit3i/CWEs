@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe22LogViewer: Exercise = {
   cweId: 'CWE-22',
   name: 'Path Traversal - Log File Viewer',
+  language: 'Python',
 
   vulnerableFunction: `app.get('/admin/logs/:logfile', authenticateAdmin, (req, res) => {
   const logFile = req.params.logfile;

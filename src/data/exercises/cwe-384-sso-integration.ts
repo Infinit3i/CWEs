@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe384SsoIntegration: Exercise = {
   cweId: 'CWE-384',
   name: 'Session Fixation - SSO Authentication Callback',
+  language: 'JavaScript',
 
   vulnerableFunction: `function handleSsoCallback(ssoToken, sessionId) {
   // Validate SSO token from trusted provider

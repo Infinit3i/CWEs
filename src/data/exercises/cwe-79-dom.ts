@@ -6,6 +6,7 @@ import type { Exercise } from '@/data/exercises'
  */
 export const cwe79Dom: Exercise = {
   cweId: 'CWE-79',
+  language: 'JavaScript',
   name: 'Cross-Site Scripting - URL Parameter Display',
 
   vulnerableFunction: `function displaySearchResults() {

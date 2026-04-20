@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe119ArrayUnderflow: Exercise = {
   cweId: 'CWE-119',
   name: 'Memory Buffer Bounds - Array Index Underflow in Data Processing',
+  language: 'C',
 
   vulnerableFunction: `function getValueFromArray(dataArray, arrayLength, index) {
   let value;

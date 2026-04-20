@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe190MemoryAllocation: Exercise = {
   cweId: 'CWE-190',
   name: 'Integer Overflow - Memory Allocation for Image Processing',
+  language: 'C++',
 
   vulnerableFunction: `function processImageBatch(imageCount, pixelsPerImage) {
   if (imageCount <= 0 || pixelsPerImage <= 0) {

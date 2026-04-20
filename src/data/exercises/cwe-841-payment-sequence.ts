@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe841PaymentSequence: Exercise = {
   cweId: 'CWE-841',
   name: 'Improper Enforcement of Behavioral Workflow - Payment Processing',
+  language: 'C#',
 
   vulnerableFunction: `function processPayment(transactionId, step, userId) {
   const transaction = getTransaction(transactionId);

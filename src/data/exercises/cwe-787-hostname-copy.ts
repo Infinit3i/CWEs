@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe787HostnameCopy: Exercise = {
   cweId: 'CWE-787',
   name: 'Out-of-bounds Write - Hostname Resolution',
+  language: 'C',
 
   vulnerableFunction: `function lookupHostname(userAddress) {
   const hostname = new Array(64).fill(0);

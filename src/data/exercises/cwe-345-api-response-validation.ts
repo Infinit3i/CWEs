@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe345ApiResponseValidation: Exercise = {
   cweId: 'CWE-345',
   name: 'Insufficient Verification of Data Authenticity - API Integration',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function processPaymentConfirmation(transactionId) {
   try {

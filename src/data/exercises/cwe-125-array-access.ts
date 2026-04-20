@@ -3,30 +3,57 @@ import type { Exercise } from '@/data/exercises'
 export const cwe125ArrayAccess: Exercise = {
   cweId: 'CWE-125',
   name: 'Out-of-bounds Read - Array Value Retrieval',
+  language: 'C',
 
-  vulnerableFunction: `function getValueFromArray(dataArray, arrayLength, index) {
-  let retrievedValue;
+  vulnerableFunction: `#include <stdio.h>
 
-  // Check if index is within array bounds
-  if (index < arrayLength) {
-    retrievedValue = dataArray[index];
-  } else {
-    console.log('Index out of bounds, value is:', dataArray[index]);
-    retrievedValue = -1;
-  }
+typedef struct {
+    int value;
+    int index;
+    int valid;
+} ArrayResult;
 
-  return {
-    value: retrievedValue,
-    index: index,
-    valid: index < arrayLength
-  };
+ArrayResult get_value_from_array(int* data_array, int array_length, int index) {
+    ArrayResult result;
+    int retrieved_value;
+
+    // Check if index is within array bounds
+    if (index < array_length) {
+        retrieved_value = data_array[index];
+        result.valid = 1;
+    } else {
+        // VULNERABLE: Still reads out-of-bounds value for logging
+        printf("Index out of bounds, value is: %d\\n", data_array[index]);
+        retrieved_value = -1;
+        result.valid = 0;
+    }
+
+    result.value = retrieved_value;
+    result.index = index;
+
+    return result;
 }`,
 
-  vulnerableLine: `retrievedValue = dataArray[index];`,
+  vulnerableLine: `printf("Index out of bounds, value is: %d\\n", data_array[index]);`,
 
   options: [
     {
-      code: `if (index >= 0 && index < arrayLength) { retrievedValue = dataArray[index]; } else { retrievedValue = -1; }`,
+      code: `ArrayResult get_value_from_array(int* data_array, int array_length, int index) {
+    ArrayResult result;
+
+    // Proper bounds checking for both upper and lower bounds
+    if (index >= 0 && index < array_length) {
+        result.value = data_array[index];
+        result.valid = 1;
+    } else {
+        printf("Index %d out of bounds for array of size %d\\n", index, array_length);
+        result.value = -1;
+        result.valid = 0;
+    }
+
+    result.index = index;
+    return result;
+}`,
       correct: true,
       explanation: `Check both lower and upper bounds`
     },

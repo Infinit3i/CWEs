@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe840AccountLockout: Exercise = {
   cweId: 'CWE-840',
   name: 'Business Logic Errors - Account Lockout Mechanism',
+  language: 'C#',
 
   vulnerableFunction: `function authenticateUser(username, password) {
   const user = getUserRecord(username);

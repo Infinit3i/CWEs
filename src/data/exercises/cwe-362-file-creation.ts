@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe362FileCreation: Exercise = {
   cweId: 'CWE-362',
   name: 'Race Condition - File Creation Service',
+  language: 'Go',
 
   vulnerableFunction: `class FileService {
   async createSecureFile(filename: string, content: string, userId: string) {

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe798Database: Exercise = {
   cweId: 'CWE-798',
   name: 'Hard-coded Credentials - Database Connection Pool',
+  language: 'Python',
 
   vulnerableFunction: `class DatabaseManager {
   private connectionPool: any;

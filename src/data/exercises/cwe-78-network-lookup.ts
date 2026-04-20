@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe78NetworkLookup: Exercise = {
   cweId: 'CWE-78',
   name: 'OS Command Injection - Network Hostname Lookup',
+  language: 'Go',
 
   vulnerableFunction: `function performNetworkLookup(hostName) {
   const { exec } = require('child_process');

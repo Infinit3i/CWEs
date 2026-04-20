@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe77ImageProcessor: Exercise = {
   cweId: 'CWE-77',
   name: 'Command Injection - Image Processing Service',
+  language: 'Go',
 
   vulnerableFunction: `function processImageFile(inputFile, outputFile, operation, options) {
   const { exec } = require('child_process');

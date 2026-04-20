@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe20UserProfile: Exercise = {
   cweId: 'CWE-20',
   name: 'Improper Input Validation - User Profile Update',
+  language: 'JavaScript',
 
   vulnerableFunction: `function updateUserProfile(profileData) {
   // Extract user input

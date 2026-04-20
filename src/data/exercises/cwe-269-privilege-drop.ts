@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe269PrivilegeDrop: Exercise = {
   cweId: 'CWE-269',
   name: 'Privilege Management - Privilege Drop Failure',
+  language: 'C',
 
   vulnerableFunction: `class SecureFileProcessor {
   private elevated = false;

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe331SecureToken: Exercise = {
   cweId: 'CWE-331',
   name: 'Insufficient Entropy - Security Token Creation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateSecureToken(userId, sessionType) {
   // Use user ID as base entropy

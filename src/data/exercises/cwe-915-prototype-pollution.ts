@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe915PrototypePollution: Exercise = {
   cweId: 'CWE-915',
   name: 'Prototype Pollution - Configuration Object Setting',
+  language: 'JavaScript',
 
   vulnerableFunction: `function setValueByPath(object, path, value) {
   const pathArray = path.split(".");

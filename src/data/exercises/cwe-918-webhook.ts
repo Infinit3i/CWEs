@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe918Webhook: Exercise = {
   cweId: 'CWE-918',
   name: 'Server-Side Request Forgery - Webhook Processor',
+  language: 'JavaScript',
 
   vulnerableFunction: `class WebhookService {
   async processWebhook(callbackUrl: string, payload: any) {

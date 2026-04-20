@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe665BufferManagement: Exercise = {
   cweId: 'CWE-665',
   name: 'Improper Initialization - Buffer Management System',
+  language: 'PHP',
 
   vulnerableFunction: `class DataBuffer {
   constructor(size) {

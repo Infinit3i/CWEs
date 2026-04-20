@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe642CookiePrivilege: Exercise = {
   cweId: 'CWE-642',
   name: 'External Control of Critical State Data - Cookie Authentication',
+  language: 'PHP',
 
   vulnerableFunction: `function checkAdminAccess(request) {
   const cookies = parseCookies(request.headers.cookie);

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe328FileIntegrity: Exercise = {
   cweId: 'CWE-328',
   name: 'Weak Hash - Document Integrity Check',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateFileIntegrityHash(fileData, fileName) {
   const crypto = require('crypto');

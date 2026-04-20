@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe328BackupVerification: Exercise = {
   cweId: 'CWE-328',
   name: 'Weak Hash - Database Backup Integrity',
+  language: 'JavaScript',
 
   vulnerableFunction: `function verifyBackupIntegrity(backupData, expectedHash, backupTimestamp) {
   const crypto = require('crypto');

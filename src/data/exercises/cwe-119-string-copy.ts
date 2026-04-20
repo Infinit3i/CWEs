@@ -7,174 +7,140 @@ import type { Exercise } from '@/data/exercises'
 export const cwe119StringCopy: Exercise = {
   cweId: 'CWE-119',
   name: 'Memory Buffer Bounds - User Input String Copy Operations',
+  language: 'C',
 
-  vulnerableFunction: `function processUserInput(userInput, category) {
-  const MAX_CATEGORY_LENGTH = 32;
-  const MAX_INPUT_LENGTH = 256;
+  vulnerableFunction: `#include <stdio.h>
+#include <string.h>
+#include <time.h>
 
-  // Validate input length
-  if (userInput.length > MAX_INPUT_LENGTH) {
-    throw new Error('Input too long');
-  }
+typedef struct {
+    char category[32];
+    char content[256];
+    char metadata[64];
+} ProcessedData;
 
-  // Create fixed-size buffer for processed data
-  const processedData = {
-    category: new Array(MAX_CATEGORY_LENGTH),
-    content: new Array(MAX_INPUT_LENGTH),
-    metadata: new Array(64)
-  };
+int process_user_input(char* user_input, char* category, ProcessedData* result) {
+    const int MAX_INPUT_LENGTH = 256;
 
-  // Copy category (could be longer than buffer)
-  for (let i = 0; i < category.length; i++) {
-    processedData.category[i] = category[i];
-  }
+    // Validate input length
+    if (strlen(user_input) > MAX_INPUT_LENGTH) {
+        return -1; // Input too long
+    }
 
-  // Copy user input
-  for (let i = 0; i < userInput.length; i++) {
-    processedData.content[i] = userInput[i];
-  }
+    // Clear the structure
+    memset(result, 0, sizeof(ProcessedData));
 
-  // Generate metadata (timestamp + category + content length)
-  const timestamp = Date.now().toString();
-  const metadata = timestamp + '|' + category + '|' + userInput.length;
+    // Copy category (could be longer than buffer)
+    strcpy(result->category, category);
 
-  for (let i = 0; i < metadata.length; i++) {
-    processedData.metadata[i] = metadata[i];
-  }
+    // Copy user input
+    strcpy(result->content, user_input);
 
-  return {
-    category: processedData.category.join('').replace(/\\0/g, ''),
-    content: processedData.content.join('').replace(/\\0/g, ''),
-    metadata: processedData.metadata.join('').replace(/\\0/g, '')
-  };
+    // Generate metadata (timestamp + category + content length)
+    time_t timestamp = time(NULL);
+    sprintf(result->metadata, "%ld|%s|%zu", timestamp, category, strlen(user_input));
+
+    return 0;
 }`,
 
-  vulnerableLine: `for (let i = 0; i < category.length; i++) {`,
+  vulnerableLine: `strcpy(result->category, category);`,
 
   options: [
     {
-      code: `function processUserInput(userInput, category) {
-  const MAX_CATEGORY_LENGTH = 32;
-  const MAX_INPUT_LENGTH = 256;
-  const MAX_METADATA_LENGTH = 64;
+      code: `int process_user_input(char* user_input, char* category, ProcessedData* result) {
+    const int MAX_CATEGORY_LENGTH = 31; // Leave space for null terminator
+    const int MAX_INPUT_LENGTH = 255;   // Leave space for null terminator
+    const int MAX_METADATA_LENGTH = 63; // Leave space for null terminator
 
-  // Validate all input lengths
-  if (userInput.length > MAX_INPUT_LENGTH) {
-    throw new Error('Input too long');
-  }
+    // Validate all input lengths
+    if (strlen(user_input) > MAX_INPUT_LENGTH) {
+        return -1; // Input too long
+    }
 
-  if (category.length > MAX_CATEGORY_LENGTH) {
-    throw new Error('Category name too long');
-  }
+    if (strlen(category) > MAX_CATEGORY_LENGTH) {
+        return -2; // Category name too long
+    }
 
-  // Generate metadata first to validate length
-  const timestamp = Date.now().toString();
-  const metadata = timestamp + '|' + category + '|' + userInput.length;
+    // Clear the structure
+    memset(result, 0, sizeof(ProcessedData));
 
-  if (metadata.length > MAX_METADATA_LENGTH) {
-    throw new Error('Metadata too long');
-  }
+    // Safe copying with bounds checking
+    strncpy(result->category, category, MAX_CATEGORY_LENGTH);
+    result->category[MAX_CATEGORY_LENGTH] = '\\0'; // Ensure null termination
 
-  // Safe copying with validated lengths
-  const processedData = {
-    category: category,  // Use string directly
-    content: userInput,  // Use string directly
-    metadata: metadata   // Use string directly
-  };
+    strncpy(result->content, user_input, MAX_INPUT_LENGTH);
+    result->content[MAX_INPUT_LENGTH] = '\\0'; // Ensure null termination
 
-  return processedData;
+    // Generate metadata with safe formatting
+    time_t timestamp = time(NULL);
+    int written = snprintf(result->metadata, MAX_METADATA_LENGTH + 1,
+                          "%ld|%s|%zu", timestamp, category, strlen(user_input));
+
+    if (written >= MAX_METADATA_LENGTH + 1) {
+        return -3; // Metadata would be truncated
+    }
+
+    return 0;
 }`,
       correct: true,
-      explanation: `Use proper cryptographic functions`
+      explanation: `Use bounds-checked functions like strncpy() and snprintf() to prevent buffer overflows`
     },
     // String copy buffer overflow vulnerabilities
     {
-      code: `for (let i = 0; i < category.length; i++) {
-    processedData.category[i] = category[i];
+      code: `strcpy(result->category, category);`,
+      correct: false,
+      explanation: 'strcpy() does not check buffer bounds. Category strings longer than 31 characters (32 including null terminator) will overwrite adjacent memory, corrupting other structure fields and potentially causing crashes or security vulnerabilities.'
+    },
+    {
+      code: `sprintf(result->metadata, "%ld|%s|%zu", timestamp, category, strlen(user_input));`,
+      correct: false,
+      explanation: 'sprintf() does not validate output buffer size. Long timestamps, categories, or combined strings can exceed the 64-character metadata buffer, causing stack buffer overflow.'
+    },
+    {
+      code: `if (strlen(category) <= 32) {
+    strcpy(result->category, category);
 }`,
       correct: false,
-      explanation: 'Unchecked string copy allows buffer overflow. Category names longer than 32 characters will overwrite adjacent memory in the processedData structure, corrupting other fields.'
+      explanation: 'Incorrect length check with unsafe function. The buffer holds 32 characters including null terminator, so maximum safe string length is 31. Also strcpy() remains unsafe even with length checks.'
     },
     {
-      code: `const metadata = timestamp + '|' + category + '|' + userInput.length;
-for (let i = 0; i < metadata.length; i++) {
-    processedData.metadata[i] = metadata[i];
+      code: `size_t len = strlen(category) < 32 ? strlen(category) : 31;
+memcpy(result->category, category, len);`,
+      correct: false,
+      explanation: 'memcpy() with manual length limiting does not add null terminator. The resulting string may not be properly null-terminated, causing undefined behavior in string operations.'
+    },
+    {
+      code: `strncpy(result->category, category, 32);`,
+      correct: false,
+      explanation: 'strncpy() without explicit null termination. If the source string is 32 characters or longer, strncpy() will not add a null terminator, creating invalid C strings.'
+    },
+    {
+      code: `char temp[64];
+sprintf(temp, "%s", category);
+memcpy(result->category, temp, 32);`,
+      correct: false,
+      explanation: 'sprintf() into temporary buffer is still unsafe and provides no additional protection. The sprintf() call can overflow the temp buffer before memcpy() even executes.'
+    },
+    {
+      code: `for (int i = 0; i < strlen(category) && i < 32; i++) {
+    result->category[i] = category[i];
 }`,
       correct: false,
-      explanation: 'Metadata string construction without length validation. Long timestamps, categories, or the combined string can exceed the 64-character metadata buffer, causing overflow.'
+      explanation: 'Manual character copying without null termination. While preventing overflow, the loop does not add a null terminator, creating invalid C strings that can cause undefined behavior.'
     },
     {
-      code: `if (category.length <= MAX_CATEGORY_LENGTH) {
-    for (let i = 0; i < category.length; i++) {
-        processedData.category[i] = category[i];
-    }
+      code: `char* safe_copy = strndup(category, 31);
+strcpy(result->category, safe_copy);
+free(safe_copy);`,
+      correct: false,
+      explanation: 'strndup() followed by strcpy() is redundant and potentially unsafe. Direct string copying with dynamic allocation adds complexity without benefit over direct bounds-checked copying.'
+    },
+    {
+      code: `if (category != NULL) {
+    strcpy(result->category, category);
 }`,
       correct: false,
-      explanation: 'Silent truncation through conditional copying can create incomplete data. Applications may not realize the category was truncated, leading to logic errors or data corruption.'
-    },
-    {
-      code: `const safeCategoryLength = Math.min(category.length, MAX_CATEGORY_LENGTH);
-for (let i = 0; i < safeCategoryLength; i++) {
-    processedData.category[i] = category[i];
-}`,
-      correct: false,
-      explanation: 'Silent truncation with Math.min masks data loss. While preventing overflow, truncated categories may become invalid or indistinguishable, corrupting application logic.'
-    },
-    {
-      code: `try {
-    for (let i = 0; i < category.length; i++) {
-        processedData.category[i] = category[i];
-    }
-} catch (e) {
-    console.log('Category copy failed');
-}`,
-      correct: false,
-      explanation: 'JavaScript arrays automatically expand rather than throwing exceptions on out-of-bounds writes. Try-catch will not detect buffer overflow conditions in JavaScript arrays.'
-    },
-    {
-      code: `for (let i = 0; i < category.length && i < MAX_CATEGORY_LENGTH; i++) {
-    processedData.category[i] = category[i];
-}
-// Continue without error if truncated`,
-      correct: false,
-      explanation: 'Loop bounds limiting with silent truncation can corrupt application state. The category may be partially copied, creating invalid or ambiguous category values.'
-    },
-    {
-      code: `const categoryBuffer = new Array(MAX_CATEGORY_LENGTH);
-category.split('').forEach((char, index) => {
-    categoryBuffer[index] = char;
-});`,
-      correct: false,
-      explanation: 'forEach without bounds checking allows buffer overflow. The callback function will write beyond array boundaries if the category exceeds the buffer size.'
-    },
-    {
-      code: `let writePos = 0;
-for (const char of category) {
-    if (writePos < MAX_CATEGORY_LENGTH) {
-        processedData.category[writePos++] = char;
-    }
-}`,
-      correct: false,
-      explanation: 'Per-character bounds checking creates silent truncation. While preventing overflow, the truncated result may be invalid or misleading to application logic.'
-    },
-    {
-      code: `const encodedCategory = btoa(category);
-if (encodedCategory.length <= MAX_CATEGORY_LENGTH) {
-    for (let i = 0; i < encodedCategory.length; i++) {
-        processedData.category[i] = encodedCategory[i];
-    }
-}`,
-      correct: false,
-      explanation: 'Base64 encoding changes data representation and may not fit application requirements. Encoded strings are also longer than originals, reducing effective buffer capacity.'
-    },
-    {
-      code: `const chunkSize = Math.floor(MAX_CATEGORY_LENGTH / category.length);
-for (let i = 0; i < MAX_CATEGORY_LENGTH; i++) {
-    const sourceIndex = Math.floor(i / chunkSize);
-    processedData.category[i] = category[sourceIndex] || '';
-}`,
-      correct: false,
-      explanation: 'Character sampling/stretching corrupts string content. This approach creates invalid strings that do not represent the original category data.'
+      explanation: 'Null pointer check does not prevent buffer overflow. While checking for null pointers is good practice, strcpy() still has no bounds checking and can overflow the destination buffer.'
     }
   ]
 }

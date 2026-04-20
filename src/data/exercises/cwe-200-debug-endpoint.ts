@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe200DebugEndpoint: Exercise = {
   cweId: 'CWE-200',
   name: 'Information Exposure - Debug Endpoint',
+  language: 'Java',
 
   vulnerableFunction: `app.get('/debug/system-info', async (req, res) => {
   // System debugging endpoint for development

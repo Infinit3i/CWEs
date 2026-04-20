@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe639DocumentSharing: Exercise = {
   cweId: 'CWE-639',
   name: 'Authorization Bypass - Document Access Control',
+  language: 'PHP',
 
   vulnerableFunction: `app.get('/api/documents/:documentId', authenticateUser, async (req, res) => {
   try {

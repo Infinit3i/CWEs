@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe269SystemCommand: Exercise = {
   cweId: 'CWE-269',
   name: 'Privilege Management - System Command Execution',
+  language: 'C',
 
   vulnerableFunction: `class SystemManager {
   async executeSystemCommand(userId: string, command: string, sudo: boolean = false) {

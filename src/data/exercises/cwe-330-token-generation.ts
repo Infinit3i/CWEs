@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe330TokenGeneration: Exercise = {
   cweId: 'CWE-330',
   name: 'Insufficient Randomness - API Authentication Tokens',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateAuthToken(userId, applicationId) {
   // Create predictable seed from user and application IDs

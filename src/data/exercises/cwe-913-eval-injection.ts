@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe913EvalInjection: Exercise = {
   cweId: 'CWE-913',
   name: 'Code Injection - Expression Evaluator',
+  language: 'JavaScript',
 
   vulnerableFunction: `function calculateExpression(userExpression, variables) {
   // Create a context with user variables

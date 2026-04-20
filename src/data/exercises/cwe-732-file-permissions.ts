@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe732FilePermissions: Exercise = {
   cweId: 'CWE-732',
   name: 'Incorrect Permission Assignment - File Creation',
+  language: 'C',
 
   vulnerableFunction: `function createSecretFile(secretData) {
   const fs = require('fs');

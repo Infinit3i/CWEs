@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe326SessionEncryption: Exercise = {
   cweId: 'CWE-326',
   name: 'Weak Encryption - Session Data Protection',
+  language: 'Python',
 
   vulnerableFunction: `function encryptSessionData(sessionData, sessionId) {
   // Use session ID first 4 chars as 32-bit key

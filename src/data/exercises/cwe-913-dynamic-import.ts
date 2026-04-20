@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe913DynamicImport: Exercise = {
   cweId: 'CWE-913',
   name: 'Dynamic Import - Plugin System',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function loadPlugin(pluginName, config) {
   // Dynamic plugin loading system

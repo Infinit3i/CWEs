@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe330LotterySystem: Exercise = {
   cweId: 'CWE-330',
   name: 'Insufficient Randomness - Digital Lottery System',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateLotteryNumbers(drawId, participantCount) {
   // Seed based on draw ID and participant count

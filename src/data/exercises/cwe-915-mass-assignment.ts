@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe915MassAssignment: Exercise = {
   cweId: 'CWE-915',
   name: 'Mass Assignment - User Profile Update',
+  language: 'JavaScript',
 
   vulnerableFunction: `function updateUserProfile(userId, updateData) {
   const user = users[userId];

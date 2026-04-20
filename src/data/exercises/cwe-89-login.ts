@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe89Login: Exercise = {
   cweId: 'CWE-89',
   name: 'SQL Injection - Login Authentication',
+  language: 'JavaScript',
   vulnerableFunction: `function authenticateUser(username, password) {
   const query = "SELECT id FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
   const result = database.query(query);

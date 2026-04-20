@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe862UserOrders: Exercise = {
   cweId: 'CWE-862',
   name: 'Missing Authorization - User Order History',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.get('/api/orders/:orderId', authenticateUser, (req, res) => {
   const orderId = req.params.orderId;

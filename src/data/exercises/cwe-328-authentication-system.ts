@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe328AuthenticationSystem: Exercise = {
   cweId: 'CWE-328',
   name: 'Weak Hash - User Login Authentication',
+  language: 'JavaScript',
 
   vulnerableFunction: `function authenticateUser(username, plainTextPassword, storedPasswordHash) {
   const crypto = require('crypto');

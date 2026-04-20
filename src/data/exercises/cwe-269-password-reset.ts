@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe269PasswordReset: Exercise = {
   cweId: 'CWE-269',
   name: 'Privilege Management - Password Reset Function',
+  language: 'C',
 
   vulnerableFunction: `class AdminController {
   async resetUserPassword(requestingUserId: string, targetUserId: string, newPassword: string) {

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe119PacketProcessing: Exercise = {
   cweId: 'CWE-119',
   name: 'Memory Buffer Bounds - Network Packet Header Processing',
+  language: 'C',
 
   vulnerableFunction: `function parseNetworkPacket(packetBuffer, expectedSize) {
   const HEADER_SIZE = 20;

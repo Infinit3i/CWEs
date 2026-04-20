@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe384PrivilegeEscalation: Exercise = {
   cweId: 'CWE-384',
   name: 'Session Fixation - Admin Privilege Escalation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function elevateToAdmin(sessionId, adminPassword) {
   const session = sessions[sessionId];

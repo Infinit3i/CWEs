@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe862FileSharing: Exercise = {
   cweId: 'CWE-862',
   name: 'Missing Authorization - File Sharing System',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.get('/api/files/:fileId/download', authenticateUser, (req, res) => {
   const fileId = req.params.fileId;

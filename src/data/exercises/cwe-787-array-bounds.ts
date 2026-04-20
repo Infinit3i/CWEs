@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe787ArrayBounds: Exercise = {
   cweId: 'CWE-787',
   name: 'Out-of-bounds Write - Widget List Management',
+  language: 'C',
 
   vulnerableFunction: `function initializeWidgets(numWidgets) {
   const widgetList = new Array(numWidgets);

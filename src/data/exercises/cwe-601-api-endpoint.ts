@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe601ApiEndpoint: Exercise = {
   cweId: 'CWE-601',
   name: 'Open Redirect - URL Shortener API',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.post('/api/shorten', async (req, res) => {
   const { originalUrl, customAlias } = req.body;

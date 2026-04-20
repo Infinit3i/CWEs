@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe306ConfigApi: Exercise = {
   cweId: 'CWE-306',
   name: 'Missing Authentication - System Configuration',
+  language: 'C',
 
   vulnerableFunction: `class ConfigurationController {
   async updateSystemConfig(req: Request, res: Response) {

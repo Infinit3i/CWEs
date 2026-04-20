@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe327FirmwareIntegrity: Exercise = {
   cweId: 'CWE-327',
   name: 'Broken Cryptographic Algorithm - Firmware Verification',
+  language: 'Python',
 
   vulnerableFunction: `function verifyFirmwareIntegrity(firmwareData, expectedHash) {
   const crypto = require('crypto');

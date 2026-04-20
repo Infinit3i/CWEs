@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe190LoopCounter: Exercise = {
   cweId: 'CWE-190',
   name: 'Integer Overflow - Network Packet Processing Loop',
+  language: 'C++',
 
   vulnerableFunction: `function processNetworkPackets(packetData) {
   let bytesProcessed = 0; // Using 16-bit integer (max 65535)

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe863Ownership: Exercise = {
   cweId: 'CWE-863',
   name: 'Incorrect Authorization - File Ownership Validation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function deleteUserFile(fileId, request) {
   const claimedUserId = request.headers['x-user-id'];

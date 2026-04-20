@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe502BackupRestore: Exercise = {
   cweId: 'CWE-502',
   name: 'Deserialization of Untrusted Data - Database Backup Restoration',
+  language: 'Java',
 
   vulnerableFunction: `function restoreFromBackup(backupData, restoreOptions) {
   const crypto = require('crypto');

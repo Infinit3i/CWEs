@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe77DatabaseBackup: Exercise = {
   cweId: 'CWE-77',
   name: 'Command Injection - Database Backup Utility',
+  language: 'Go',
 
   vulnerableFunction: `function createDatabaseBackup(dbName, username, backupPath, compressionLevel) {
   const { exec } = require('child_process');

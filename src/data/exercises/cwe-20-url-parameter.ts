@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe20UrlParameter: Exercise = {
   cweId: 'CWE-20',
   name: 'Improper Input Validation - URL Intent Parameter',
+  language: 'JavaScript',
 
   vulnerableFunction: `function processWebIntent(intentData) {
   // Extract URL from intent extras

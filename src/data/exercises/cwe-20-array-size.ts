@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe20ArraySize: Exercise = {
   cweId: 'CWE-20',
   name: 'Improper Input Validation - Dynamic Array Creation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function createWidgetList(untrustedListSize) {
   // Validate against negative sizes

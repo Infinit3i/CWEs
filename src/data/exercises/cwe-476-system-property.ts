@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe476SystemProperty: Exercise = {
   cweId: 'CWE-476',
   name: 'NULL Pointer Dereference - System Property Access',
+  language: 'Go',
 
   vulnerableFunction: `function executeCommand() {
   // Get command from system property

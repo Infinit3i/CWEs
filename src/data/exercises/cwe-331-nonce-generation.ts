@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe331NonceGeneration: Exercise = {
   cweId: 'CWE-331',
   name: 'Insufficient Entropy - Cryptographic Nonce Generation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateCryptographicNonce(transactionId, clientId) {
   // Use transaction ID as base entropy

@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe200ConfigExposure: Exercise = {
   cweId: 'CWE-200',
   name: 'Information Exposure - Configuration File Access',
+  language: 'Java',
 
   vulnerableFunction: `app.get('/config/:filename', (req, res) => {
   try {

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe913TemplateInjection: Exercise = {
   cweId: 'CWE-913',
   name: 'Template Injection - Dynamic Email Generator',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateEmail(templateString, userData) {
   // Dynamic template processing with user data

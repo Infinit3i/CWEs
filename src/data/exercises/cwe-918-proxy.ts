@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe918Proxy: Exercise = {
   cweId: 'CWE-918',
   name: 'Server-Side Request Forgery - API Proxy Gateway',
+  language: 'JavaScript',
 
   vulnerableFunction: `class ApiProxyService {
   async forwardRequest(targetUrl: string, headers: Record<string, string>, body?: string) {

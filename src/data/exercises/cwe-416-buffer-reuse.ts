@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe416BufferReuse: Exercise = {
   cweId: 'CWE-416',
   name: 'Use After Free - Memory Buffer Management',
+  language: 'Rust',
 
   vulnerableFunction: `function processDataBuffers(inputData) {
   let primaryBuffer = allocateBuffer(512);

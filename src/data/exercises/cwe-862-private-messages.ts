@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe862PrivateMessages: Exercise = {
   cweId: 'CWE-862',
   name: 'Missing Authorization - Private Messages',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.get('/api/messages/:messageId', authenticateUser, (req, res) => {
   const messageId = req.params.messageId;

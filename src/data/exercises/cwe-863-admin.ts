@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe863Admin: Exercise = {
   cweId: 'CWE-863',
   name: 'Incorrect Authorization - Admin Dashboard',
+  language: 'JavaScript',
 
   vulnerableFunction: `function accessAdminPanel(username, request) {
   const isAdmin = request.headers['x-admin-user'] === 'true';

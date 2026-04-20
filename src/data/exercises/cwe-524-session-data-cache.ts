@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe524SessionDataCache: Exercise = {
   cweId: 'CWE-524',
   name: 'Session Data Cache - User Profile Cache',
+  language: 'JavaScript',
 
   vulnerableFunction: `function getUserProfile(userId, sessionId) {
   const cacheKey = \`profile:\${userId}\`;

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe642HiddenFieldPrice: Exercise = {
   cweId: 'CWE-642',
   name: 'External Control of Critical State Data - Shopping Cart Price',
+  language: 'PHP',
 
   vulnerableFunction: `function processCheckout(formData) {
   const items = [];

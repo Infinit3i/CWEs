@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe601PasswordReset: Exercise = {
   cweId: 'CWE-601',
   name: 'Open Redirect - Password Reset Flow',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.post('/password-reset', async (req, res) => {
   const { email, returnUrl } = req.body;

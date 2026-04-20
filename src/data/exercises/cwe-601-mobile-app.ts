@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe601MobileApp: Exercise = {
   cweId: 'CWE-601',
   name: 'Open Redirect - Mobile Deep Link Handler',
+  language: 'JavaScript',
 
   vulnerableFunction: `// React Native deep link handler
 import { Linking } from 'react-native';

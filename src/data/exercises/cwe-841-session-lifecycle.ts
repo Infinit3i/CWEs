@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe841SessionLifecycle: Exercise = {
   cweId: 'CWE-841',
   name: 'Improper Enforcement of Behavioral Workflow - Session Management',
+  language: 'C#',
 
   vulnerableFunction: `function manageSession(sessionId, action, userId) {
   const session = getSession(sessionId);

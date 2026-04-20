@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe327CertificateValidation: Exercise = {
   cweId: 'CWE-327',
   name: 'Broken Cryptographic Algorithm - Certificate Signing',
+  language: 'Python',
 
   vulnerableFunction: `function generateCertificateSignature(certificateData, privateKey) {
   const crypto = require('crypto');

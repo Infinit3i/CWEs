@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe617EmailValidation: Exercise = {
   cweId: 'CWE-617',
   name: 'Reachable Assertion - Email Parameter Validation',
+  language: 'Go',
 
   vulnerableFunction: `function processUserRegistration(req, res) {
   const email = req.body.email_address;

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe94Query: Exercise = {
   cweId: 'CWE-94',
   name: 'Code Injection - Query Builder',
+  language: 'JavaScript',
 
   vulnerableFunction: `function buildDynamicQuery(tableName, filters, orderBy) {
   const queryBuilder = \`

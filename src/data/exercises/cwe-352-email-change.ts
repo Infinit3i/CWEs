@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe352EmailChange: Exercise = {
   cweId: 'CWE-352',
   name: 'Cross-Site Request Forgery - Email Change',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.post('/change-email', (req, res) => {
   if (!req.session.userId) {

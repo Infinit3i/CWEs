@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe502MessageQueue: Exercise = {
   cweId: 'CWE-502',
   name: 'Deserialization of Untrusted Data - Message Queue Processing',
+  language: 'Java',
 
   vulnerableFunction: `function processQueueMessage(messageData) {
   const crypto = require('crypto');

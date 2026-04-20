@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe352PasswordChange: Exercise = {
   cweId: 'CWE-352',
   name: 'Cross-Site Request Forgery - Password Change',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.post('/change-password', isAuthenticated, (req, res) => {
   const { currentPassword, newPassword } = req.body;

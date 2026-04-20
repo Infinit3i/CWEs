@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe642UserPreferences: Exercise = {
   cweId: 'CWE-642',
   name: 'External Control of Critical State Data - Security Preferences',
+  language: 'PHP',
 
   vulnerableFunction: `function applySecuritySettings(userId, preferences) {
   const userPrefs = preferences || getUserStoredPreferences(userId);

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe841AuthenticationSequence: Exercise = {
   cweId: 'CWE-841',
   name: 'Improper Enforcement of Behavioral Workflow - FTP Authentication',
+  language: 'C#',
 
   vulnerableFunction: `function handleFtpCommand(command, args, sessionState) {
   if (command === 'USER') {

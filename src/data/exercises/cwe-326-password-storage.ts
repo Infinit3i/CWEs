@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe326PasswordStorage: Exercise = {
   cweId: 'CWE-326',
   name: 'Weak Encryption - Password Storage System',
+  language: 'Python',
 
   vulnerableFunction: `function encryptPassword(password, userId) {
   // Simple XOR encryption with user ID as key

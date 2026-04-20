@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe416ErrorLogging: Exercise = {
   cweId: 'CWE-416',
   name: 'Use After Free - Error Context Logging',
+  language: 'Rust',
 
   vulnerableFunction: `function processTransaction(transactionData) {
   let contextBuffer = allocateTransactionContext(transactionData.size);

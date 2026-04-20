@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe78FileViewer: Exercise = {
   cweId: 'CWE-78',
   name: 'OS Command Injection - File Content Viewer',
+  language: 'Go',
 
   vulnerableFunction: `function viewFileContent(fileName) {
   const { exec } = require('child_process');

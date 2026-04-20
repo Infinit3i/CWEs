@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe384AccountSwitch: Exercise = {
   cweId: 'CWE-384',
   name: 'Session Fixation - Multi-Account Switching',
+  language: 'JavaScript',
 
   vulnerableFunction: `function switchAccount(currentSessionId, targetAccountId, switchToken) {
   const currentSession = sessions[currentSessionId];

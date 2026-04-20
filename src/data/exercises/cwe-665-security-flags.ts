@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe665SecurityFlags: Exercise = {
   cweId: 'CWE-665',
   name: 'Improper Initialization - Security Flag Management',
+  language: 'PHP',
 
   vulnerableFunction: `class SecurityManager {
   constructor() {

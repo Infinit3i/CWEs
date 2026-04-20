@@ -6,6 +6,7 @@ import type { Exercise } from '@/data/exercises'
  */
 export const cwe79Attribute: Exercise = {
   cweId: 'CWE-79',
+  language: 'JavaScript',
   name: 'Cross-Site Scripting - Profile Image Display',
 
   vulnerableFunction: `function displayUserProfile(userProfile) {

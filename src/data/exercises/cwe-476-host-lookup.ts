@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe476HostLookup: Exercise = {
   cweId: 'CWE-476',
   name: 'NULL Pointer Dereference - Host Lookup Function',
+  language: 'Go',
 
   vulnerableFunction: `function hostLookup(userSuppliedAddr) {
   let hostname = '';

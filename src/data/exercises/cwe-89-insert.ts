@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe89Insert: Exercise = {
   cweId: 'CWE-89',
   name: 'SQL Injection - Order Creation',
+  language: 'JavaScript',
   vulnerableFunction: `function createOrder(customerId, productId, quantity, notes) {
   const orderQuery = "INSERT INTO orders (customer_id, product_id, quantity) VALUES (" + customerId + ", " + productId + ", " + quantity + ")";
   const orderResult = database.query(orderQuery);

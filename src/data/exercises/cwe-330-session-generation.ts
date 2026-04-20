@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe330SessionGeneration: Exercise = {
   cweId: 'CWE-330',
   name: 'Insufficient Randomness - Session ID Generation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateSessionID(userID) {
   // Seed with user ID for consistent session generation

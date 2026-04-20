@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe668ApiEndpoints: Exercise = {
   cweId: 'CWE-668',
   name: 'Exposure of Resource to Wrong Sphere - API Resource Access',
+  language: 'PHP',
 
   vulnerableFunction: `function getCompanyDocument(documentId, userRole) {
   const documentService = require('./documentService');

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe326MessageEncryption: Exercise = {
   cweId: 'CWE-326',
   name: 'Weak Encryption - Private Message System',
+  language: 'Python',
 
   vulnerableFunction: `function encryptMessage(message, recipientId, senderId) {
   // Use fixed salt for key derivation

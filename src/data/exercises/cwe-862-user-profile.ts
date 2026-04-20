@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe862UserProfile: Exercise = {
   cweId: 'CWE-862',
   name: 'Missing Authorization - User Profile Access',
+  language: 'JavaScript',
 
   vulnerableFunction: `app.get('/api/users/:userId/profile', authenticateUser, (req, res) => {
   const requestedUserId = req.params.userId;

@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe369AverageCalculation: Exercise = {
   cweId: 'CWE-369',
   name: 'Divide By Zero - Response Time Calculation',
+  language: 'Go',
 
   vulnerableFunction: `function computeAverageResponseTime(totalTime, numRequests) {
   // Calculate average response time in milliseconds

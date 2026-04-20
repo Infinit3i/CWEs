@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe349ConfigInjection: Exercise = {
   cweId: 'CWE-349',
   name: 'Configuration Injection - Environment Override',
+  language: 'JavaScript',
 
   vulnerableFunction: `function loadApplicationConfig(defaultConfig, userOverrides, envVars) {
   // Load base configuration from trusted source

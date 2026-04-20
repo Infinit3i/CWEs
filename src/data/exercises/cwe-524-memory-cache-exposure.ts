@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe524MemoryCacheExposure: Exercise = {
   cweId: 'CWE-524',
   name: 'Memory Cache Exposure - User Credentials Cache',
+  language: 'JavaScript',
 
   vulnerableFunction: `function authenticateUser(username, password) {
   // Check cache first for performance

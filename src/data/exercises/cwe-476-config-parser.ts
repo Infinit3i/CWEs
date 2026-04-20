@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe476ConfigParser: Exercise = {
   cweId: 'CWE-476',
   name: 'NULL Pointer Dereference - Configuration Parser',
+  language: 'Go',
 
   vulnerableFunction: `function parseConfigValue(configData, key) {
   // Extract configuration value

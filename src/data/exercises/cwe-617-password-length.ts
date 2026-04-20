@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe617PasswordLength: Exercise = {
   cweId: 'CWE-617',
   name: 'Reachable Assertion - Password Strength Validation',
+  language: 'Go',
 
   vulnerableFunction: `function validatePasswordStrength(password) {
   // Assert minimum password requirements

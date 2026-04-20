@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe276Config: Exercise = {
   cweId: 'CWE-276',
   name: 'Incorrect Default Permissions - Database Configuration',
+  language: 'C',
 
   vulnerableFunction: `function saveDbConfig(configData) {
   const configPath = '/etc/myapp/database.conf';

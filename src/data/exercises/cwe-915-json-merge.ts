@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe915JsonMerge: Exercise = {
   cweId: 'CWE-915',
   name: 'JSON Merge - Configuration Override',
+  language: 'JavaScript',
 
   vulnerableFunction: `function mergeConfig(baseConfig, userConfig) {
   function deepMerge(target, source) {

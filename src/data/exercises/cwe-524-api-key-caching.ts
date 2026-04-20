@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe524ApiKeyCaching: Exercise = {
   cweId: 'CWE-524',
   name: 'API Key Caching - HTTP Client Cache',
+  language: 'JavaScript',
 
   vulnerableFunction: `function makeApiRequest(endpoint, apiKey, params) {
   const cacheKey = \`api:\${endpoint}:\${JSON.stringify(params)}\`;

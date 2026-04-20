@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe326FileEncryption: Exercise = {
   cweId: 'CWE-326',
   name: 'Weak Encryption - Confidential File Protection',
+  language: 'Python',
 
   vulnerableFunction: `function encryptFile(fileData, userPassword) {
   // Use simple 8-bit key derived from password

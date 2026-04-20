@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe668FileAccess: Exercise = {
   cweId: 'CWE-668',
   name: 'Exposure of Resource to Wrong Sphere - File Access Control',
+  language: 'PHP',
 
   vulnerableFunction: `function downloadUserFile(userId, filename) {
   const path = require('path');

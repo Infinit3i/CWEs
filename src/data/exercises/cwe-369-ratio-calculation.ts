@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe369RatioCalculation: Exercise = {
   cweId: 'CWE-369',
   name: 'Divide By Zero - Error Rate Ratio',
+  language: 'Go',
 
   vulnerableFunction: `function calculateErrorRatio(errorCount, successCount) {
   // Calculate ratio of errors to successful operations

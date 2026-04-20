@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe190FinancialCalculation: Exercise = {
   cweId: 'CWE-190',
   name: 'Integer Overflow - Revenue Calculation System',
+  language: 'C++',
 
   vulnerableFunction: `function calculateMonthlyRevenue(salesData) {
   let totalRevenue = 0; // Using 32-bit signed integer (max ~2.1 billion)

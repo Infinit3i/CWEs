@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe840InventoryBypass: Exercise = {
   cweId: 'CWE-840',
   name: 'Business Logic Errors - Inventory Management',
+  language: 'C#',
 
   vulnerableFunction: `function purchaseProduct(productId, quantity, userId) {
   const product = getProduct(productId);

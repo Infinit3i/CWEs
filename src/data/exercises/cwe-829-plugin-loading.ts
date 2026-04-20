@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe829PluginLoading: Exercise = {
   cweId: 'CWE-829',
   name: 'Inclusion of Functionality from Untrusted Control Sphere - Plugin System',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function loadUserPlugin(pluginConfig, userId) {
   const { pluginUrl, pluginName, pluginVersion } = pluginConfig;

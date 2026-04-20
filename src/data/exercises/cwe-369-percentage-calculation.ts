@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe369PercentageCalculation: Exercise = {
   cweId: 'CWE-369',
   name: 'Divide By Zero - Success Rate Percentage',
+  language: 'Go',
 
   vulnerableFunction: `function calculateSuccessRate(successfulOperations, totalOperations) {
   // Calculate percentage of successful operations

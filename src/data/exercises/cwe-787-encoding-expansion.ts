@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe787EncodingExpansion: Exercise = {
   cweId: 'CWE-787',
   name: 'Out-of-bounds Write - HTML Encoding Buffer',
+  language: 'C',
 
   vulnerableFunction: `function encodeHTMLEntities(userInput) {
   // Allocate 4x buffer assuming worst case encoding

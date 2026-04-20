@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe209LoginError: Exercise = {
   cweId: 'CWE-209',
   name: 'Information Exposure - Login Error Messages',
+  language: 'Java',
 
   vulnerableFunction: `app.post('/api/login', async (req, res) => {
   try {

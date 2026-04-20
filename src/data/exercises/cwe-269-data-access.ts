@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe269DataAccess: Exercise = {
   cweId: 'CWE-269',
   name: 'Privilege Management - Customer Data Access',
+  language: 'C',
 
   vulnerableFunction: `class CustomerDataController {
   async getCustomerData(requestingUserId: string, customerId: string, includeFinancials: boolean = false) {

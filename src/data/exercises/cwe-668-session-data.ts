@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe668SessionData: Exercise = {
   cweId: 'CWE-668',
   name: 'Exposure of Resource to Wrong Sphere - Session Management',
+  language: 'PHP',
 
   vulnerableFunction: `function getSessionData(sessionId, requestedField) {
   const sessionStore = require('./sessionStore');

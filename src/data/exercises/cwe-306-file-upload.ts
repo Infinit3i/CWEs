@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe306FileUpload: Exercise = {
   cweId: 'CWE-306',
   name: 'Missing Authentication - File Upload Service',
+  language: 'C',
 
   vulnerableFunction: `class DocumentService {
   async uploadDocument(req: Request, res: Response) {

@@ -11,31 +11,43 @@
     </div>
 
     <div class="exercise">
-      <div class="code-block">
-        <pre><code>{{ renderFunctionStart() }}<span
-    class="vulnerable-line"
-    :class="{ 'drag-over': isDragOver, 'replaced': droppedOption !== null }"
-    @dragover.prevent="handleDragOver"
-    @dragleave="handleDragLeave"
-    @drop="handleDrop"
-  >{{ droppedOption !== null ? currentExercise.options[droppedOption].code : currentExercise.vulnerableLine }}</span>{{ renderFunctionEnd() }}</code></pre>
-      </div>
-
-      <div v-if="!isCorrectAnswer" class="options">
-        <div
-          v-for="option in shuffledOptions"
-          :key="option.originalIndex"
-          class="option"
-          :class="{ 'dragging': draggingIndex === option.originalIndex }"
-          draggable="true"
-          @dragstart="handleDragStart(option.originalIndex, $event)"
-          @dragend="handleDragEnd"
-        >
-          {{ option.code }}
+      <div class="exercise-content">
+        <div class="code-section">
+          <div class="code-block">
+            <div class="language-indicator">{{ currentExercise.language }}</div>
+            <div
+              v-if="showTryAgainOverlay"
+              class="try-again-overlay"
+              :class="{ 'fading-out': isFadingOut }"
+            >
+              TRY AGAIN
+            </div>
+            <pre><code>{{ renderFunctionStart() }}<span
+        class="vulnerable-line"
+        :class="{ 'drag-over': isDragOver, 'replaced': droppedOption !== null }"
+        @dragover.prevent="handleDragOver"
+        @dragleave="handleDragLeave"
+        @drop="handleDrop"
+      >{{ droppedOption !== null ? currentExercise.options[droppedOption].code : currentExercise.vulnerableLine }}</span>{{ renderFunctionEnd() }}</code></pre>
+          </div>
         </div>
-      </div>
 
-      <div v-if="droppedOption !== null" class="result">
+        <div class="options-section">
+          <div v-if="!isCorrectAnswer" class="options">
+            <div
+              v-for="option in shuffledOptions"
+              :key="option.originalIndex"
+              class="option"
+              :class="{ 'dragging': draggingIndex === option.originalIndex }"
+              draggable="true"
+              @dragstart="handleDragStart(option.originalIndex, $event)"
+              @dragend="handleDragEnd"
+            >
+              {{ option.code }}
+            </div>
+          </div>
+
+          <div v-if="droppedOption !== null && !showTryAgainOverlay" class="result">
         <div v-if="!currentExercise.options[droppedOption].correct" class="wrong">
           {{ currentExercise.options[droppedOption].explanation }}
           <button @click="reset" class="try-again">Try Again</button>
@@ -95,6 +107,8 @@
           </div>
         </div>
       </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -110,6 +124,8 @@ const isDragOver = ref(false)
 const shuffleKey = ref(0)
 const exerciseCount = ref(1)
 const currentExerciseIndex = ref(0)
+const showTryAgainOverlay = ref(false)
+const isFadingOut = ref(false)
 
 // CWE API data
 const cweData = ref<CWEData | null>(null)
@@ -242,17 +258,21 @@ function renderFunctionEnd() {
 
 <style scoped>
 .cwe-viewer {
-  max-width: none;
+  width: 100%;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  width: 100%;
 }
 
 .header h1 {
@@ -296,39 +316,93 @@ function renderFunctionEnd() {
 .exercise {
   background: #1f2937;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
   border: 1px solid #374151;
+  width: 90%;
   max-width: 1400px;
   margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Desktop layout: side-by-side */
+.exercise-content {
+  display: flex;
+  gap: 2%;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .exercise-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .exercise {
+    width: 95%;
+  }
+}
+
+.code-section {
+  flex: 0 0 63%;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.options-section {
+  flex: 0 0 35%;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .code-block {
   background: #111827;
   border-radius: 8px;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  padding: 1.5rem;
   border: 1px solid #374151;
-  width: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2rem;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .code-block {
-    width: 100%;
-  }
+.language-indicator {
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  background: #374151;
+  color: #9ca3af;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  z-index: 1;
 }
 
 .code-block pre {
-  margin: 0;
+  margin: 1.5rem 0 0 0;
   color: #f8fafc;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.6;
   text-align: left;
-  white-space: pre;
-  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
@@ -345,8 +419,9 @@ function renderFunctionEnd() {
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
-  display: inline-block;
-  min-width: 300px;
+  display: inline;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .vulnerable-line.drag-over {
@@ -364,26 +439,25 @@ function renderFunctionEnd() {
 .options {
   display: grid;
   gap: 0.75rem;
-  max-width: 70%;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .options {
-    max-width: 100%;
-  }
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .option {
   background: #374151;
   border: 1px solid #4b5563;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 0.75rem;
   cursor: grab;
   transition: all 0.2s;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
-  font-size: 13px;
+  font-size: 12px;
   color: #f8fafc;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .option:hover {
@@ -401,16 +475,11 @@ function renderFunctionEnd() {
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid #374151;
-  max-width: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2rem;
-}
-
-@media (max-width: 768px) {
-  .result {
-    max-width: 100%;
-  }
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  word-break: break-word;
 }
 
 .wrong {

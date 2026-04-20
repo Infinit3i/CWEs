@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe384PasswordReset: Exercise = {
   cweId: 'CWE-384',
   name: 'Session Fixation - Password Reset Completion',
+  language: 'JavaScript',
 
   vulnerableFunction: `function completePasswordReset(resetToken, newPassword, sessionId) {
   // Validate the password reset token

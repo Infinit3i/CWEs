@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe125StringParsing: Exercise = {
   cweId: 'CWE-125',
   name: 'Out-of-bounds Read - String Token Parser',
+  language: 'C',
 
   vulnerableFunction: `function parseTokenString(inputString, tokenIndex) {
   const tokens = inputString.split(',');

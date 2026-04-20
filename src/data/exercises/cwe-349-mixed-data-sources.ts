@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe349MixedDataSources: Exercise = {
   cweId: 'CWE-349',
   name: 'Mixed Data Sources - API Response Handler',
+  language: 'JavaScript',
 
   vulnerableFunction: `function processApiResponse(trustedServerResponse, userProvidedMetadata) {
   // Merge trusted API response with user-provided metadata

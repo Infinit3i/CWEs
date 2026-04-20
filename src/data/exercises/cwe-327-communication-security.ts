@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe327CommunicationSecurity: Exercise = {
   cweId: 'CWE-327',
   name: 'Broken Cryptographic Algorithm - Message Security',
+  language: 'Python',
 
   vulnerableFunction: `function secureMessageTransmission(message, sharedSecret) {
   const crypto = require('crypto');

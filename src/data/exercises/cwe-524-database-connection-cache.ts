@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe524DatabaseConnectionCache: Exercise = {
   cweId: 'CWE-524',
   name: 'Database Connection Cache - Connection Pool Manager',
+  language: 'JavaScript',
 
   vulnerableFunction: `function getDbConnection(connectionParams) {
   const cacheKey = \`db:\${connectionParams.host}:\${connectionParams.database}\`;

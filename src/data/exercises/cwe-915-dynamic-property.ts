@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe915DynamicProperty: Exercise = {
   cweId: 'CWE-915',
   name: 'Dynamic Property Access - REST API Handler',
+  language: 'JavaScript',
 
   vulnerableFunction: `function updateResourceProperty(resource, propertyName, propertyValue) {
   // Dynamic property update based on API request

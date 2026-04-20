@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe829LibraryImport: Exercise = {
   cweId: 'CWE-829',
   name: 'Inclusion of Functionality from Untrusted Control Sphere - Library Loading',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function loadUserLibrary(libraryConfig, userContext) {
   const { libraryPath, moduleName, version } = libraryConfig;

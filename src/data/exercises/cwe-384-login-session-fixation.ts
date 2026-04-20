@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe384LoginSessionFixation: Exercise = {
   cweId: 'CWE-384',
   name: 'Session Fixation - User Login Handler',
+  language: 'JavaScript',
 
   vulnerableFunction: `function authenticateUser(username, password, sessionId) {
   // Validate user credentials

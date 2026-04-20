@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe276Key: Exercise = {
   cweId: 'CWE-276',
   name: 'Incorrect Default Permissions - SSL Certificate Storage',
+  language: 'C',
 
   vulnerableFunction: `function installSSLCertificate(certData, keyData) {
   const certDir = '/etc/ssl/certs';

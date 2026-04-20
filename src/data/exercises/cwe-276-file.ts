@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe276File: Exercise = {
   cweId: 'CWE-276',
   name: 'Incorrect Default Permissions - Log File Creation',
+  language: 'C',
 
   vulnerableFunction: `function createUserLogFile(userId, logData) {
   const logPath = \`/var/logs/user_\${userId}.log\`;

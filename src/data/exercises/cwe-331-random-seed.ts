@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe331RandomSeed: Exercise = {
   cweId: 'CWE-331',
   name: 'Insufficient Entropy - Cryptographic Seed Generation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateCryptographicSeed(applicationId) {
   // Use application ID as primary entropy source

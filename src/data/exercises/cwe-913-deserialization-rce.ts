@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe913DeserializationRce: Exercise = {
   cweId: 'CWE-913',
   name: 'Unsafe Deserialization - Session Recovery',
+  language: 'JavaScript',
 
   vulnerableFunction: `function deserializeUserSession(serializedData) {
   try {

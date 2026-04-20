@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe190TimestampCalculation: Exercise = {
   cweId: 'CWE-190',
   name: 'Integer Overflow - Session Timeout Calculation',
+  language: 'C++',
 
   vulnerableFunction: `function calculateSessionTimeout(baseTimeout, extensionMinutes, userActivity) {
   // Base timeout in milliseconds

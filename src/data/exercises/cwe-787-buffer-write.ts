@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe787BufferWrite: Exercise = {
   cweId: 'CWE-787',
   name: 'Out-of-bounds Write - User Message Processing',
+  language: 'C',
 
   vulnerableFunction: `function processUserMessage(message) {
   const buffer = new Array(64);

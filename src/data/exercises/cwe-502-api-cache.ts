@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe502ApiCache: Exercise = {
   cweId: 'CWE-502',
   name: 'Deserialization of Untrusted Data - API Response Cache',
+  language: 'Java',
 
   vulnerableFunction: `function loadCachedApiResponse(cacheKey) {
   const redis = require('redis');

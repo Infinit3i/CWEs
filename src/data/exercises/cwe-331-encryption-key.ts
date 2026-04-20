@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe331EncryptionKey: Exercise = {
   cweId: 'CWE-331',
   name: 'Insufficient Entropy - Encryption Key Generation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generateEncryptionKey(userPassword, salt) {
   // Use user password as primary entropy source

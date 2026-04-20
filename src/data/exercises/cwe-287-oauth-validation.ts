@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe287OAuthValidation: Exercise = {
   cweId: 'CWE-287',
   name: 'Improper Authentication - OAuth Token Validation',
+  language: 'Python',
 
   vulnerableFunction: `function validateOAuthToken(accessToken, requiredScope) {
   if (!accessToken) {

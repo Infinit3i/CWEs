@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe125ConfigParser: Exercise = {
   cweId: 'CWE-125',
   name: 'Out-of-bounds Read - Configuration File Parser',
+  language: 'C',
 
   vulnerableFunction: `function parseConfigSection(configLines, sectionIndex) {
   const MAX_LINES = 1000;

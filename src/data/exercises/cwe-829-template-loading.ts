@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe829TemplateLoading: Exercise = {
   cweId: 'CWE-829',
   name: 'Inclusion of Functionality from Untrusted Control Sphere - Template System',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function loadCustomTemplate(templateConfig, userData) {
   const { templateUrl, templateType, params } = templateConfig;

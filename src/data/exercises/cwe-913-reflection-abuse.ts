@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe913ReflectionAbuse: Exercise = {
   cweId: 'CWE-913',
   name: 'Reflection Abuse - Command Dispatcher',
+  language: 'JavaScript',
 
   vulnerableFunction: `function executeCommand(commandName, params) {
   // Dynamic command execution system

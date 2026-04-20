@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe639AccountSettings: Exercise = {
   cweId: 'CWE-639',
   name: 'Authorization Bypass - Account Settings Update',
+  language: 'PHP',
 
   vulnerableFunction: `app.put('/api/account/settings', requireAuth, async (req, res) => {
   try {

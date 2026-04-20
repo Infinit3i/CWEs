@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe798SshKey: Exercise = {
   cweId: 'CWE-798',
   name: 'Hard-coded Credentials - SSH Deployment Key',
+  language: 'Python',
 
   vulnerableFunction: `class DeploymentManager {
   async deployToProduction(artifacts: string[]) {
@@ -23,6 +24,7 @@ W3xY4zA5bC6dE7fG8hI9jK0lM1nO2pQ3rS4tU5vW6xY7zA8bC9dE0fG1hI2jK3lM4n
     await connection.connect({
       host: 'prod-server-01.company.com',
       username: 'deploy',
+  language: 'Python',
       privateKey: sshPrivateKey
     });
 

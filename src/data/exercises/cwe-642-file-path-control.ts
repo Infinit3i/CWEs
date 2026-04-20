@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe642FilePathControl: Exercise = {
   cweId: 'CWE-642',
   name: 'External Control of Critical State Data - File Access Control',
+  language: 'PHP',
 
   vulnerableFunction: `function deleteReportFile(request) {
   const reportName = request.body.reportName;

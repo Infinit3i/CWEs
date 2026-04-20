@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe326ApiToken: Exercise = {
   cweId: 'CWE-326',
   name: 'Weak Encryption - API Token Protection',
+  language: 'Python',
 
   vulnerableFunction: `function encryptApiToken(token, clientId) {
   // Use client ID as encryption key

@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe20BoardDimensions: Exercise = {
   cweId: 'CWE-20',
   name: 'Improper Input Validation - Game Board Allocation',
+  language: 'JavaScript',
 
   vulnerableFunction: `function createGameBoard(width, height) {
   const MAX_DIMENSION = 1000;

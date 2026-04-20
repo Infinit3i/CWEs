@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe617NumericRange: Exercise = {
   cweId: 'CWE-617',
   name: 'Reachable Assertion - Numeric Range Validation',
+  language: 'Go',
 
   vulnerableFunction: `function processQuantity(userQuantity) {
   const quantity = parseInt(userQuantity);

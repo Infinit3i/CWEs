@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe287PasswordReset: Exercise = {
   cweId: 'CWE-287',
   name: 'Improper Authentication - Password Reset System',
+  language: 'Python',
 
   vulnerableFunction: `function validatePasswordResetToken(email, token) {
   if (!email || !token) {

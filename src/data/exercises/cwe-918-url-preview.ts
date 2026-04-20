@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe918UrlPreview: Exercise = {
   cweId: 'CWE-918',
   name: 'Server-Side Request Forgery - URL Preview Service',
+  language: 'JavaScript',
 
   vulnerableFunction: `class UrlPreviewService {
   async generatePreview(url: string) {

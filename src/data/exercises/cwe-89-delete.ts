@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe89Delete: Exercise = {
   cweId: 'CWE-89',
   name: 'SQL Injection - Data Deletion',
+  language: 'JavaScript',
   vulnerableFunction: `function deleteUserPosts(userId, category) {
   const query = "DELETE FROM posts WHERE user_id = " + userId + " AND category = '" + category + "'";
   const result = database.query(query);

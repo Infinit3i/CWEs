@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe668ProcessMemory: Exercise = {
   cweId: 'CWE-668',
   name: 'Exposure of Resource to Wrong Sphere - Process Memory Access',
+  language: 'PHP',
 
   vulnerableFunction: `function debugProcessInfo(processName) {
   const { exec } = require('child_process');

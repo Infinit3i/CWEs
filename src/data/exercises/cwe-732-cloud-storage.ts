@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe732CloudStorage: Exercise = {
   cweId: 'CWE-732',
   name: 'Incorrect Permission Assignment - Cloud Storage ACL',
+  language: 'C',
 
   vulnerableFunction: `function deployWebAssets() {
   const aws = require('aws-sdk');

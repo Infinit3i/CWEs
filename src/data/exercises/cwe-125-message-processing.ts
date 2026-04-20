@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe125MessageProcessing: Exercise = {
   cweId: 'CWE-125',
   name: 'Out-of-bounds Read - Network Message Parser',
+  language: 'C',
 
   vulnerableFunction: `function processNetworkMessage(messageBuffer) {
   const BUFFER_SIZE = 1024;

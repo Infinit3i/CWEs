@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe345FirmwareVerification: Exercise = {
   cweId: 'CWE-345',
   name: 'Insufficient Verification of Data Authenticity - Firmware Updates',
+  language: 'JavaScript',
 
   vulnerableFunction: `async function updateFirmware(firmwareFile, updateMetadata) {
   const { expectedChecksum, expectedSize, version } = updateMetadata;

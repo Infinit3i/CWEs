@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe306DatabaseAccess: Exercise = {
   cweId: 'CWE-306',
   name: 'Missing Authentication - Database Management',
+  language: 'C',
 
   vulnerableFunction: `class DatabaseAdminController {
   async executeQuery(req: Request, res: Response) {

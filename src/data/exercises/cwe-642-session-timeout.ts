@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe642SessionTimeout: Exercise = {
   cweId: 'CWE-642',
   name: 'External Control of Critical State Data - Session Management',
+  language: 'PHP',
 
   vulnerableFunction: `function validateSessionAccess(request) {
   const sessionData = request.cookies.sessionData ?

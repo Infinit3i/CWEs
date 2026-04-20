@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe330PasswordReset: Exercise = {
   cweId: 'CWE-330',
   name: 'Insufficient Randomness - Password Reset Security',
+  language: 'JavaScript',
 
   vulnerableFunction: `function generatePasswordResetToken(email, userId) {
   // Create seed from email hash and user ID

@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe476IntentReceiver: Exercise = {
   cweId: 'CWE-476',
   name: 'NULL Pointer Dereference - Intent Receiver',
+  language: 'Go',
 
   vulnerableFunction: `function onReceiveIntent(context, intent) {
   // Extract URL from intent data

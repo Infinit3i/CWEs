@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe22ProfileAccess: Exercise = {
   cweId: 'CWE-22',
   name: 'Path Traversal - User Profile Access',
+  language: 'Python',
 
   vulnerableFunction: `function getUserProfile(username) {
   const profilePath = '/var/www/profiles/' + username + '.json';

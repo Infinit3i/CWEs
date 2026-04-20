@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe840DiscountStacking: Exercise = {
   cweId: 'CWE-840',
   name: 'Business Logic Errors - Discount Code Stacking',
+  language: 'C#',
 
   vulnerableFunction: `function applyDiscounts(cart, discountCodes) {
   let totalDiscount = 0;

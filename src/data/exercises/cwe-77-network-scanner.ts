@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe77NetworkScanner: Exercise = {
   cweId: 'CWE-77',
   name: 'Command Injection - Network Diagnostic Scanner',
+  language: 'Go',
 
   vulnerableFunction: `function scanNetworkHost(hostAddress, scanType, options) {
   const { exec } = require('child_process');

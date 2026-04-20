@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe328ApiKeyValidation: Exercise = {
   cweId: 'CWE-328',
   name: 'Weak Hash - API Key Integrity Check',
+  language: 'JavaScript',
 
   vulnerableFunction: `function validateApiKey(providedKey, expectedKeyHash, clientId) {
   const crypto = require('crypto');

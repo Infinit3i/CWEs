@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe362BalanceTransfer: Exercise = {
   cweId: 'CWE-362',
   name: 'Race Condition - Bank Transfer Service',
+  language: 'Go',
 
   vulnerableFunction: `class TransferService {
   async processTransfer(fromAccount: string, toAccount: string, amount: number) {

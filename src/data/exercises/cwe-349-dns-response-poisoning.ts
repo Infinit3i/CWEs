@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe349DnsResponsePoisoning: Exercise = {
   cweId: 'CWE-349',
   name: 'DNS Response Poisoning - Extra Record Acceptance',
+  language: 'JavaScript',
 
   vulnerableFunction: `function processDnsResponse(query, dnsResponse) {
   const cache = {};

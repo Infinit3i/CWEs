@@ -7,6 +7,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe287CookieAuth: Exercise = {
   cweId: 'CWE-287',
   name: 'Improper Authentication - Cookie-Based Login System',
+  language: 'Python',
 
   vulnerableFunction: `function authenticateUser(username, password) {
   if (username && password) {

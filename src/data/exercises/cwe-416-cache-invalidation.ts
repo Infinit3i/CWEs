@@ -3,6 +3,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe416CacheInvalidation: Exercise = {
   cweId: 'CWE-416',
   name: 'Use After Free - Cache Entry Management',
+  language: 'Rust',
 
   vulnerableFunction: `function manageCacheEntry(cacheKey, operation) {
   let cacheEntry = getCacheEntry(cacheKey);

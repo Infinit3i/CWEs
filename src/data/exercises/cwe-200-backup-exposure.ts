@@ -8,6 +8,7 @@ import type { Exercise } from '@/data/exercises'
 export const cwe200BackupExposure: Exercise = {
   cweId: 'CWE-200',
   name: 'Information Exposure - Backup File Access',
+  language: 'Java',
 
   vulnerableFunction: `app.get('/download/:filename', authenticateUser, (req, res) => {
   try {
