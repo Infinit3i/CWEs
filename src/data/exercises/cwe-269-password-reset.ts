@@ -54,7 +54,7 @@ export const cwe269PasswordReset: Exercise = {
 
   options: [
     {
-      code: `if (!this.canResetPassword(requestingUser, targetUser)) { throw new Error('Insufficient privileges to reset this user\\'s password'); }`,
+      code: `if (!this.canResetPassword(requestingUser, targetUser)) { throw new Error('Insufficient privileges to reset this user\'s password'); }`,
       correct: true,
       explanation: `Correct! Password reset authorization should validate both the requesting user's privileges and whether they have authority over the target user. This prevents operators from resetting admin passwords and ensures proper hierarchical control.`
     },
