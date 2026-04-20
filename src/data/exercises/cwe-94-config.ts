@@ -7,13 +7,14 @@ import type { Exercise } from '@/data/exercises'
 export const cwe94Config: Exercise = {
   cweId: 'CWE-94',
   name: 'Code Injection - Dynamic Configuration',
+  language: 'JavaScript',
 
   vulnerableFunction: `function loadUserConfig(configName, userSettings) {
   const configPath = \`./configs/\${configName}.js\`;
   const configContent = \`
     module.exports = {
       theme: '\${userSettings.theme}',
-      locale: ${userSettings.language}}',
+      locale: '\${userSettings.language}',
       preferences: \${JSON.stringify(userSettings.preferences)}
     };
   \`;
@@ -37,7 +38,7 @@ return allowedConfigs[configName](userSettings);`,
     },
     // MITRE-inspired wrong answers
     {
-      code: `const configContent = \`module.exports = { theme: '\${userSettings.theme}', locale: ${userSettings.language}}' };\`;
+      code: `const configContent = \`module.exports = { theme: '\${userSettings.theme}', locale: '\${userSettings.language}' };\`;
 fs.writeFileSync(\`./configs/\${configName}.js\`, configContent);
 return require(\`./configs/\${configName}.js\`);`,
       correct: false,
@@ -92,7 +93,7 @@ return eval(\`({theme: '\${userSettings.theme}'})\`);`,
       explanation: 'Keyword blacklisting is easily bypassed using techniques like bracket notation (this["require"]), encoded strings, or constructor property access to achieve code execution.'
     },
     {
-      code: `const configObj = { theme: userSettings.theme, locale: ${userSettings.language} };
+      code: `const configObj = { theme: userSettings.theme, locale: userSettings.language };
 const configContent = \`module.exports = \${JSON.stringify(configObj)};\`;
 fs.writeFileSync(\`./configs/\${configName}.js\`, configContent);
 delete require.cache[require.resolve(\`./configs/\${configName}.js\`)];

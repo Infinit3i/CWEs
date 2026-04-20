@@ -1,5 +1,9 @@
 <template>
   <div class="cwe-viewer">
+    <div v-if="!currentExercise" class="loading">
+      Loading exercises...
+    </div>
+    <div v-else>
     <div class="header">
       <h1>{{ currentExercise.cweId }}: {{ currentExercise.name }}</h1>
       <div class="nav">
@@ -109,6 +113,7 @@
       </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -226,7 +231,27 @@ function handleDrop(event: DragEvent) {
   event.preventDefault()
   isDragOver.value = false
   if (droppedOption.value !== null) return
-  droppedOption.value = parseInt(event.dataTransfer!.getData('text/plain'))
+
+  const optionIndex = parseInt(event.dataTransfer!.getData('text/plain'))
+  droppedOption.value = optionIndex
+
+  // If wrong answer, show overlay instead of explanation
+  if (!currentExercise.value.options[optionIndex].correct) {
+    showTryAgainOverlay.value = true
+    isFadingOut.value = false
+
+    // Start fade out after 2 seconds
+    setTimeout(() => {
+      isFadingOut.value = true
+    }, 2000)
+
+    // Reset after fade out completes (3 seconds total)
+    setTimeout(() => {
+      showTryAgainOverlay.value = false
+      isFadingOut.value = false
+      reset()
+    }, 3000)
+  }
 }
 
 function reset() {
@@ -386,6 +411,53 @@ function renderFunctionEnd() {
   letter-spacing: 0.05em;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
   z-index: 1;
+}
+
+.try-again-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(239, 68, 68, 0.95);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  border-radius: 8px;
+  z-index: 10;
+  animation: fadeIn 0.3s ease-in;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.try-again-overlay.fading-out {
+  animation: fadeOut 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
 }
 
 .code-block pre {
