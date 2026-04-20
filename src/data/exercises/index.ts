@@ -95,6 +95,41 @@ import { cwe476IntentReceiver } from './cwe-476-intent-receiver'
 import { cwe476HttpResponse } from './cwe-476-http-response'
 import { cwe476ConfigParser } from './cwe-476-config-parser'
 
+// CWE-287 Improper Authentication exercises
+import { cwe287CookieAuth } from './cwe-287-cookie-authentication'
+import { cwe287ApiToken } from './cwe-287-api-token-validation'
+import { cwe287SessionManagement } from './cwe-287-session-management'
+import { cwe287PasswordReset } from './cwe-287-password-reset'
+import { cwe287OAuthValidation } from './cwe-287-oauth-validation'
+
+// CWE-190 Integer Overflow exercises
+import { cwe190MemoryAllocation } from './cwe-190-memory-allocation'
+import { cwe190LoopCounter } from './cwe-190-loop-counter'
+import { cwe190FinancialCalculation } from './cwe-190-financial-calculation'
+import { cwe190ArrayIndexing } from './cwe-190-array-indexing'
+import { cwe190TimestampCalculation } from './cwe-190-timestamp-calculation'
+
+// CWE-502 Deserialization exercises
+import { cwe502UserSession } from './cwe-502-user-session'
+import { cwe502ApiCache } from './cwe-502-api-cache'
+import { cwe502ConfigLoader } from './cwe-502-config-loader'
+import { cwe502BackupRestore } from './cwe-502-backup-restore'
+import { cwe502MessageQueue } from './cwe-502-message-queue'
+
+// CWE-77 Command Injection exercises
+import { cwe77FileBackup } from './cwe-77-file-backup'
+import { cwe77LogAnalyzer } from './cwe-77-log-analyzer'
+import { cwe77NetworkScanner } from './cwe-77-network-scanner'
+import { cwe77DatabaseBackup } from './cwe-77-database-backup'
+import { cwe77ImageProcessor } from './cwe-77-image-processor'
+
+// CWE-119 Memory Buffer Bounds exercises
+import { cwe119HostnameLookup } from './cwe-119-hostname-lookup'
+import { cwe119EncodingExpansion } from './cwe-119-encoding-expansion'
+import { cwe119ArrayUnderflow } from './cwe-119-array-underflow'
+import { cwe119PacketProcessing } from './cwe-119-packet-processing'
+import { cwe119StringCopy } from './cwe-119-string-copy'
+
 import type { Exercise } from '@/data/exercises'
 
 /**
@@ -212,6 +247,41 @@ export const exercisesList: Exercise[] = [
   cwe476IntentReceiver,
   cwe476HttpResponse,
   cwe476ConfigParser,
+
+  // CWE-287 Improper Authentication exercises
+  cwe287CookieAuth,
+  cwe287ApiToken,
+  cwe287SessionManagement,
+  cwe287PasswordReset,
+  cwe287OAuthValidation,
+
+  // CWE-190 Integer Overflow exercises
+  cwe190MemoryAllocation,
+  cwe190LoopCounter,
+  cwe190FinancialCalculation,
+  cwe190ArrayIndexing,
+  cwe190TimestampCalculation,
+
+  // CWE-502 Deserialization exercises
+  cwe502UserSession,
+  cwe502ApiCache,
+  cwe502ConfigLoader,
+  cwe502BackupRestore,
+  cwe502MessageQueue,
+
+  // CWE-77 Command Injection exercises
+  cwe77FileBackup,
+  cwe77LogAnalyzer,
+  cwe77NetworkScanner,
+  cwe77DatabaseBackup,
+  cwe77ImageProcessor,
+
+  // CWE-119 Memory Buffer Bounds exercises
+  cwe119HostnameLookup,
+  cwe119EncodingExpansion,
+  cwe119ArrayUnderflow,
+  cwe119PacketProcessing,
+  cwe119StringCopy,
 ]
 
 export {
@@ -229,5 +299,10 @@ export {
   cwe352ProfileUpdate, cwe352EmailChange, cwe352AdminDelete, cwe352PasswordChange, cwe352FundTransfer,
   cwe434AvatarUpload, cwe434DocumentUpload, cwe434ResumeUpload, cwe434ImageGallery, cwe434BackupRestore,
   cwe862UserProfile, cwe862PrivateMessages, cwe862AdminPanel, cwe862UserOrders, cwe862FileSharing,
-  cwe476HostLookup, cwe476SystemProperty, cwe476IntentReceiver, cwe476HttpResponse, cwe476ConfigParser
+  cwe476HostLookup, cwe476SystemProperty, cwe476IntentReceiver, cwe476HttpResponse, cwe476ConfigParser,
+  cwe287CookieAuth, cwe287ApiToken, cwe287SessionManagement, cwe287PasswordReset, cwe287OAuthValidation,
+  cwe190MemoryAllocation, cwe190LoopCounter, cwe190FinancialCalculation, cwe190ArrayIndexing, cwe190TimestampCalculation,
+  cwe502UserSession, cwe502ApiCache, cwe502ConfigLoader, cwe502BackupRestore, cwe502MessageQueue,
+  cwe77FileBackup, cwe77LogAnalyzer, cwe77NetworkScanner, cwe77DatabaseBackup, cwe77ImageProcessor,
+  cwe119HostnameLookup, cwe119EncodingExpansion, cwe119ArrayUnderflow, cwe119PacketProcessing, cwe119StringCopy
 }

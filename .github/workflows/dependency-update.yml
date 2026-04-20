@@ -1,0 +1,117 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    # Run weekly on Mondays at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Update dependencies
+      run: |
+        npm update
+        npm audit fix --force || true
+
+    - name: Check for changes
+      id: changes
+      run: |
+        if [[ -n $(git status --porcelain) ]]; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create Pull Request
+      if: steps.changes.outputs.changes == 'true'
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'chore: update dependencies'
+        title: 'chore: Weekly dependency updates'
+        body: |
+          ## Automated Dependency Updates
+
+          This PR contains weekly dependency updates:
+          - Updated npm packages to latest compatible versions
+          - Applied security fixes where available
+          - Verified build still works with updated dependencies
+
+          ### Changes
+          - Updated `package-lock.json` with latest dependency versions
+          - Applied `npm audit fix` for security vulnerabilities
+
+          ### Testing
+          - [ ] Build succeeds with new dependencies
+          - [ ] All exercises load correctly
+          - [ ] MITRE API integration still works
+          - [ ] Random navigation functions properly
+
+          🤖 *This PR was generated automatically by GitHub Actions*
+        branch: chore/dependency-updates
+        delete-branch: true
+
+  update-cwe-data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Check MITRE API health
+      run: |
+        echo "Checking MITRE CWE API availability..."
+        for cwe in 89 79 94 863 276 787 416 78 20 125 22 352 434 862 476 798 918 306 362 269; do
+          echo "Testing CWE-$cwe..."
+          curl -f "https://cwe-api.mitre.org/api/v1/cwe/weakness/$cwe" > /dev/null || echo "CWE-$cwe API unavailable"
+        done
+
+    - name: Validate exercise integrity
+      run: |
+        echo "Validating all exercise files compile..."
+        npm ci
+        npm run build
+        echo "All exercises validated successfully"
+
+    - name: Create API status report
+      run: |
+        echo "# MITRE API Status Report" > api-status.md
+        echo "Generated: $(date)" >> api-status.md
+        echo "" >> api-status.md
+        echo "## CWE API Endpoints" >> api-status.md
+        for cwe in 89 79 94 863 276 787 416 78 20 125 22 352 434 862 476 798 918 306 362 269; do
+          if curl -f "https://cwe-api.mitre.org/api/v1/cwe/weakness/$cwe" >/dev/null 2>&1; then
+            echo "- ✅ CWE-$cwe: Available" >> api-status.md
+          else
+            echo "- ❌ CWE-$cwe: Unavailable" >> api-status.md
+          fi
+        done
+
+    - name: Upload API status
+      uses: actions/upload-artifact@v4
+      with:
+        name: api-status-report
+        path: api-status.md

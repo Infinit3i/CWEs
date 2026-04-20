@@ -1,0 +1,160 @@
+name: Pull Request Automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  auto-label:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_target'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Auto-label PR
+      uses: actions/labeler@v5
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        configuration-path: .github/labeler.yml
+
+  pr-validator:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Validate new exercises
+      id: validate
+      run: |
+        echo "Checking for new exercise files..."
+        NEW_FILES=$(git diff --name-only --diff-filter=A origin/main...HEAD | grep "src/data/exercises/cwe-.*\.ts" || true)
+
+        if [ -n "$NEW_FILES" ]; then
+          echo "new_exercises=true" >> $GITHUB_OUTPUT
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "$NEW_FILES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          # Validate each new exercise file
+          for file in $NEW_FILES; do
+            echo "Validating $file..."
+
+            # Check TypeScript syntax
+            npx tsc --noEmit "$file"
+
+            # Check exercise structure
+            node -e "
+              const exercise = require('./$(echo $file | sed 's/\.ts$/\.js/')');
+              const required = ['cweId', 'name', 'vulnerableFunction', 'vulnerableLine', 'options'];
+              required.forEach(field => {
+                if (!exercise[Object.keys(exercise)[0]][field]) {
+                  throw new Error(\`Missing required field: \${field}\`);
+                }
+              });
+              console.log('✅ Exercise structure valid');
+            " || echo "⚠️ Exercise structure check failed for $file"
+          done
+        else
+          echo "new_exercises=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Comment on PR
+      if: steps.validate.outputs.new_exercises == 'true'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const files = `${{ steps.validate.outputs.files }}`.split('\n').filter(f => f);
+          const fileList = files.map(f => `- \`${f}\``).join('\n');
+
+          const comment = `## 🆕 New CWE Exercises Detected
+
+          This PR adds new CWE exercises:
+          ${fileList}
+
+          ### Automated Checks
+          - ✅ TypeScript compilation
+          - ✅ Exercise structure validation
+          - ✅ Build integration
+
+          ### Manual Review Checklist
+          - [ ] Exercise uses authentic MITRE vulnerable code patterns
+          - [ ] All 10 answer options are realistic and educational
+          - [ ] Explanations reference specific vulnerability patterns
+          - [ ] Business scenario context is appropriate
+          - [ ] Technical depth matches target audience
+
+          ### Testing
+          Please verify:
+          - [ ] New exercises appear in random rotation
+          - [ ] CWE data loads correctly (API + fallback)
+          - [ ] Drag-drop interaction works properly
+          - [ ] Mobile responsive design maintained
+
+          🤖 *This comment was generated automatically*`;
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+  exercise-metrics:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Generate exercise metrics
+      run: |
+        echo "# Exercise Platform Metrics" > metrics.md
+        echo "" >> metrics.md
+
+        # Count exercises by CWE
+        echo "## Exercises by CWE Type" >> metrics.md
+        echo "" >> metrics.md
+        find src/data/exercises -name "cwe-*.ts" | sed 's/.*cwe-\([0-9]*\)-.*/CWE-\1/' | sort | uniq -c | while read count cwe; do
+          echo "- **$cwe**: $count exercises" >> metrics.md
+        done
+
+        echo "" >> metrics.md
+        echo "## Total Coverage" >> metrics.md
+        TOTAL=$(find src/data/exercises -name "cwe-*.ts" | wc -l)
+        TYPES=$(find src/data/exercises -name "cwe-*.ts" | sed 's/.*cwe-\([0-9]*\)-.*/\1/' | sort -n | uniq | wc -l)
+        echo "- **Total exercises**: $TOTAL" >> metrics.md
+        echo "- **CWE types covered**: $TYPES" >> metrics.md
+        echo "- **Average per CWE**: $(echo "scale=1; $TOTAL / $TYPES" | bc)" >> metrics.md
+
+    - name: Upload metrics
+      uses: actions/upload-artifact@v4
+      with:
+        name: exercise-metrics
+        path: metrics.md

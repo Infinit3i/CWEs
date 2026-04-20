@@ -1,0 +1,142 @@
+name: Release Automation
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.2.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build application
+      run: npm run build
+
+    - name: Generate exercise statistics
+      run: |
+        echo "# CWE Learning Platform Release" > release-notes.md
+        echo "" >> release-notes.md
+
+        # Version info
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          VERSION="${{ github.event.inputs.version }}"
+        else
+          VERSION="${{ github.ref_name }}"
+        fi
+
+        echo "## Version $VERSION" >> release-notes.md
+        echo "Released: $(date +%Y-%m-%d)" >> release-notes.md
+        echo "" >> release-notes.md
+
+        # Exercise statistics
+        echo "## Exercise Coverage" >> release-notes.md
+        echo "" >> release-notes.md
+
+        TOTAL=$(find src/data/exercises -name "cwe-*.ts" | wc -l)
+        TYPES=$(find src/data/exercises -name "cwe-*.ts" | sed 's/.*cwe-\([0-9]*\)-.*/\1/' | sort -n | uniq | wc -l)
+
+        echo "- **Total Exercises**: $TOTAL" >> release-notes.md
+        echo "- **CWE Types Covered**: $TYPES" >> release-notes.md
+        echo "- **OWASP Top 25 Coverage**: $(echo "scale=1; $TYPES / 25 * 100" | bc)%" >> release-notes.md
+        echo "" >> release-notes.md
+
+        # Exercise breakdown
+        echo "### Exercises by CWE Type" >> release-notes.md
+        echo "" >> release-notes.md
+        find src/data/exercises -name "cwe-*.ts" | sed 's/.*cwe-\([0-9]*\)-.*/CWE-\1/' | sort -V | uniq -c | while read count cwe; do
+          echo "- **$cwe**: $count exercises" >> release-notes.md
+        done
+
+        echo "" >> release-notes.md
+        echo "## Features" >> release-notes.md
+        echo "" >> release-notes.md
+        echo "✅ **Interactive Learning**: Drag-and-drop code replacement exercises" >> release-notes.md
+        echo "✅ **Authentic Patterns**: Real MITRE vulnerable code examples as learning material" >> release-notes.md
+        echo "✅ **Random Navigation**: Reinforcement learning through repeated exposure" >> release-notes.md
+        echo "✅ **Live CWE Data**: Official MITRE API integration with comprehensive fallbacks" >> release-notes.md
+        echo "✅ **Technical Depth**: Detailed explanations of vulnerability mechanisms" >> release-notes.md
+        echo "✅ **Modern Stack**: Vue 3, TypeScript, responsive design" >> release-notes.md
+        echo "" >> release-notes.md
+        echo "## Deployment" >> release-notes.md
+        echo "" >> release-notes.md
+        echo "- **GitHub Pages**: Automatic deployment on push to main" >> release-notes.md
+        echo "- **CDN Delivery**: Fast global content delivery" >> release-notes.md
+        echo "- **Progressive Web App**: Offline capability with service workers" >> release-notes.md
+
+    - name: Create bundle archive
+      run: |
+        cd dist
+        tar -czf ../cwe-learning-platform.tar.gz *
+        cd ..
+
+    - name: Generate changelog
+      id: changelog
+      run: |
+        # Get commits since last tag
+        LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+        if [ -n "$LAST_TAG" ]; then
+          CHANGES=$(git log --pretty=format:"- %s" $LAST_TAG..HEAD)
+        else
+          CHANGES=$(git log --pretty=format:"- %s" --max-count=20)
+        fi
+
+        echo "## Recent Changes" >> release-notes.md
+        echo "" >> release-notes.md
+        echo "$CHANGES" >> release-notes.md
+
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name || github.event.inputs.version }}
+        release_name: CWE Learning Platform ${{ github.ref_name || github.event.inputs.version }}
+        body_path: release-notes.md
+        draft: false
+        prerelease: false
+
+    - name: Upload release assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./cwe-learning-platform.tar.gz
+        asset_name: cwe-learning-platform.tar.gz
+        asset_content_type: application/gzip
+
+  notify-deployment:
+    runs-on: ubuntu-latest
+    needs: create-release
+
+    steps:
+    - name: Deployment notification
+      run: |
+        echo "🚀 CWE Learning Platform deployed successfully!"
+        echo "📊 Access at: https://${{ github.repository_owner }}.github.io/CWEs/"
+        echo "📦 Release: ${{ github.ref_name || github.event.inputs.version }}"

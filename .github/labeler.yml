@@ -1,0 +1,79 @@
+# Label configuration for automatic PR labeling
+
+# CWE Exercise related changes
+'cwe-exercises':
+  - 'src/data/exercises/**/*'
+
+# Component changes
+'frontend':
+  - 'src/components/**/*'
+
+# API/Service changes
+'api':
+  - 'src/services/**/*'
+
+# Configuration changes
+'config':
+  - '*.config.*'
+  - '*.json'
+  - '.github/**/*'
+
+# Documentation changes
+'documentation':
+  - '**/*.md'
+  - 'docs/**/*'
+
+# Dependency changes
+'dependencies':
+  - 'package*.json'
+
+# Template changes
+'templates':
+  - 'src/templates/**/*'
+
+# Styling changes
+'styling':
+  - '**/*.css'
+  - '**/*.scss'
+
+# Build/Deploy changes
+'build':
+  - '.github/workflows/**/*'
+  - 'vite.config.*'
+  - 'tsconfig.*'
+
+# Security related
+'security':
+  - 'src/data/exercises/cwe-*security*'
+  - 'src/data/exercises/cwe-*auth*'
+  - 'src/data/exercises/cwe-*injection*'
+
+# High impact changes
+'breaking-change':
+  - 'src/data/exercises.ts'
+  - 'src/components/CWEViewer.vue'
+
+# New features
+'enhancement':
+  - 'src/data/exercises/cwe-*'
+
+# Memory related CWEs
+'memory-safety':
+  - 'src/data/exercises/cwe-787*'
+  - 'src/data/exercises/cwe-416*'
+  - 'src/data/exercises/cwe-125*'
+  - 'src/data/exercises/cwe-119*'
+
+# Web security CWEs
+'web-security':
+  - 'src/data/exercises/cwe-79*'
+  - 'src/data/exercises/cwe-89*'
+  - 'src/data/exercises/cwe-352*'
+  - 'src/data/exercises/cwe-22*'
+
+# Access control CWEs
+'access-control':
+  - 'src/data/exercises/cwe-862*'
+  - 'src/data/exercises/cwe-863*'
+  - 'src/data/exercises/cwe-269*'
+  - 'src/data/exercises/cwe-306*'
