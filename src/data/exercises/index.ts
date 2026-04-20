@@ -177,6 +177,41 @@ export const exercisesList: Exercise[] = [
   cwe269SystemCommand,
   cwe269DataAccess,
   cwe269PrivilegeDrop,
+
+  // CWE-22 Path Traversal exercises
+  cwe22FileDownload,
+  cwe22ProfileAccess,
+  cwe22TemplateInclude,
+  cwe22LogViewer,
+  cwe22ConfigReader,
+
+  // CWE-352 Cross-Site Request Forgery exercises
+  cwe352ProfileUpdate,
+  cwe352EmailChange,
+  cwe352AdminDelete,
+  cwe352PasswordChange,
+  cwe352FundTransfer,
+
+  // CWE-434 Unrestricted Upload exercises
+  cwe434AvatarUpload,
+  cwe434DocumentUpload,
+  cwe434ResumeUpload,
+  cwe434ImageGallery,
+  cwe434BackupRestore,
+
+  // CWE-862 Missing Authorization exercises
+  cwe862UserProfile,
+  cwe862PrivateMessages,
+  cwe862AdminPanel,
+  cwe862UserOrders,
+  cwe862FileSharing,
+
+  // CWE-476 NULL Pointer Dereference exercises
+  cwe476HostLookup,
+  cwe476SystemProperty,
+  cwe476IntentReceiver,
+  cwe476HttpResponse,
+  cwe476ConfigParser,
 ]
 
 export {
@@ -189,5 +224,10 @@ export {
   cwe918Webhook, cwe918Proxy, cwe918ImageFetch, cwe918UrlPreview, cwe918HealthCheck,
   cwe306AdminApi, cwe306FileUpload, cwe306PaymentApi, cwe306ConfigApi, cwe306DatabaseAccess,
   cwe362BalanceTransfer, cwe362InventoryUpdate, cwe362CounterIncrement, cwe362SessionCheck, cwe362FileCreation,
-  cwe269PrivilegeEscalation, cwe269PasswordReset, cwe269SystemCommand, cwe269DataAccess, cwe269PrivilegeDrop
+  cwe269PrivilegeEscalation, cwe269PasswordReset, cwe269SystemCommand, cwe269DataAccess, cwe269PrivilegeDrop,
+  cwe22FileDownload, cwe22ProfileAccess, cwe22TemplateInclude, cwe22LogViewer, cwe22ConfigReader,
+  cwe352ProfileUpdate, cwe352EmailChange, cwe352AdminDelete, cwe352PasswordChange, cwe352FundTransfer,
+  cwe434AvatarUpload, cwe434DocumentUpload, cwe434ResumeUpload, cwe434ImageGallery, cwe434BackupRestore,
+  cwe862UserProfile, cwe862PrivateMessages, cwe862AdminPanel, cwe862UserOrders, cwe862FileSharing,
+  cwe476HostLookup, cwe476SystemProperty, cwe476IntentReceiver, cwe476HttpResponse, cwe476ConfigParser
 }
