@@ -1,0 +1,206 @@
+name: Platform Monitoring
+
+on:
+  schedule:
+    # Run daily at 8 AM UTC
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build health check
+      run: |
+        echo "Testing production build..."
+        npm run build
+
+        echo "Checking bundle size..."
+        du -sh dist/
+
+        echo "Verifying all exercise files..."
+        find src/data/exercises -name "cwe-*.ts" | wc -l
+
+    - name: MITRE API health monitoring
+      run: |
+        echo "# Daily MITRE API Health Report" > api-health.md
+        echo "Date: $(date)" >> api-health.md
+        echo "" >> api-health.md
+
+        # Test core CWE endpoints
+        FAILED_APIS=""
+        TOTAL_TESTED=0
+        SUCCESSFUL=0
+
+        for cwe in 89 79 94 863 276 787 416 78 20 125 22 352 434 862 476 798 918 306 362 269 287 190 502 77 119; do
+          TOTAL_TESTED=$((TOTAL_TESTED + 1))
+
+          if timeout 10 curl -f -s "https://cwe-api.mitre.org/api/v1/cwe/weakness/$cwe" > /dev/null; then
+            echo "✅ CWE-$cwe API: Healthy" >> api-health.md
+            SUCCESSFUL=$((SUCCESSFUL + 1))
+          else
+            echo "❌ CWE-$cwe API: Failed" >> api-health.md
+            FAILED_APIS="$FAILED_APIS CWE-$cwe"
+          fi
+        done
+
+        echo "" >> api-health.md
+        echo "## Summary" >> api-health.md
+        echo "- **Total APIs tested**: $TOTAL_TESTED" >> api-health.md
+        echo "- **Successful**: $SUCCESSFUL" >> api-health.md
+        echo "- **Failed**: $((TOTAL_TESTED - SUCCESSFUL))" >> api-health.md
+        echo "- **Success rate**: $(echo "scale=1; $SUCCESSFUL * 100 / $TOTAL_TESTED" | bc)%" >> api-health.md
+
+        if [ -n "$FAILED_APIS" ]; then
+          echo "" >> api-health.md
+          echo "## Failed APIs" >> api-health.md
+          echo "⚠️ The following CWE APIs are currently unavailable:" >> api-health.md
+          for api in $FAILED_APIS; do
+            echo "- $api" >> api-health.md
+          done
+          echo "" >> api-health.md
+          echo "💡 **Note**: The platform includes comprehensive fallback data, so exercises will continue to work normally." >> api-health.md
+        fi
+
+    - name: Exercise statistics
+      run: |
+        echo "" >> api-health.md
+        echo "## Exercise Platform Statistics" >> api-health.md
+        echo "" >> api-health.md
+
+        TOTAL_EXERCISES=$(find src/data/exercises -name "cwe-*.ts" | wc -l)
+        UNIQUE_CWES=$(find src/data/exercises -name "cwe-*.ts" | sed 's/.*cwe-\([0-9]*\)-.*/\1/' | sort -n | uniq | wc -l)
+
+        echo "- **Total exercises**: $TOTAL_EXERCISES" >> api-health.md
+        echo "- **Unique CWE types**: $UNIQUE_CWES" >> api-health.md
+        echo "- **Average per CWE**: $(echo "scale=1; $TOTAL_EXERCISES / $UNIQUE_CWES" | bc)" >> api-health.md
+        echo "- **Top 25 coverage**: $(echo "scale=1; $UNIQUE_CWES / 25 * 100" | bc)%" >> api-health.md
+
+        echo "" >> api-health.md
+        echo "### Exercise Distribution" >> api-health.md
+        echo "" >> api-health.md
+
+        find src/data/exercises -name "cwe-*.ts" | sed 's/.*cwe-\([0-9]*\)-.*/\1/' | sort -n | uniq -c | while read count cwe; do
+          echo "- **CWE-$cwe**: $count exercises" >> api-health.md
+        done
+
+    - name: Performance benchmarks
+      run: |
+        echo "" >> api-health.md
+        echo "## Build Performance" >> api-health.md
+        echo "" >> api-health.md
+
+        BUILD_START=$(date +%s)
+        npm run build
+        BUILD_END=$(date +%s)
+        BUILD_TIME=$((BUILD_END - BUILD_START))
+
+        echo "- **Build time**: ${BUILD_TIME}s" >> api-health.md
+        echo "- **Bundle size**: $(du -sh dist/ | cut -f1)" >> api-health.md
+        echo "- **Asset files**: $(find dist/ -type f | wc -l)" >> api-health.md
+
+        # Check largest assets
+        echo "- **Largest assets**:" >> api-health.md
+        find dist/ -type f -exec du -h {} + | sort -rh | head -3 | while read size file; do
+          echo "  - $(basename $file): $size" >> api-health.md
+        done
+
+    - name: Upload health report
+      uses: actions/upload-artifact@v4
+      with:
+        name: daily-health-report-${{ github.run_number }}
+        path: api-health.md
+
+    - name: Create issue on failure
+      if: failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const title = `🚨 Platform Health Check Failed - ${new Date().toDateString()}`;
+          const body = `## Health Check Failure
+
+          The daily health check has detected issues with the CWE Learning Platform.
+
+          **Run Details:**
+          - Workflow: ${context.workflow}
+          - Run ID: ${context.runId}
+          - Commit: ${context.sha}
+
+          **Possible Issues:**
+          - MITRE API endpoints down
+          - Build failures
+          - Exercise file corruption
+          - Dependency issues
+
+          **Next Steps:**
+          1. Check the workflow logs for specific error details
+          2. Verify MITRE API status manually
+          3. Test local build process
+          4. Review recent changes that might have caused issues
+
+          🤖 *This issue was created automatically by the monitoring workflow*`;
+
+          await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: title,
+            body: body,
+            labels: ['bug', 'monitoring', 'high-priority']
+          });
+
+  uptime-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check GitHub Pages deployment
+      run: |
+        # Try to access the deployed site
+        SITE_URL="https://${{ github.repository_owner }}.github.io/CWEs/"
+
+        echo "Checking site availability: $SITE_URL"
+
+        if curl -f -s "$SITE_URL" > /dev/null; then
+          echo "✅ Site is accessible"
+
+          # Check if it contains expected content
+          if curl -s "$SITE_URL" | grep -q "CWE"; then
+            echo "✅ Site contains expected CWE content"
+          else
+            echo "⚠️ Site accessible but may not be loading correctly"
+            exit 1
+          fi
+        else
+          echo "❌ Site is not accessible"
+          exit 1
+        fi
+
+    - name: Performance spot check
+      run: |
+        # Quick performance test using curl
+        SITE_URL="https://${{ github.repository_owner }}.github.io/CWEs/"
+
+        echo "Running basic performance check..."
+
+        # Measure response time
+        RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' "$SITE_URL")
+        echo "Response time: ${RESPONSE_TIME}s"
+
+        # Check if response time is reasonable (under 3 seconds)
+        if (( $(echo "$RESPONSE_TIME < 3.0" | bc -l) )); then
+          echo "✅ Performance acceptable"
+        else
+          echo "⚠️ Slow response time detected"
+        fi
