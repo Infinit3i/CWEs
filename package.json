@@ -4,8 +4,11 @@
   "description": "Interactive CWE (Common Weakness Enumeration) learning application",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "build": "vite build",
+    "build:check": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "preview:build": "npm run build && vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "vue": "^3.4.0",

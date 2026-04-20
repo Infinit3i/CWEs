@@ -107,11 +107,27 @@ src/
 - **No maintenance** of static CVE lists
 - **Comprehensive** severity, attack vectors, mitigation strategies
 
-## Building for Production
+## Deployment
+
+### GitHub Pages (Automatic)
+Push to main branch and GitHub Actions automatically deploys:
 
 ```bash
-npm run build
+git add .
+git commit -m "Deploy CWE learning platform"
+git push origin main
 ```
+
+**Setup:** Enable GitHub Pages with "GitHub Actions" source in repository settings.
+**URL:** `https://yourusername.github.io/CWEs/`
+
+### Manual Build
+```bash
+npm run build  # Creates dist/ directory
+npm run deploy # Deploy to gh-pages branch (requires gh-pages package)
+```
+
+**See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment guide.**
 
 ## Technology Stack
 
