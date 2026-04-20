@@ -85,7 +85,7 @@ export const cwe639AccountSettings: Exercise = {
 const authenticatedUserId = req.user.id;
 
 if (parseInt(userId) !== authenticatedUserId) {
-  return res.status(403).json({ error: 'Access denied: cannot modify other users\\' settings' });
+  return res.status(403).json({ error: 'Access denied: cannot modify other users\' settings' });
 }
 
 await db.query(updateQuery, updateValues);`,
@@ -96,7 +96,7 @@ await db.query(updateQuery, updateValues);`,
     {
       code: `await db.query(updateQuery, updateValues);`,
       correct: false,
-      explanation: 'Direct from MITRE CWE-639: Missing authorization check allows users to modify any account by manipulating the userId parameter. Attackers can change other users\\' email addresses for account takeover, modify privacy settings to expose data, or upgrade account types for unauthorized privileges.'
+      explanation: 'Direct from MITRE CWE-639: Missing authorization check allows users to modify any account by manipulating the userId parameter. Attackers can change other users\' email addresses for account takeover, modify privacy settings to expose data, or upgrade account types for unauthorized privileges.'
     },
     {
       code: `if (userId === '1') { return res.status(403).json({ error: 'Cannot modify admin account' }); }
@@ -109,20 +109,20 @@ await db.query(updateQuery, updateValues);`,
 if (userAge < 86400000) { return res.status(403).json({ error: 'Account too new' }); }
 await db.query(updateQuery, updateValues);`,
       correct: false,
-      explanation: 'Account age restrictions do not prevent unauthorized settings modification. While this may prevent new accounts from changing settings, established users can still modify any other user\\'s settings by manipulating the userId parameter.'
+      explanation: 'Account age restrictions do not prevent unauthorized settings modification. While this may prevent new accounts from changing settings, established users can still modify any other user\'s settings by manipulating the userId parameter.'
     },
     {
       code: `if (accountType === 'admin') { return res.status(403).json({ error: 'Cannot set admin account type' }); }
 await db.query(updateQuery, updateValues);`,
       correct: false,
-      explanation: 'Field-specific validation does not implement user authorization. While preventing admin privilege escalation, users can still modify other users\\' email addresses, phone numbers, and privacy settings by manipulating the userId parameter.'
+      explanation: 'Field-specific validation does not implement user authorization. While preventing admin privilege escalation, users can still modify other users\' email addresses, phone numbers, and privacy settings by manipulating the userId parameter.'
     },
     {
       code: `const requestLimit = await getRequestCount(req.user.id);
 if (requestLimit > 10) { return res.status(429).json({ error: 'Too many requests' }); }
 await db.query(updateQuery, updateValues);`,
       correct: false,
-      explanation: 'Rate limiting does not prevent unauthorized settings modification, only limits frequency. Users can still modify other users\\' account settings within the rate limit by manipulating the userId parameter.'
+      explanation: 'Rate limiting does not prevent unauthorized settings modification, only limits frequency. Users can still modify other users\' account settings within the rate limit by manipulating the userId parameter.'
     },
     {
       code: `const hashedUserId = crypto.createHash('md5').update(userId.toString()).digest('hex');
@@ -148,7 +148,7 @@ await db.query(updateQuery, [...updateValues.slice(0, -1), decryptedUserId]);`,
       code: `await new Promise(resolve => setTimeout(resolve, 1000));
 await db.query(updateQuery, updateValues);`,
       correct: false,
-      explanation: 'Adding delays does not implement authorization. While this may slow down attacks, users can still modify other users\\' account settings by manipulating the userId parameter - just at a slower rate.'
+      explanation: 'Adding delays does not implement authorization. While this may slow down attacks, users can still modify other users\' account settings by manipulating the userId parameter - just at a slower rate.'
     }
   ]
 }

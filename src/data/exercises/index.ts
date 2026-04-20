@@ -130,6 +130,34 @@ import { cwe119ArrayUnderflow } from './cwe-119-array-underflow'
 import { cwe119PacketProcessing } from './cwe-119-packet-processing'
 import { cwe119StringCopy } from './cwe-119-string-copy'
 
+// CWE-601 URL Redirection exercises
+import { cwe601OauthRedirect } from './cwe-601-oauth-redirect'
+import { cwe601ApiEndpoint } from './cwe-601-api-endpoint'
+import { cwe601MobileApp } from './cwe-601-mobile-app'
+import { cwe601PasswordReset } from './cwe-601-password-reset'
+import { cwe601LogoutRedirect } from './cwe-601-logout-redirect'
+
+// CWE-639 Authorization Bypass Through User-Controlled Key exercises
+import { cwe639InvoiceAccess } from './cwe-639-invoice-access'
+import { cwe639UserProfile } from './cwe-639-user-profile'
+import { cwe639DocumentSharing } from './cwe-639-document-sharing'
+import { cwe639ApiKeys } from './cwe-639-api-keys'
+import { cwe639AccountSettings } from './cwe-639-account-settings'
+
+// CWE-200 Information Exposure exercises
+import { cwe200ApiError } from './cwe-200-api-error'
+import { cwe200DebugEndpoint } from './cwe-200-debug-endpoint'
+import { cwe200ConfigExposure } from './cwe-200-config-exposure'
+import { cwe200UserEnumeration } from './cwe-200-user-enumeration'
+import { cwe200BackupExposure } from './cwe-200-backup-exposure'
+
+// CWE-209 Information Exposure Through Error Messages exercises
+import { cwe209LoginError } from './cwe-209-login-error'
+import { cwe209DatabaseError } from './cwe-209-database-error'
+import { cwe209FileProcessing } from './cwe-209-file-processing'
+import { cwe209ApiValidation } from './cwe-209-api-validation'
+import { cwe209ExternalService } from './cwe-209-external-service'
+
 import type { Exercise } from '@/data/exercises'
 
 /**
@@ -282,6 +310,34 @@ export const exercisesList: Exercise[] = [
   cwe119ArrayUnderflow,
   cwe119PacketProcessing,
   cwe119StringCopy,
+
+  // CWE-601 URL Redirection exercises
+  cwe601OauthRedirect,
+  cwe601ApiEndpoint,
+  cwe601MobileApp,
+  cwe601PasswordReset,
+  cwe601LogoutRedirect,
+
+  // CWE-639 Authorization Bypass Through User-Controlled Key exercises
+  cwe639InvoiceAccess,
+  cwe639UserProfile,
+  cwe639DocumentSharing,
+  cwe639ApiKeys,
+  cwe639AccountSettings,
+
+  // CWE-200 Information Exposure exercises
+  cwe200ApiError,
+  cwe200DebugEndpoint,
+  cwe200ConfigExposure,
+  cwe200UserEnumeration,
+  cwe200BackupExposure,
+
+  // CWE-209 Information Exposure Through Error Messages exercises
+  cwe209LoginError,
+  cwe209DatabaseError,
+  cwe209FileProcessing,
+  cwe209ApiValidation,
+  cwe209ExternalService,
 ]
 
 export {
@@ -304,5 +360,9 @@ export {
   cwe190MemoryAllocation, cwe190LoopCounter, cwe190FinancialCalculation, cwe190ArrayIndexing, cwe190TimestampCalculation,
   cwe502UserSession, cwe502ApiCache, cwe502ConfigLoader, cwe502BackupRestore, cwe502MessageQueue,
   cwe77FileBackup, cwe77LogAnalyzer, cwe77NetworkScanner, cwe77DatabaseBackup, cwe77ImageProcessor,
-  cwe119HostnameLookup, cwe119EncodingExpansion, cwe119ArrayUnderflow, cwe119PacketProcessing, cwe119StringCopy
+  cwe119HostnameLookup, cwe119EncodingExpansion, cwe119ArrayUnderflow, cwe119PacketProcessing, cwe119StringCopy,
+  cwe601OauthRedirect, cwe601ApiEndpoint, cwe601MobileApp, cwe601PasswordReset, cwe601LogoutRedirect,
+  cwe639InvoiceAccess, cwe639UserProfile, cwe639DocumentSharing, cwe639ApiKeys, cwe639AccountSettings,
+  cwe200ApiError, cwe200DebugEndpoint, cwe200ConfigExposure, cwe200UserEnumeration, cwe200BackupExposure,
+  cwe209LoginError, cwe209DatabaseError, cwe209FileProcessing, cwe209ApiValidation, cwe209ExternalService
 }
