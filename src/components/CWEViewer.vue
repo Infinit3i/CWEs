@@ -326,6 +326,9 @@ function renderFunctionEnd() {
   font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
   font-size: 16px;
   line-height: 1.7;
+  text-align: left;
+  white-space: pre;
+  overflow-x: auto;
 }
 
 @media (max-width: 768px) {
