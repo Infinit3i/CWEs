@@ -5,22 +5,9 @@ export const cwe78FileListing: Exercise = {
   name: 'OS Command Injection - Directory Listing',
   language: 'Python',
 
-  vulnerableFunction: `import subprocess
-import os
-
-def list_user_files(user_name):
-    # List files in user's home directory
-    command = f"ls -l /home/{user_name}"
-
-    try:
-        result = subprocess.run(command, shell=True,
-                               capture_output=True, text=True)
-        if result.returncode == 0:
-            return result.stdout
-        else:
-            raise Exception(f"Command failed: {result.stderr}")
-    except Exception as e:
-        raise e`,
+  vulnerableFunction: `def list_files(user):
+    cmd = "ls /home/" + user
+    return subprocess.run(cmd, shell=True, capture_output=True)`,
 
   vulnerableLine: `command = f"ls -l /home/{user_name}"`,
 

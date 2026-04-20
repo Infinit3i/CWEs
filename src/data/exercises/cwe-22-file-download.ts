@@ -9,91 +9,75 @@ export const cwe22FileDownload: Exercise = {
   name: 'Path Traversal - File Download Endpoint',
   language: 'Python',
 
-  vulnerableFunction: `from flask import Flask, request, send_file, abort
-import os
-import os.path
+  vulnerableFunction: `def read_file(filename):
+    path = '/uploads/' + filename
+    return open(path, 'r').read()`,
 
-app = Flask(__name__)
-UPLOAD_DIR = "/var/www/uploads"
-
-@app.route('/api/download/<filename>')
-def download_file(filename):
-    # Vulnerable path construction
-    file_path = os.path.join(UPLOAD_DIR, filename)
-
-    if os.path.exists(file_path):
-        return send_file(file_path, as_attachment=True)
-    else:
-        abort(404, "File not found")`,
-
-  vulnerableLine: `file_path = os.path.join(UPLOAD_DIR, filename)`,
+  vulnerableLine: `path = '/uploads/' + filename`,
 
   options: [
     {
-      code: `@app.route('/api/download/<filename>')
-def download_file(filename):
-    # Sanitize filename - remove path components
-    safe_name = os.path.basename(filename)
-    file_path = os.path.join(UPLOAD_DIR, safe_name)
-
-    # Resolve and validate path stays within upload directory
-    resolved_path = os.path.realpath(file_path)
-    upload_real = os.path.realpath(UPLOAD_DIR)
-
-    if not resolved_path.startswith(upload_real + os.sep):
-        abort(403, "Access denied")
-
-    if os.path.exists(resolved_path):
-        return send_file(resolved_path, as_attachment=True)
-    else:
-        abort(404, "File not found")`,
+      code: `safe_name = os.path.basename(filename)
+path = '/uploads/' + safe_name`,
       correct: true,
-      explanation: `Use os.path.basename() and validate resolved path stays within allowed directory`
+      explanation: `os.path.basename() strips path components, prevents traversal`
     },
     {
-      code: `const filePath = '/users/cwe/profiles/' + filename;`,
+      code: `cleaned = filename.replace('../', '')
+path = '/uploads/' + cleaned`,
       correct: false,
-      explanation: 'String concatenation with user input allows attackers to inject "../../../etc/passwd" to escape the intended directory and access sensitive files.'
+      explanation: 'Only removes first "../" - multiple sequences still work'
     },
     {
-      code: `const cleaned = filename.replace('../', ''); const filePath = path.join(__dirname, 'uploads', cleaned);`,
+      code: `if filename.startswith('/uploads/'):
+    path = filename`,
       correct: false,
-      explanation: 'Removing only the first instance of "../" fails when attackers provide multiple sequences like "../../../etc/passwd" - after one is stripped, traversal sequences remain.'
+      explanation: 'Path like "/uploads/../etc/passwd" bypasses this check'
     },
     {
-      code: `if (filename.startsWith('/uploads/')) { const filePath = filename; }`,
+      code: `filtered = filename.replace('..', '')
+path = '/uploads/' + filtered`,
       correct: false,
-      explanation: 'MITRE vulnerability: startsWith() validation can be bypassed. A path like "/uploads/../important.dat" passes validation yet the "../" sequence still accesses files outside the directory.'
+      explanation: 'Simple filtering bypassed by encoded %2e%2e sequences'
     },
     {
-      code: `const filePath = path.join(__dirname, filename);`,
+      code: `if '/' in filename:
+    raise Error('Invalid')
+path = '/uploads/' + filename`,
       correct: false,
-      explanation: 'Path joining without base directory validation allows absolute paths. Attackers can supply "/etc/passwd" to bypass directory restrictions entirely.'
+      explanation: 'Blocking / helps but \\ works on Windows'
     },
     {
-      code: `const filtered = filename.replace(/\.\./g, ''); const filePath = path.join(__dirname, 'uploads', filtered);`,
+      code: `decoded = urllib.parse.unquote(filename)
+path = '/uploads/' + decoded`,
       correct: false,
-      explanation: 'Simple regex filtering can be bypassed with encoded sequences like %2e%2e%2f or double-encoded paths that decode after validation.'
+      explanation: 'URL decoding enables %2e%2e%2f to become ../'
     },
     {
-      code: `if (filename.includes('/')) { throw new Error('Invalid'); } const filePath = path.join(__dirname, 'uploads', filename);`,
+      code: `if len(filename) > 20:
+    raise Error('Too long')
+path = '/uploads/' + filename`,
       correct: false,
-      explanation: 'Blocking forward slashes helps but is insufficient on Windows systems where backslashes (\\) can also traverse directories.'
+      explanation: 'Length limits don\'t prevent short traversal like "../etc"'
     },
     {
-      code: `const decoded = decodeURIComponent(filename); const filePath = path.join(__dirname, 'uploads', decoded);`,
+      code: `lower = filename.lower()
+path = '/uploads/' + lower`,
       correct: false,
-      explanation: 'URL decoding without validation actually increases attack surface by enabling encoded traversal sequences like %2e%2e%2f to become ../'
+      explanation: 'Case conversion doesn\'t prevent "../etc/passwd"'
     },
     {
-      code: `if (filename.length > 50) { throw new Error('Too long'); } const filePath = path.join(__dirname, 'uploads', filename);`,
+      code: `if 'script' in filename:
+    raise Error('Invalid')
+path = '/uploads/' + filename`,
       correct: false,
-      explanation: 'Length validation alone is insufficient. Short traversal sequences like "../../../etc" can be very effective within length limits.'
+      explanation: 'Keyword filtering irrelevant to path traversal attacks'
     },
     {
-      code: `const sanitized = filename.toLowerCase(); const filePath = path.join(__dirname, 'uploads', sanitized);`,
+      code: `trimmed = filename.strip()
+path = '/uploads/' + trimmed`,
       correct: false,
-      explanation: 'Case conversion does not prevent path traversal. Lowercase "../etc/passwd" sequences are still effective for directory escape.'
+      explanation: 'Whitespace removal doesn\'t prevent path traversal'
     }
   ]
 }

@@ -5,71 +5,66 @@ export const cwe787BufferWrite: Exercise = {
   name: 'Out-of-bounds Write - User Message Processing',
   language: 'C',
 
-  vulnerableFunction: `function processUserMessage(message) {
-  const buffer = new Array(64);
-  let index = 0;
-
-  // Copy message characters to buffer
-  for (let i = 0; i < message.length; i++) {
-    buffer[index] = message.charCodeAt(i);
-    index++;
-  }
-
-  return buffer.slice(0, index);
+  vulnerableFunction: `void copy_data(char *input) {
+  char buffer[10];
+  strcpy(buffer, input);
 }`,
 
-  vulnerableLine: `buffer[index] = message.charCodeAt(i);`,
+  vulnerableLine: `strcpy(buffer, input);`,
 
   options: [
     {
-      code: `if (index < buffer.length) { buffer[index] = message.charCodeAt(i); index++; }`,
+      code: `strncpy(buffer, input, sizeof(buffer) - 1);
+buffer[sizeof(buffer) - 1] = '\\0';`,
       correct: true,
-      explanation: `Check bounds before writing to arrays`
+      explanation: `strncpy() with size limit prevents overflow`
     },
     {
-      code: `buffer[index] = message.charCodeAt(i); index++;`,
+      code: `memcpy(buffer, input, strlen(input));`,
       correct: false,
-      explanation: 'No bounds check allows buffer overflow'
+      explanation: 'No length check - input can be longer than buffer'
     },
     {
-      code: `buffer[index % buffer.length] = message.charCodeAt(i); index++;`,
+      code: `strcpy(buffer, input + 5);`,
       correct: false,
-      explanation: 'Modulo overwrites existing data causing corruption'
+      explanation: 'Pointer arithmetic doesn\'t fix buffer size issue'
     },
     {
-      code: `try { buffer[index] = message.charCodeAt(i); index++; } catch(e) { /* ignore */ }`,
+      code: `if (input[0]) strcpy(buffer, input);`,
       correct: false,
-      explanation: 'Try-catch cannot prevent buffer overflow damage'
+      explanation: 'Checking first character doesn\'t validate length'
     },
     {
-      code: `buffer[Math.min(index, buffer.length-1)] = message.charCodeAt(i); index++;`,
+      code: `strcpy(buffer, input);
+buffer[9] = '\\0';`,
       correct: false,
-      explanation: 'Overwrites last element repeatedly, losing data'
+      explanation: 'Null terminator after overflow is too late'
     },
     {
-      code: `if (message.length <= 64) { buffer[index] = message.charCodeAt(i); index++; }`,
+      code: `for (int i = 0; input[i]; i++)
+    buffer[i] = input[i];`,
       correct: false,
-      explanation: 'Check bounds every iteration, not once'
+      explanation: 'Manual loop without bounds check still overflows'
     },
     {
-      code: `buffer.push(message.charCodeAt(i));`,
+      code: `strcpy(buffer, strlen(input) < 10 ? input : "");`,
       correct: false,
-      explanation: 'Push() changes fixed-size to dynamic array'
+      explanation: 'Ternary check is better but strcpy still used'
     },
     {
-      code: `buffer[index] = message.charCodeAt(i) || 0; index++;`,
+      code: `strcpy(&buffer[0], input);`,
       correct: false,
-      explanation: 'Logical OR does not prevent overflow'
+      explanation: 'Pointer syntax doesn\'t change buffer overflow risk'
     },
     {
-      code: `if (index >= 0) { buffer[index] = message.charCodeAt(i); index++; }`,
+      code: `if (buffer && input) strcpy(buffer, input);`,
       correct: false,
-      explanation: 'Missing upper bound check allows overflow'
+      explanation: 'Null checks don\'t prevent length-based overflow'
     },
     {
-      code: `buffer[index] = message.length > 64 ? 0 : message.charCodeAt(i); index++;`,
+      code: `sprintf(buffer, "%s", input);`,
       correct: false,
-      explanation: 'Still writes to invalid buffer indices'
+      explanation: 'sprintf() has same overflow risk as strcpy()'
     }
   ]
 }

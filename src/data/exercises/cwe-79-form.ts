@@ -9,100 +9,74 @@ export const cwe79Form: Exercise = {
   language: 'JavaScript',
   name: 'Cross-Site Scripting - Contact Form Validation',
 
-  vulnerableFunction: `function validateAndShowForm(formData) {
-  const errors = [];
-  const name = formData.get('name') || '';
-  const email = formData.get('email') || '';
-  const message = formData.get('message') || '';
-
-  // Validate inputs
-  if (name.length < 2) errors.push('Name must be at least 2 characters');
-  if (!email.includes('@')) errors.push('Please enter a valid email');
-  if (message.length < 10) errors.push('Message must be at least 10 characters');
-
-  const statusDiv = document.getElementById('form-status');
-
-  if (errors.length > 0) {
-    statusDiv.innerHTML = \`
-      <div class="error">
-        <h4>Please fix the following errors:</h4>
-        <ul>\${errors.map(err => \`<li>\${err}</li>\`).join('')}</ul>
-        <p>You entered: Name="\${name}", Email="\${email}"</p>
-      </div>
-    \`;
-  } else {
-    statusDiv.innerHTML = \`<div class="success">Thank you \${name}! Your message has been sent.</div>\`;
-  }
+  vulnerableFunction: `function displayUserName(name) {
+  const div = document.getElementById('greeting');
+  div.innerHTML = \`<h2>Welcome \${name}!</h2>\`;
 }`,
 
-  vulnerableLine: `<p>You entered: Name="\${name}", Email="\${email}"</p>`,
+  vulnerableLine: `div.innerHTML = \`<h2>Welcome \${name}!</h2>\`;`,
 
   options: [
     {
-      code: `const summary = document.createElement('p');
-summary.textContent = \`You entered: Name="\${name}", Email="\${email}"\`;
-statusDiv.appendChild(summary);`,
+      code: `div.textContent = \`Welcome \${name}!\`;`,
       correct: true,
-      explanation: `Use textContent instead of innerHTML for user data`
+      explanation: `textContent treats input as text, not HTML code`
     },
-    // Form reflection XSS vulnerabilities
     {
-      code: `statusDiv.innerHTML = \`<p>Name: \${name}, Email: \${email}</p>\`;`,
+      code: `div.innerHTML = \`<h2>Hello \${name}</h2>\`;`,
       correct: false,
-      explanation: 'innerHTML allows `<script>` injection - executes malicious code'
+      explanation: 'innerHTML executes user scripts like <script>alert(1)</script>'
     },
     {
       code: `const clean = name.replace(/<script>/gi, '');
-statusDiv.innerHTML = \`<p>Name: \${clean}</p>\`;`,
+div.innerHTML = \`<h2>Welcome \${clean}!</h2>\`;`,
       correct: false,
-      explanation: 'Removing `<script>` is incomplete - `<img onerror>` bypasses filter'
+      explanation: 'Only blocks <script> - <img onerror=alert(1)> still works'
     },
     {
-      code: `const short = email.substring(0, 50);
-statusDiv.innerHTML = \`<p>Email: \${short}</p>\`;`,
+      code: `const short = name.substring(0, 20);
+div.innerHTML = \`<h2>Hi \${short}!</h2>\`;`,
       correct: false,
-      explanation: 'Length limits don\'t prevent XSS - short payloads work'
+      explanation: 'Length limits don\'t stop XSS - <img onerror=alert(1)> is short'
     },
     {
       code: `const filtered = name.replace(/[<>]/g, '');
-statusDiv.innerHTML = \`<p>Name: \${filtered}</p>\`;`,
+div.innerHTML = \`<h2>Welcome \${filtered}!</h2>\`;`,
       correct: false,
-      explanation: 'Removing `<>` helps but incomplete - `onerror` works without brackets'
+      explanation: 'Removing <> helps but incomplete - events like onerror still work'
     },
     {
       code: `const encoded = encodeURIComponent(name);
-statusDiv.innerHTML = \`<p>Name: \${encoded}</p>\`;`,
+div.innerHTML = \`<h2>Welcome \${encoded}!</h2>\`;`,
       correct: false,
-      explanation: 'URL encoding is for HTTP, not HTML display'
+      explanation: 'URL encoding is for URLs, not HTML content'
     },
     {
       code: `if (name.includes('script')) {
-  statusDiv.innerHTML = '<p>Invalid input</p>';
+  div.innerHTML = '<h2>Invalid name</h2>';
 } else {
-  statusDiv.innerHTML = \`<p>Name: \${name}</p>\`;
+  div.innerHTML = \`<h2>Welcome \${name}!</h2>\`;
 }`,
       correct: false,
-      explanation: 'Keyword blacklisting bypassed by `<img onerror>` and others'
+      explanation: 'Keyword filtering bypassed by <img onerror=alert(1)>'
     },
     {
-      code: `const escaped = name.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-statusDiv.innerHTML = \`<p>Name: \${escaped}</p>\`;`,
+      code: `const escaped = name.replace(/</g, '&lt;');
+div.innerHTML = \`<h2>Welcome \${escaped}!</h2>\`;`,
       correct: false,
-      explanation: 'Manual HTML encoding is error-prone - use textContent instead'
+      explanation: 'Manual escaping is error-prone - use textContent'
     },
     {
-      code: `const nameDiv = document.createElement('div');
-nameDiv.innerHTML = 'Name: ' + name;
-statusDiv.appendChild(nameDiv);`,
+      code: `const h2 = document.createElement('h2');
+h2.innerHTML = 'Welcome ' + name;
+div.appendChild(h2);`,
       correct: false,
-      explanation: 'innerHTML with user data is still vulnerable - use textContent'
+      explanation: 'innerHTML with user data is still vulnerable'
     },
     {
-      code: `const template = document.createElement('template');
-template.innerHTML = \`<p>Name: \${name}</p>\`;
-statusDiv.appendChild(template.content.cloneNode(true));`,
+      code: `div.outerHTML = \`<div><h2>Welcome \${name}!</h2></div>\`;`,
       correct: false,
-      explanation: 'Templates with innerHTML are still vulnerable - use textContent'
+      explanation: 'outerHTML has same XSS risk as innerHTML'
     }
   ]
 }
